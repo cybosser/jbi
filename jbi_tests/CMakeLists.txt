@@ -1,6 +1,10 @@
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-set(JBI_TESTS_SOURCE_FILES core_tests/exceptions_tests.cpp)
+set(JBI_TESTS_SOURCE_FILES
+    algorithm_tests/pp_tests.cpp
+
+    core_tests/exceptions_tests.cpp
+)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
