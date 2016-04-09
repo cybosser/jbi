@@ -6,3 +6,7 @@ include_directories(.)
 
 add_subdirectory(jbi)
 add_subdirectory(ijbi)
+
+add_subdirectory(thirdparty)
+
+add_subdirectory(jbi_tests)
