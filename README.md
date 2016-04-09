@@ -1,0 +1,2 @@
+# jbi
+Simple interactive interpreter
