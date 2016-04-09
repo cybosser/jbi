@@ -1,4 +1,6 @@
 set(JBI_HEADER_FILES
+    algorithm/pp.h
+
     core/exceptions.h
 
     interpreter/interpreter.h
