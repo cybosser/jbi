@@ -10,7 +10,7 @@
 namespace jbi
 {
 
-    class not_implemented_error : std::runtime_error
+    class not_implemented_error : public std::runtime_error
     {
     public:
         not_implemented_error() : std::runtime_error("The method or function is not implemented")
