@@ -1,8 +1,7 @@
 #include <ijbi/io/console.h>
 
+#include <jbi/core/exceptions.h>
 #include <jbi/interpreter/interpreter.h>
-
-#include <cstdlib>
 
 int main()
 {
@@ -26,7 +25,8 @@ int main()
     }
     catch (const std::exception& ex)
     {
-        // TODO output diagnostic information
+        console.write_line(jbi::diagnostic_information(ex));
+
         return EXIT_FAILURE;
     }
 
