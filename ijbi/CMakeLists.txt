@@ -1,4 +1,10 @@
-set(IJBI_SOURCE_FILES main.cpp)
+set(IJBI_HEADER_FILES io/console.h)
 
-add_executable(ijbi ${IJBI_SOURCE_FILES})
+set(IJBI_SOURCE_FILES
+    io/console.cpp
+
+    main.cpp
+)
+
+add_executable(ijbi ${IJBI_HEADER_FILES} ${IJBI_SOURCE_FILES})
 target_link_libraries(ijbi jbi)
