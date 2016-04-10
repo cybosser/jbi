@@ -1,9 +1,10 @@
 #ifndef JBI_CORE_EXCEPTIONS_H
 #define JBI_CORE_EXCEPTIONS_H
 
+#include <jbi/core/type_traits.h>
+
 #include <sstream>
 #include <stdexcept>
-#include <type_traits>
 
 // TODO store context (__FILE__, __LINE__, etc.)
 #define JBI_THROW(...) \
@@ -14,13 +15,13 @@ namespace jbi
 
     // TODO extract context (__FILE__, __LINE__, etc.)
     template < typename T >
-    typename std::enable_if<std::is_base_of<std::exception, T>::value, std::string>::type diagnostic_information(const T& exception)
+    enable_if_t<std::is_base_of<std::exception, T>::value, std::string> diagnostic_information(const T& ex)
     {
-        return exception.what();
+        return ex.what();
     }
 
     template < typename T >
-    typename std::enable_if<!std::is_base_of<std::exception, T>::value, std::string>::type diagnostic_information(const T& value)
+    enable_if_t<!std::is_base_of<std::exception, T>::value, std::string> diagnostic_information(const T& value)
     {
         std::ostringstream stream;
         stream << value;
