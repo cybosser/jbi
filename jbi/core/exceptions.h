@@ -7,8 +7,16 @@
 #include <stdexcept>
 
 // TODO store context (__FILE__, __LINE__, etc.)
-#define JBI_THROW(...) \
-    throw __VA_ARGS__
+#define JBI_THROW(Exception) \
+    throw Exception
+
+#define JBI_THROW_IF(Condition, Exception) \
+    do \
+    { \
+        if (Condition) \
+            JBI_THROW(Exception); \
+    } \
+    while (false)
 
 namespace jbi
 {
