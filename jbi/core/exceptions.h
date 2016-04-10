@@ -1,9 +1,9 @@
 #ifndef JBI_CORE_EXCEPTIONS_H
 #define JBI_CORE_EXCEPTIONS_H
 
+#include <jbi/core/string.h>
 #include <jbi/core/type_traits.h>
 
-#include <sstream>
 #include <stdexcept>
 
 // TODO store context (__FILE__, __LINE__, etc.)
@@ -23,9 +23,7 @@ namespace jbi
     template < typename T >
     enable_if_t<!std::is_base_of<std::exception, T>::value, std::string> diagnostic_information(const T& value)
     {
-        std::ostringstream stream;
-        stream << value;
-        return stream.str();
+        return to_string(value);
     }
 
     class not_implemented_error : public std::runtime_error
