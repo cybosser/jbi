@@ -6,8 +6,11 @@
 namespace jbi
 {
 
-    template < bool B, typename T = void >
-    using enable_if_t = typename std::enable_if<B, T>::type;
+    template < std::size_t Length, typename... Ts >
+    using aligned_union_t = typename std::aligned_union<Length, Ts...>::type;
+
+    template < bool Condition, typename T = void >
+    using enable_if_t = typename std::enable_if<Condition, T>::type;
 
 }
 
