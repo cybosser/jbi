@@ -15,6 +15,9 @@ namespace jbi
     template < bool Condition, typename T = void >
     using enable_if_t = typename std::enable_if<Condition, T>::type;
 
+    template < std::size_t Value >
+    using size_t_constant = std::integral_constant<std::size_t, Value>;
+
 }
 
 #endif
