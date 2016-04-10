@@ -10,7 +10,7 @@ namespace jbi
     namespace pp
     {
 
-        constexpr std::size_t noindex = std::numeric_limits<std::size_t>::max();
+        constexpr std::size_t npos = -1;
 
         namespace detail
         {
@@ -23,7 +23,7 @@ namespace jbi
             { };
 
             template < std::size_t Index, typename T, typename Last >
-            struct index_of_impl<Index, T, Last> : std::integral_constant<std::size_t, std::is_same<T, Last>::value? Index : noindex>
+            struct index_of_impl<Index, T, Last> : std::integral_constant<std::size_t, std::is_same<T, Last>::value? Index : npos>
             { };
 
         }
