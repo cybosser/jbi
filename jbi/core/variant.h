@@ -137,11 +137,13 @@ namespace jbi
     public:
         template < typename T >
         variant(T&& value)
-            : _which(pp::index_of<T, Ts...>::value)
+            : _which(pp::index_of<decay_t<T>, Ts...>::value)
         {
+            using decayed_t = decay_t<T>;
+
             // TODO check convertibility instead of exact type
-            static_assert(pp::index_of<T, Ts...>::value != pp::npos, "T should be one of the Ts");
-            new(_storage.address()) T(value);
+            static_assert(pp::index_of<decayed_t, Ts...>::value != pp::npos, "T should be one of the Ts");
+            new(_storage.address()) decayed_t(std::forward<T>(value));
         }
 
         ~variant()
