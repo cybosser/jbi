@@ -1,6 +1,8 @@
-#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include <jbi/core/variant.h>
+
+using namespace ::testing;
 
 TEST(core_variant_tests, default_constructor_test)
 {
@@ -40,42 +42,34 @@ TEST(core_variant_tests, destructor_test)
 
 TEST(core_variant_tests, apply_visitor_test)
 {
-    static constexpr int expected_int = 1948;
-    static constexpr float expected_float = 3.14f;
+    constexpr int expected_int = 1948;
+    constexpr float expected_float = 3.14f;
 
-    enum class number_type
+    struct mock_visitor : public jbi::static_visitor<int>
     {
-        int_, float_
+        MOCK_METHOD1(call_operator_int, int(int value));
+        MOCK_METHOD1(call_operator_float, int(float value));
+
+        int operator()(int value) { return call_operator_int(value); }
+        int operator()(float value) { return call_operator_float(value); }
     };
 
-    struct visitor : public jbi::static_visitor<number_type>
-    {
-        number_type operator()(int value)
-        {
-            EXPECT_EQ(expected_int, value);
-            return number_type::int_;
-        }
+    mock_visitor visitor;
 
-        number_type operator()(float value)
-        {
-            EXPECT_EQ(expected_float, value);
-            return number_type::float_;
-        }
-    };
-
-    visitor visitor;
+    EXPECT_CALL(visitor, call_operator_int(expected_int)).Times(2).WillRepeatedly(Return(0));
+    EXPECT_CALL(visitor, call_operator_float(expected_float)).Times(2).WillRepeatedly(Return(1));
 
     jbi::variant<int, float> int_variant(expected_int);
-    EXPECT_EQ(number_type::int_, int_variant.apply_visitor(visitor));
+    EXPECT_EQ(0, int_variant.apply_visitor(visitor));
 
     jbi::variant<int, float> float_variant(expected_float);
-    EXPECT_EQ(number_type::float_, float_variant.apply_visitor(visitor));
+    EXPECT_EQ(1, float_variant.apply_visitor(visitor));
 
     const jbi::variant<int, float> const_int_variant(expected_int);
-    EXPECT_EQ(number_type::int_, const_int_variant.apply_visitor(visitor));
+    EXPECT_EQ(0, const_int_variant.apply_visitor(visitor));
 
     const jbi::variant<int, float> const_float_variant(expected_float);
-    EXPECT_EQ(number_type::float_, const_float_variant.apply_visitor(visitor));
+    EXPECT_EQ(1, const_float_variant.apply_visitor(visitor));
 }
 
 TEST(core_variant_tests, get_test)
