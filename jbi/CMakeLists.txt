@@ -4,6 +4,7 @@ set(JBI_HEADER_FILES
     core/exceptions.h
     core/string.h
     core/type_traits.h
+    core/variant.h
 
     interpreter/interpreter.h
 )
