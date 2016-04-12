@@ -26,24 +26,24 @@ TEST(core_variant_tests, destructor_test)
         jbi::variant<int, destructable_type> variant{ destructable_type(destructor_called) };
     }
 
-    ASSERT_TRUE(destructor_called);
+    EXPECT_TRUE(destructor_called);
 };
 
 TEST(core_variant_tests, get_test)
 {
     jbi::variant<int, float> int_variant(1984);
-    ASSERT_EQ(1984, jbi::get<int>(int_variant));
-    ASSERT_THROW(jbi::get<float>(int_variant), jbi::bad_get);
+    EXPECT_EQ(1984, jbi::get<int>(int_variant));
+    EXPECT_THROW(jbi::get<float>(int_variant), jbi::bad_get);
 
     jbi::variant<int, float> float_variant(3.14f);
-    ASSERT_EQ(3.14f, jbi::get<float>(float_variant));
-    ASSERT_THROW(jbi::get<int>(float_variant), jbi::bad_get);
+    EXPECT_EQ(3.14f, jbi::get<float>(float_variant));
+    EXPECT_THROW(jbi::get<int>(float_variant), jbi::bad_get);
 
     const jbi::variant<int, float> const_int_variant(1948);
-    ASSERT_EQ(1948, jbi::get<int>(const_int_variant));
-    ASSERT_THROW(jbi::get<float>(const_int_variant), jbi::bad_get);
+    EXPECT_EQ(1948, jbi::get<int>(const_int_variant));
+    EXPECT_THROW(jbi::get<float>(const_int_variant), jbi::bad_get);
 
     const jbi::variant<int, float> const_float_variant(1.61f);
-    ASSERT_EQ(1.61f, jbi::get<float>(const_float_variant));
-    ASSERT_THROW(jbi::get<int>(const_float_variant), jbi::bad_get);
+    EXPECT_EQ(1.61f, jbi::get<float>(const_float_variant));
+    EXPECT_THROW(jbi::get<int>(const_float_variant), jbi::bad_get);
 }
