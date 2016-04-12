@@ -106,7 +106,6 @@ namespace jbi
             }
         };
 
-
         template < typename Visitor, typename ParameterPack, typename Address >
         return_type_t<Visitor> apply_visitor(Visitor& visitor, Address address, ParameterPack pack, std::size_t which)
         {
@@ -135,6 +134,12 @@ namespace jbi
         detail::variant_storage<Ts...>  _storage;
 
     public:
+        variant()
+            : _which()
+        {
+            new(_storage.address()) pp::front<Ts...>();
+        }
+
         template < typename T >
         variant(T&& value)
             : _which(pp::index_of<decay_t<T>, Ts...>::value)

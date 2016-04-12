@@ -2,6 +2,15 @@
 
 #include <jbi/core/variant.h>
 
+TEST(core_variant_tests, default_constructor_test)
+{
+    jbi::variant<int, float> int_variant;
+    EXPECT_EQ(0, jbi::get<int>(int_variant));
+
+    jbi::variant<float, int> float_variant;
+    EXPECT_EQ(0.0f, jbi::get<float>(float_variant));
+}
+
 TEST(core_variant_tests, destructor_test)
 {
     class destructable_type
