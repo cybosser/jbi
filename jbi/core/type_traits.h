@@ -12,6 +12,9 @@ namespace jbi
     template < bool Condition, typename T, typename F >
     using conditional_t = typename std::conditional<Condition, T, F>::type;
 
+    template < typename T >
+    using decay_t = typename std::decay<T>::type;
+
     template < bool Condition, typename T = void >
     using enable_if_t = typename std::enable_if<Condition, T>::type;
 
