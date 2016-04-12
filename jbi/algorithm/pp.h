@@ -31,6 +31,36 @@ namespace jbi
         template < typename T, typename... Ts >
         using index_of = detail::index_of_impl<0, T, Ts...>;
 
+        namespace detail
+        {
+
+            template < typename Head, typename... >
+            struct front_impl
+            {
+                using type = Head;
+            };
+
+            template < typename... Ts >
+            struct back_impl;
+
+            template < typename Head, typename... Tail >
+            struct back_impl<Head, Tail...> : public detail::back_impl<Tail...>
+            { };
+
+            template < typename Last >
+            struct back_impl<Last>
+            {
+                using type = Last;
+            };
+
+        }
+
+        template < typename... Ts >
+        using front = typename detail::front_impl<Ts...>::type;
+
+        template < typename... Ts >
+        using back = typename detail::back_impl<Ts...>::type;
+
     }
 
 }
