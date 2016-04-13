@@ -3,6 +3,7 @@
 
 #include <jbi/algorithm/pp.h>
 #include <jbi/core/exceptions.h>
+#include <jbi/core/static_visitor.h>
 #include <jbi/core/type_traits.h>
 
 #include <memory>
@@ -10,13 +11,6 @@
 
 namespace jbi
 {
-
-    template < typename ReturnType = void >
-    struct static_visitor
-    {
-        using return_type = ReturnType;
-    };
-
 
     namespace detail
     {

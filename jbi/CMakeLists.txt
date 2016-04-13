@@ -2,6 +2,7 @@ set(JBI_HEADER_FILES
     algorithm/pp.h
 
     core/exceptions.h
+    core/static_visitor.h
     core/string.h
     core/type_traits.h
     core/variant.h
