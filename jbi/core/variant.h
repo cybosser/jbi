@@ -114,6 +114,42 @@ namespace jbi
         }
 
 
+        class variant_copier : public static_visitor<>
+        {
+        private:
+            void* _address;
+
+        public:
+            explicit variant_copier(void* address)
+                : _address(address)
+            { }
+
+            template < typename T >
+            void operator()(T& value)
+            {
+                new(_address) T(value);
+            }
+        };
+
+
+        class variant_mover : public static_visitor<>
+        {
+        private:
+            void* _address;
+
+        public:
+            explicit variant_mover(void* address)
+                : _address(address)
+            { }
+
+            template < typename T >
+            void operator()(T& value)
+            {
+                new(_address) T(std::move(value));
+            }
+        };
+
+
         struct variant_destroyer : public static_visitor<>
         {
             template < typename T >
@@ -134,14 +170,8 @@ namespace jbi
         detail::variant_storage<Ts...>  _storage;
 
     public:
-        variant()
-            : _which()
-        {
-            new(_storage.address()) pp::front<Ts...>();
-        }
-
-        template < typename T >
-        variant(T&& value)
+        template < typename T, enable_if_t<!std::is_same<decay_t<T>, variant>::value, void>* = nullptr >
+        explicit variant(T&& value)
             : _which(pp::index_of<decay_t<T>, Ts...>::value)
         {
             using decayed_t = decay_t<T>;
@@ -151,19 +181,30 @@ namespace jbi
             new(_storage.address()) decayed_t(std::forward<T>(value));
         }
 
+        variant(const variant& other)
+        {
+            detail::variant_copier copier(_storage.address());
+            other.apply_visitor(copier);
+
+            _which = other._which;
+        }
+
+        variant(variant&& other)
+        {
+            detail::variant_mover mover(_storage.address());
+            other.apply_visitor(mover);
+
+            _which = other._which;
+        }
+
         ~variant()
         {
             detail::variant_destroyer destroyer;
             apply_visitor(destroyer);
         }
 
-        // TODO: implement
-        variant(const variant&) = delete;
-        variant(const variant&&) = delete;
-
-        // TODO: implement
-        variant& operator=(const variant& other) = delete;
-        variant& operator=(variant&& other) = delete;
+        variant& operator=(const variant&) = delete;
+        variant& operator=(variant&&) = delete;
 
         template < typename Visitor >
         detail::return_type_t<Visitor> apply_visitor(Visitor& visitor)
