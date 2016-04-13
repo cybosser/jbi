@@ -1,9 +1,14 @@
-set(IJBI_HEADER_FILES io/console.h)
+set(IJBI_HEADER_FILES
+    io/console.h
+
+    printer.h
+)
 
 set(IJBI_SOURCE_FILES
     io/console.cpp
 
     main.cpp
+    printer.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
