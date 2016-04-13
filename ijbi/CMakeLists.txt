@@ -1,12 +1,10 @@
 set(IJBI_HEADER_FILES
-    io/console.h
-
+    console.h
     printer.h
 )
 
 set(IJBI_SOURCE_FILES
-    io/console.cpp
-
+    console.cpp
     main.cpp
     printer.cpp
 )

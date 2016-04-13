@@ -1,5 +1,5 @@
-#ifndef IJBI_IO_CONSOLE_H
-#define IJBI_IO_CONSOLE_H
+#ifndef IJBI_CONSOLE_H
+#define IJBI_CONSOLE_H
 
 #include <string>
 

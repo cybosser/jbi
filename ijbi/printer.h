@@ -1,7 +1,7 @@
 #ifndef IJBI_PRINTER_H
 #define IJBI_PRINTER_H
 
-#include <ijbi/io/console.h>
+#include <ijbi/console.h>
 
 #include <jbi/core/static_visitor.h>
 #include <jbi/core/string.h>

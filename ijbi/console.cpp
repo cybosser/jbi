@@ -1,4 +1,4 @@
-#include <ijbi/io/console.h>
+#include <ijbi/console.h>
 
 #include <iostream>
 

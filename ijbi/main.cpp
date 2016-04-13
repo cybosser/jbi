@@ -1,4 +1,4 @@
-#include <ijbi/io/console.h>
+#include <ijbi/console.h>
 
 #include <jbi/core/exceptions.h>
 #include <jbi/interpreter/interpreter.h>
