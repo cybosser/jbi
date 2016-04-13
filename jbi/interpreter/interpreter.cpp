@@ -5,7 +5,7 @@
 namespace jbi
 {
 
-    void interpreter::interpret(const std::string& statement)
+    value interpreter::interpret(const std::string& statement)
     {
         JBI_THROW(not_implemented_error());
     }
