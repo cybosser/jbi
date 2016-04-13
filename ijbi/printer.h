@@ -3,8 +3,8 @@
 
 #include <ijbi/console.h>
 
-#include <jbi/core/static_visitor.h>
 #include <jbi/core/string.h>
+#include <jbi/variant/static_visitor.h>
 
 namespace ijbi
 {

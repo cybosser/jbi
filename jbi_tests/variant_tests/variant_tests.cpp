@@ -1,6 +1,6 @@
 #include <gmock/gmock.h>
 
-#include <jbi/core/variant.h>
+#include <jbi/variant/variant.h>
 
 using namespace ::testing;
 

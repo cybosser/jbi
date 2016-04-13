@@ -1,7 +1,7 @@
 #ifndef JBI_INTERPRETER_INTERPRETER_H
 #define JBI_INTERPRETER_INTERPRETER_H
 
-#include <jbi/core/variant.h>
+#include <jbi/variant/variant.h>
 
 #include <string>
 

@@ -1,10 +1,10 @@
-#ifndef JBI_CORE_VARIANT_H
-#define JBI_CORE_VARIANT_H
+#ifndef JBI_VARIANT_VARIANT_H
+#define JBI_VARIANT_VARIANT_H
 
 #include <jbi/algorithm/pp.h>
 #include <jbi/core/exceptions.h>
-#include <jbi/core/static_visitor.h>
 #include <jbi/core/type_traits.h>
+#include <jbi/variant/static_visitor.h>
 
 #include <memory>
 #include <typeinfo>
