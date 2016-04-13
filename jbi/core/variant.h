@@ -258,6 +258,20 @@ namespace jbi
         detail::variant_getter<const T> getter;
         return variant.apply_visitor(getter);
     }
+
+
+    template < typename... Ts, typename Visitor >
+    detail::return_type_t<Visitor> apply_visitor(variant<Ts...>& variant, Visitor& visitor)
+    {
+        return variant.apply_visitor(visitor);
+    };
+
+    template < typename... Ts, typename Visitor >
+    detail::return_type_t<Visitor> apply_visitor(const variant<Ts...>& variant, Visitor& visitor)
+    {
+        return variant.apply_visitor(visitor);
+    };
+
 }
 
 #endif

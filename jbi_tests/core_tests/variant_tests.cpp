@@ -67,16 +67,16 @@ TEST(core_variant_tests, apply_visitor_test)
     EXPECT_CALL(visitor, call_operator_float(expected_float)).Times(2).WillRepeatedly(Return(1));
 
     jbi::variant<int, float> int_variant(expected_int);
-    EXPECT_EQ(0, int_variant.apply_visitor(visitor));
+    EXPECT_EQ(0, jbi::apply_visitor(int_variant, visitor));
 
     jbi::variant<int, float> float_variant(expected_float);
-    EXPECT_EQ(1, float_variant.apply_visitor(visitor));
+    EXPECT_EQ(1, jbi::apply_visitor(float_variant, visitor));
 
     const jbi::variant<int, float> const_int_variant(expected_int);
-    EXPECT_EQ(0, const_int_variant.apply_visitor(visitor));
+    EXPECT_EQ(0, jbi::apply_visitor(const_int_variant, visitor));
 
     const jbi::variant<int, float> const_float_variant(expected_float);
-    EXPECT_EQ(1, const_float_variant.apply_visitor(visitor));
+    EXPECT_EQ(1, jbi::apply_visitor(const_float_variant, visitor));
 }
 
 TEST(core_variant_tests, get_test)
