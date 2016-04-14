@@ -165,7 +165,7 @@ namespace jbi
 
     public:
         template < typename T, enable_if_t<!std::is_same<decay_t<T>, variant>::value, void>* = nullptr >
-        explicit variant(T&& value)
+        variant(T&& value)
             : _which(pp::index_of<decay_t<T>, Ts...>::value)
         {
             using decayed_t = decay_t<T>;
