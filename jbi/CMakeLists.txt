@@ -6,12 +6,16 @@ set(JBI_HEADER_FILES
     core/type_traits.h
 
     interpreter/interpreter.h
+    interpreter/lexer.h
 
     variant/static_visitor.h
     variant/variant.h
 )
 
-set(JBI_SOURCE_FILES interpreter/interpreter.cpp)
+set(JBI_SOURCE_FILES
+    interpreter/lexer.cpp
+    interpreter/interpreter.cpp
+)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
