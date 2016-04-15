@@ -11,7 +11,7 @@ namespace jbi
 
         token read_token()
         {
-            JBI_THROW(not_implemented_error());
+            JBI_THROW(not_implemented_exception());
         }
     };
 
