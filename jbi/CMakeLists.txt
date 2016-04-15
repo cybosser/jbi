@@ -8,6 +8,7 @@ set(JBI_HEADER_FILES
 
     interpreter/interpreter.h
     interpreter/lexer.h
+    interpreter/lexer/token.h
 
     variant/static_visitor.h
     variant/variant.h

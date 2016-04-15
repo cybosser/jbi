@@ -11,7 +11,7 @@ namespace jbi
 
         token read_token()
         {
-            return nullptr;
+            JBI_THROW(not_implemented_error());
         }
     };
 

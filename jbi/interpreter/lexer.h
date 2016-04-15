@@ -1,24 +1,10 @@
 #ifndef JBI_INTERPRETER_LEXER_H
 #define JBI_INTERPRETER_LEXER_H
 
-#include <jbi/variant/variant.h>
-
-#include <memory>
+#include <jbi/interpreter/lexer/token.h>
 
 namespace jbi
 {
-
-    enum operators
-    {
-        addition,
-        subtraction,
-        multiplication,
-        division
-    };
-
-
-    using token = variant<int, float, operators, std::nullptr_t>; // nullptr_t is an eof indicator
-
 
     class lexer
     {
