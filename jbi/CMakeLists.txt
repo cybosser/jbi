@@ -2,6 +2,7 @@ set(JBI_HEADER_FILES
     algorithm/pp.h
 
     core/exceptions.h
+    core/none.h
     core/string.h
     core/type_traits.h
 
@@ -13,6 +14,8 @@ set(JBI_HEADER_FILES
 )
 
 set(JBI_SOURCE_FILES
+    core/none.cpp
+
     interpreter/lexer.cpp
     interpreter/interpreter.cpp
 )
