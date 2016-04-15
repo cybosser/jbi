@@ -34,10 +34,19 @@ namespace jbi
         return to_string(value);
     }
 
+
     class not_implemented_error : public std::runtime_error
     {
     public:
         not_implemented_error() : std::runtime_error("The method or function is not implemented")
+        { }
+    };
+
+
+    class argument_exception : public std::runtime_error
+    {
+    public:
+        argument_exception() : std::runtime_error("Invalid argument")
         { }
     };
 
