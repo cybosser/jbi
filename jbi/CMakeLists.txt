@@ -17,8 +17,9 @@ set(JBI_HEADER_FILES
 set(JBI_SOURCE_FILES
     core/none.cpp
 
-    interpreter/lexer.cpp
     interpreter/interpreter.cpp
+    interpreter/lexer.cpp
+    interpreter/lexer/token.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
