@@ -1,29 +1,45 @@
 %{
 #include <jbi/interpreter/lexer/token.h>
+
+#define YY_DECL jbi::token yylex(yyscan_t yyscanner)
+
+#define yyterminate() return jbi::token::eof()
 %}
 
 %option never-interactive
 %option noyywrap
-%option outfile="scanner.cpp" header-file="scanner.h"
+%option outfile="scanner.cpp" header-file="scanner_generated.h"
 %option reentrant
-%option extra-type="jbi::token*"
 
 digit   [0-9]
 letter  [a-zA-Z]
 
 %%
 
-"="                         { *yyextra = jbi::token::equals(); }
+"var"                       { return jbi::token::var(); }
+"in"                        { return jbi::token::in(); }
+"out"                       { return jbi::token::out(); }
+"print"                     { return jbi::token::print(); }
 
-"+"                         { *yyextra = jbi::token::plus(); }
-"-"                         { *yyextra = jbi::token::minus(); }
-"*"                         { *yyextra = jbi::token::times(); }
-"/"                         { *yyextra = jbi::token::slash(); }
+{digit}+\.{digit}*         { return jbi::token::number(std::atof(yytext)); }
+{digit}+                    { return jbi::token::number(std::atoi(yytext)); }
+\"(\\.|[^\\"])*\"           { return jbi::token::string(yytext); }
 
-{digit}+                    { *yyextra = jbi::token::number(std::atoi(yytext)); }
-{digit}+.{digit}*           { *yyextra = jbi::token::number(std::atof(yytext)); }
+{letter}({letter}|{digit})* { return jbi::token::identifier(yytext); }
 
-{letter}({letter}|{digit})* { *yyextra = jbi::token::identifier(yytext); }
+"->"                        { return jbi::token::arrow(); }
+
+"="                         { return jbi::token::equals(); }
+"+"                         { return jbi::token::plus(); }
+"-"                         { return jbi::token::minus(); }
+"*"                         { return jbi::token::asterisk(); }
+"/"                         { return jbi::token::slash(); }
+"^"                         { return jbi::token::carret(); }
+","                         { return jbi::token::comma(); }
+"("                         { return jbi::token::left_parenthesis(); }
+")"                         { return jbi::token::right_parenthesis(); }
+"{"                         { return jbi::token::left_brace(); }
+"}"                         { return jbi::token::right_brace(); }
 
 [ \t\r\n]                   { }
 
