@@ -1,5 +1,5 @@
-#ifndef JBI_INTERPRETER_LEXER_H
-#define JBI_INTERPRETER_LEXER_H
+#ifndef JBI_INTERPRETER_LEXER_LEXER_H
+#define JBI_INTERPRETER_LEXER_LEXER_H
 
 #include <jbi/interpreter/lexer/token.h>
 

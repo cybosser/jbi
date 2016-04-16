@@ -7,7 +7,7 @@ set(JBI_HEADER_FILES
     core/type_traits.h
 
     interpreter/interpreter.h
-    interpreter/lexer.h
+    interpreter/lexer/lexer.h
     interpreter/lexer/flex/scanner.h
     interpreter/lexer/flex/scanner_generated.h
     interpreter/lexer/token.h
@@ -20,7 +20,7 @@ set(JBI_SOURCE_FILES
     core/none.cpp
 
     interpreter/interpreter.cpp
-    interpreter/lexer.cpp
+    interpreter/lexer/lexer.cpp
     interpreter/lexer/flex/scanner.cpp
     interpreter/lexer/token.cpp
 )

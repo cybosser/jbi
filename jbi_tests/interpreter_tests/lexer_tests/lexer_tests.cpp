@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <jbi/interpreter/lexer.h>
+#include <jbi/interpreter/lexer/lexer.h>
 
 class lexer_tester
 {

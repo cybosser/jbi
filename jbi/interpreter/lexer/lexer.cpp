@@ -1,4 +1,4 @@
-#include <jbi/interpreter/lexer.h>
+#include <jbi/interpreter/lexer/lexer.h>
 
 #include <jbi/interpreter/lexer/flex/scanner.h>
 
