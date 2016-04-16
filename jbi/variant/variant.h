@@ -31,115 +31,87 @@ namespace jbi
             {
                 return std::addressof(_storage);
             }
+
+            template < typename T >
+            T& value() &
+            {
+                return static_cast<T&>(*static_cast<T*>(address()));
+            }
+
+            template < typename T >
+            const T& value() const &
+            {
+                return static_cast<const T&>(*static_cast<const T*>(address()));
+            }
+
+            template < typename T >
+            T&& value() &&
+            {
+                return static_cast<T&&>(*static_cast<T*>(address()));
+            }
         };
+
+
+        template < typename... Ts >
+        struct parameter_pack
+        { };
 
 
         template < typename T >
         using return_type_t = typename T::return_type;
 
 
-        template < typename... Ts >
-        class parameter_pack
+        template < typename Visitor, typename Storage, typename Head, typename... Tail >
+        return_type_t<Visitor> apply_visitor(Visitor& visitor, Storage&& storage, std::size_t index, parameter_pack<Head, Tail...>)
         {
-        public:
-            template < typename Op >
-            return_type_t<Op> apply_for(Op op, std::size_t index)
-            {
-                return apply_for_impl<Op, Ts...>(op, index);
-            };
+            if (index == 0)
+                return visitor(std::forward<Storage>(storage).template value<Head>());
 
-        private:
-            template < typename Op, typename Head, typename... Tail >
-            return_type_t<Op> apply_for_impl(Op op, std::size_t index)
-            {
-                if (index == 0)
-                    return op.template apply<Head>();
+            return apply_visitor(visitor, std::forward<Storage>(storage), index - 1, parameter_pack<Tail...>());
+        };
 
-                return apply_for_impl<Op, Tail...>(op, index - 1);
-            }
-
-            template < typename Op >
-            return_type_t<Op> apply_for_impl(Op, std::size_t)
-            {
-                JBI_THROW(std::logic_error("Should never get here"));
-            }
+        template < typename Visitor, typename Storage >
+        return_type_t<Visitor> apply_visitor(Visitor&, Storage&&, std::size_t, parameter_pack<>)
+        {
+            JBI_THROW(std::logic_error("Should never get here"));
         };
 
 
-        template < typename Visitor, typename Address >
-        class visitor_applier
-        {
-        private:
-            Visitor&    _visitor;
-            Address     _address;
-
-        public:
-            using return_type = return_type_t<Visitor>;
-
-            visitor_applier(Visitor& visitor, Address address)
-                : _visitor(visitor), _address(address)
-            { }
-
-            template < typename T >
-            return_type apply()
-            {
-                return _visitor(to_reference<T>(_address));
-            }
-
-        private:
-            template < typename T >
-            T& to_reference(void* address)
-            {
-                return static_cast<T&>(*static_cast<T*>(address));
-            }
-
-            template < typename T >
-            const T& to_reference(const void* address)
-            {
-                return static_cast<const T&>(*static_cast<const T*>(address));
-            }
-        };
-
-        template < typename Visitor, typename ParameterPack, typename Address >
-        return_type_t<Visitor> apply_visitor(Visitor& visitor, Address address, ParameterPack pack, std::size_t which)
-        {
-            visitor_applier<Visitor, Address> applier(visitor, address);
-            return pack.apply_for(applier, which);
-        }
-
-
-        class variant_copier : public static_visitor<>
+        class value_initializer : public static_visitor<>
         {
         private:
             void* _address;
 
         public:
-            explicit variant_copier(void* address)
+            explicit value_initializer(void* address)
                 : _address(address)
             { }
 
             template < typename T >
-            void operator()(T& value)
+            void operator()(T&& value)
             {
-                new(_address) T(value);
+                using decayed_T = decay_t<T>;
+
+                new(_address) decayed_T(std::forward<T>(value));
             }
         };
 
-
-        class variant_mover : public static_visitor<>
+        class value_assigner : public static_visitor<>
         {
         private:
             void* _address;
 
         public:
-            explicit variant_mover(void* address)
+            explicit value_assigner(void* address)
                 : _address(address)
             { }
 
             template < typename T >
-            void operator()(T& value)
+            void operator()(T&& value)
             {
-                new(_address) T(std::move(value));
+                using decayed_T = decay_t<T>;
+
+                static_cast<decayed_T&>(*static_cast<decayed_T*>(_address)) = std::forward<T>(value);
             }
         };
 
@@ -168,48 +140,89 @@ namespace jbi
         variant(T&& value)
             : _which(pp::index_of<decay_t<T>, Ts...>::value)
         {
-            using decayed_t = decay_t<T>;
+            using decayed_T = decay_t<T>;
 
             // TODO check convertibility instead of exact type
-            static_assert(pp::index_of<decayed_t, Ts...>::value != pp::npos, "T should be one of the Ts");
-            new(_storage.address()) decayed_t(std::forward<T>(value));
+            static_assert(pp::index_of<decayed_T, Ts...>::value != pp::npos, "T should be one of the Ts");
+            new(_storage.address()) decayed_T(std::forward<T>(value));
         }
 
         variant(const variant& other)
+            : _which(other._which)
         {
-            detail::variant_copier copier(_storage.address());
-            other.apply_visitor(copier);
-
-            _which = other._which;
+            initialize_value(other);
         }
 
         variant(variant&& other)
+            : _which(other._which)
         {
-            detail::variant_mover mover(_storage.address());
-            other.apply_visitor(mover);
-
-            _which = other._which;
+            initialize_value(other);
         }
 
         ~variant()
+        {
+            destroy_value();
+        }
+
+        variant& operator=(const variant& other)
+        {
+            assign(other);
+        }
+
+        variant& operator=(variant&& other)
+        {
+            assign(other);
+        }
+
+        template < typename Visitor >
+        detail::return_type_t<Visitor> apply_visitor(Visitor& visitor) &
+        {
+            return detail::apply_visitor(visitor, _storage, _which, detail::parameter_pack<Ts...>());
+        }
+
+        template < typename Visitor >
+        detail::return_type_t<Visitor> apply_visitor(Visitor& visitor) const &
+        {
+            return detail::apply_visitor(visitor, _storage, _which, detail::parameter_pack<Ts...>());
+        }
+
+        template < typename Visitor >
+        detail::return_type_t<Visitor> apply_visitor(Visitor& visitor) &&
+        {
+            return detail::apply_visitor(visitor, std::move(_storage), _which, detail::parameter_pack<Ts...>());
+        }
+
+    private:
+        template < typename Variant >
+        void initialize_value(Variant&& other)
+        {
+            detail::value_initializer initializer(_storage.address());
+            std::forward<Variant>(other).apply_visitor(initializer);
+        }
+
+        void destroy_value()
         {
             detail::variant_destroyer destroyer;
             apply_visitor(destroyer);
         }
 
-        variant& operator=(const variant&) = delete;
-        variant& operator=(variant&&) = delete;
-
-        template < typename Visitor >
-        detail::return_type_t<Visitor> apply_visitor(Visitor& visitor)
+        // FIXME not enough exception safe
+        template < typename Variant >
+        void assign(Variant&& other)
         {
-            return detail::apply_visitor(visitor, _storage.address(), detail::parameter_pack<Ts...>(), _which);
-        }
+            if (_which == other._which)
+            {
+                detail::value_assigner assigner(_storage.address());
+                std::forward<Variant>(other).apply_visitor(assigner);
+            }
+            else
+            {
+                destroy_value();
 
-        template < typename Visitor >
-        detail::return_type_t<Visitor> apply_visitor(Visitor& visitor) const
-        {
-            return detail::apply_visitor(visitor, _storage.address(), detail::parameter_pack<Ts...>(), _which);
+                initialize_value(std::forward<Variant>(other));
+
+                _which = other._which;
+            }
         }
     };
 
@@ -223,15 +236,15 @@ namespace jbi
     {
 
         template < typename T >
-        struct variant_getter : public static_visitor<T&>
+        struct value_getter : public static_visitor<T>
         {
-            T& operator()(T& value)
+            T operator()(T value)
             {
-                return value;
+                return static_cast<T>(value);
             }
 
             template < typename U >
-            T& operator()(U&)
+            T operator()(const U&)
             {
                 JBI_THROW(bad_get());
             }
@@ -242,15 +255,22 @@ namespace jbi
     template < typename T, typename... Ts >
     T& get(variant<Ts...>& variant)
     {
-        detail::variant_getter<T> getter;
+        detail::value_getter<T&> getter;
         return variant.apply_visitor(getter);
     }
 
     template < typename T, typename... Ts >
     const T& get(const variant<Ts...>& variant)
     {
-        detail::variant_getter<const T> getter;
+        detail::value_getter<const T&> getter;
         return variant.apply_visitor(getter);
+    }
+
+    template < typename T, typename... Ts >
+    T&& get(variant<Ts...>&& variant)
+    {
+        detail::value_getter<T&&> getter;
+        return std::move(variant).apply_visitor(getter);
     }
 
 
@@ -264,6 +284,12 @@ namespace jbi
     detail::return_type_t<Visitor> apply_visitor(const variant<Ts...>& variant, Visitor& visitor)
     {
         return variant.apply_visitor(visitor);
+    };
+
+    template < typename... Ts, typename Visitor >
+    detail::return_type_t<Visitor> apply_visitor(variant<Ts...>&& variant, Visitor& visitor)
+    {
+        return std::move(variant).apply_visitor(visitor);
     };
 
 }

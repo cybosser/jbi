@@ -4,21 +4,30 @@
 
 using namespace ::testing;
 
+
+template < typename T >
+jbi::variant<int, float> make_variant(T value)
+{
+    return jbi::variant<int, float>(value);
+};
+
 TEST(core_variant_tests, copy_constructor_test)
 {
-    jbi::variant<int, float> first(3.14f);
+    jbi::variant<int, float> variant(3.14f);
 
-    jbi::variant<int, float> second(first);
-    EXPECT_EQ(3.14f, jbi::get<float>(second));
+    jbi::variant<int, float> copy(variant);
+    EXPECT_EQ(3.14f, jbi::get<float>(copy));
 }
 
 TEST(core_variant_tests, move_constructor_test)
 {
-    jbi::variant<int, float> first(3.14f);
+    jbi::variant<int, float> int_variant(make_variant(1948));
+    EXPECT_EQ(1948, jbi::get<int>(int_variant));
 
-    jbi::variant<int, float> second(std::move(first));
-    EXPECT_EQ(3.14f, jbi::get<float>(first));
+    jbi::variant<int, float> float_variant(make_variant(3.14f));
+    EXPECT_EQ(3.14f, jbi::get<float>(float_variant));
 }
+
 
 TEST(core_variant_tests, destructor_test)
 {
@@ -47,6 +56,36 @@ TEST(core_variant_tests, destructor_test)
     EXPECT_TRUE(destructor_called);
 };
 
+TEST(core_variant_tests, copy_assignment_test)
+{
+    jbi::variant<int, float> variant(1948);
+
+    jbi::variant<int, float> int_variant(1984);
+
+    variant = int_variant;
+
+    EXPECT_EQ(1984, jbi::get<int>(variant));
+    EXPECT_EQ(1984, jbi::get<int>(int_variant));
+
+    jbi::variant<int, float> float_variant(3.14f);
+
+    variant = float_variant;
+
+    EXPECT_EQ(3.14f, jbi::get<float>(variant));
+    EXPECT_EQ(3.14f, jbi::get<float>(float_variant));
+}
+
+TEST(core_variant_tests, move_assignment_test)
+{
+    jbi::variant<int, float> variant(1948);
+
+    variant = make_variant(1984);
+    EXPECT_EQ(1984, jbi::get<int>(variant));
+
+    variant = make_variant(3.14f);
+    EXPECT_EQ(3.14f, jbi::get<float>(variant));
+}
+
 TEST(core_variant_tests, apply_visitor_test)
 {
     constexpr int expected_int = 1948;
@@ -63,20 +102,14 @@ TEST(core_variant_tests, apply_visitor_test)
 
     mock_visitor visitor;
 
-    EXPECT_CALL(visitor, call_operator_int(expected_int)).Times(2).WillRepeatedly(Return(0));
-    EXPECT_CALL(visitor, call_operator_float(expected_float)).Times(2).WillRepeatedly(Return(1));
+    EXPECT_CALL(visitor, call_operator_int(expected_int)).WillOnce(Return(0));
+    EXPECT_CALL(visitor, call_operator_float(expected_float)).WillOnce(Return(1));
 
     jbi::variant<int, float> int_variant(expected_int);
     EXPECT_EQ(0, jbi::apply_visitor(int_variant, visitor));
 
-    jbi::variant<int, float> float_variant(expected_float);
+    const jbi::variant<int, float> float_variant(expected_float);
     EXPECT_EQ(1, jbi::apply_visitor(float_variant, visitor));
-
-    const jbi::variant<int, float> const_int_variant(expected_int);
-    EXPECT_EQ(0, jbi::apply_visitor(const_int_variant, visitor));
-
-    const jbi::variant<int, float> const_float_variant(expected_float);
-    EXPECT_EQ(1, jbi::apply_visitor(const_float_variant, visitor));
 }
 
 TEST(core_variant_tests, get_test)
@@ -88,4 +121,6 @@ TEST(core_variant_tests, get_test)
     const jbi::variant<int, float> float_variant(3.14f);
     EXPECT_EQ(3.14f, jbi::get<float>(float_variant));
     EXPECT_THROW(jbi::get<int>(float_variant), jbi::bad_get);
+
+    EXPECT_EQ(1948, jbi::get<int>(make_variant(1948)));
 }
