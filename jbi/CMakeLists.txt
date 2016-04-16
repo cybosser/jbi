@@ -8,6 +8,8 @@ set(JBI_HEADER_FILES
 
     interpreter/interpreter.h
     interpreter/lexer.h
+    interpreter/lexer/flex/scanner.h
+    interpreter/lexer/flex/scanner_generated.h
     interpreter/lexer/token.h
 
     variant/static_visitor.h
@@ -19,6 +21,7 @@ set(JBI_SOURCE_FILES
 
     interpreter/interpreter.cpp
     interpreter/lexer.cpp
+    interpreter/lexer/flex/scanner.cpp
     interpreter/lexer/token.cpp
 )
 
