@@ -22,7 +22,7 @@ namespace jbi
         identifier
     };
 
-    using token_value = variant<int, float, std::string, none_t>;
+    using token_value = variant<int, double, std::string, none_t>;
 
     class token
     {
@@ -51,7 +51,7 @@ namespace jbi
         static token slash() { return token(token_tag::slash); }
 
         static token number(int number) { return token(token_tag::integer, number); }
-        static token number(float number) { return token(token_tag::float_, number); }
+        static token number(double number) { return token(token_tag::float_, number); }
 
         static token identifier(const std::string& identifier)
         {
