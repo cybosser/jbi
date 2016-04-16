@@ -136,6 +136,14 @@ namespace jbi
         detail::variant_storage<Ts...>  _storage;
 
     public:
+        variant()
+            : _which(0)
+        {
+            using T = pp::front<Ts...>;
+
+            new(_storage.address()) T();
+        }
+
         template < typename T, enable_if_t<!std::is_same<decay_t<T>, variant>::value, void>* = nullptr >
         variant(T&& value)
             : _which(pp::index_of<decay_t<T>, Ts...>::value)

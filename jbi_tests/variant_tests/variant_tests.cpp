@@ -11,6 +11,17 @@ jbi::variant<int, float> make_variant(T value)
     return jbi::variant<int, float>(value);
 };
 
+TEST(core_variant_tests, default_constructor_test)
+{
+    jbi::variant<int, float> first;
+    EXPECT_EQ(0, jbi::get<int>(first));
+    EXPECT_THROW(jbi::get<float>(first), jbi::bad_get);
+
+    jbi::variant<float, int> second;
+    EXPECT_EQ(0.0f, jbi::get<float>(second));
+    EXPECT_THROW(jbi::get<int>(second), jbi::bad_get);
+}
+
 TEST(core_variant_tests, copy_constructor_test)
 {
     jbi::variant<int, float> variant(3.14f);
