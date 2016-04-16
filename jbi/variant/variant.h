@@ -182,6 +182,11 @@ namespace jbi
             assign(other);
         }
 
+        std::size_t which() const
+        {
+            return _which;
+        }
+
         template < typename Visitor >
         detail::return_type_t<Visitor> apply_visitor(Visitor& visitor) &
         {
@@ -260,28 +265,6 @@ namespace jbi
 
     }
 
-    template < typename T, typename... Ts >
-    T& get(variant<Ts...>& variant)
-    {
-        detail::value_getter<T&> getter;
-        return variant.apply_visitor(getter);
-    }
-
-    template < typename T, typename... Ts >
-    const T& get(const variant<Ts...>& variant)
-    {
-        detail::value_getter<const T&> getter;
-        return variant.apply_visitor(getter);
-    }
-
-    template < typename T, typename... Ts >
-    T&& get(variant<Ts...>&& variant)
-    {
-        detail::value_getter<T&&> getter;
-        return std::move(variant).apply_visitor(getter);
-    }
-
-
     template < typename... Ts, typename Visitor >
     detail::return_type_t<Visitor> apply_visitor(variant<Ts...>& variant, Visitor& visitor)
     {
@@ -299,6 +282,68 @@ namespace jbi
     {
         return std::move(variant).apply_visitor(visitor);
     };
+
+
+    template < typename T, typename... Ts >
+    T& get(variant<Ts...>& variant)
+    {
+        detail::value_getter<T&> getter;
+        return apply_visitor(variant, getter);
+    }
+
+    template < typename T, typename... Ts >
+    const T& get(const variant<Ts...>& variant)
+    {
+        detail::value_getter<const T&> getter;
+        return apply_visitor(variant, getter);
+    }
+
+    template < typename T, typename... Ts >
+    T&& get(variant<Ts...>&& variant)
+    {
+        detail::value_getter<T&&> getter;
+        return apply_visitor(std::move(variant), getter);
+    }
+
+
+    namespace detail
+    {
+
+        template < typename... Ts >
+        class value_equality_comparer : public static_visitor<bool>
+        {
+        private:
+            const variant<Ts...>&  _variant;
+
+        public:
+            explicit value_equality_comparer(const variant<Ts...>& variant)
+                : _variant(variant)
+            { }
+
+            template < typename T >
+            bool operator()(const T& value)
+            {
+                return get<T>(_variant) == value;
+            }
+        };
+
+    }
+
+    template < typename... Ts >
+    bool operator==(const variant<Ts...>& left, const variant<Ts...>& right)
+    {
+        if (left.which() != right.which())
+            return false;
+
+        detail::value_equality_comparer<Ts...> comparer(left);
+        return apply_visitor(right, comparer);
+    }
+
+    template < typename... Ts >
+    bool operator!=(const variant<Ts...>& left, const variant<Ts...>& right)
+    {
+        return !(left == right);
+    }
 
 }
 

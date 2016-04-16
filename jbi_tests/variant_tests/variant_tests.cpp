@@ -135,3 +135,22 @@ TEST(core_variant_tests, get_test)
 
     EXPECT_EQ(1948, jbi::get<int>(make_variant(1948)));
 }
+
+TEST(core_variant_tests, equality_operators_test)
+{
+    jbi::variant<int, float> first(1984);
+    jbi::variant<int, float> second(1984);
+
+    EXPECT_TRUE(first == second);
+    EXPECT_FALSE(first != second);
+
+    jbi::variant<int, float> third(42);
+
+    EXPECT_FALSE(first == third);
+    EXPECT_TRUE(first != third);
+
+    jbi::variant<int, float> fifth(42.0f);
+
+    EXPECT_FALSE(first == fifth);
+    EXPECT_TRUE(first != fifth);
+}
