@@ -23,6 +23,7 @@ set(JBI_SOURCE_FILES
     interpreter/interpreter.cpp
     interpreter/lexer/flex/scanner.cpp
     interpreter/lexer/lexer.cpp
+    interpreter/type.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")

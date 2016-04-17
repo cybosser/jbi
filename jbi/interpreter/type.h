@@ -27,6 +27,8 @@ namespace jbi
         static type int_()      { return type(class_::integer, sizeof(int)); }
         static type double_()   { return type(class_::floating_point, sizeof(double)); }
 
+        static type common_type(const type& first, const type& second);
+
     private:
         type(class_ cls, std::size_t size)
             : _class(cls), _size(size)
