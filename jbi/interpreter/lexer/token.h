@@ -35,18 +35,13 @@ namespace jbi
         token_value   _value;
 
     public:
-        token() { }
-        token(token_tag tag)
-            : _tag(tag)
-        { }
-
-        template < typename T >
-        token(token_tag tag, T&& value)
-            : _tag(tag), _value(std::forward<T>(value))
-        { }
-
         token_tag tag() const       { return _tag; }
         token_value value() const   { return _value; }
+
+        bool equals(const token& other) const
+        {
+            return _tag == other._tag && _value == other._value;
+        }
 
         static token var()      { return token(token_tag::var); }
         static token in()       { return token(token_tag::in); }
@@ -79,10 +74,30 @@ namespace jbi
 
         // TODO find better solution
         static token eof()                  { return token(token_tag::eof); }
+
+    private:
+        token()
+        { }
+
+        token(token_tag tag)
+            : _tag(tag)
+        { }
+
+        template < typename T >
+        token(token_tag tag, T&& value)
+            : _tag(tag), _value(std::forward<T>(value))
+        { }
     };
 
-    bool operator==(const token& left, const token& right);
-    bool operator!=(const token& left, const token& right);
+    inline bool operator==(const token& left, const token& right)
+    {
+        return left.equals(right);
+    }
+
+    inline bool operator!=(const token& left, const token& right)
+    {
+        return !(left == right);
+    }
 
 }
 

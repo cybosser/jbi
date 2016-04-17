@@ -7,10 +7,11 @@ set(JBI_HEADER_FILES
     core/type_traits.h
 
     interpreter/interpreter.h
-    interpreter/lexer/lexer.h
     interpreter/lexer/flex/scanner.h
     interpreter/lexer/flex/scanner_generated.h
+    interpreter/lexer/lexer.h
     interpreter/lexer/token.h
+    interpreter/type.h
 
     variant/static_visitor.h
     variant/variant.h
@@ -20,9 +21,8 @@ set(JBI_SOURCE_FILES
     core/none.cpp
 
     interpreter/interpreter.cpp
-    interpreter/lexer/lexer.cpp
     interpreter/lexer/flex/scanner.cpp
-    interpreter/lexer/token.cpp
+    interpreter/lexer/lexer.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
