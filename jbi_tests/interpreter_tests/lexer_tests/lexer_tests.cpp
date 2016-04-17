@@ -78,6 +78,18 @@ TEST(lexer_tests, arrow_test)
     tester.expect(jbi::token::arrow());
 }
 
+TEST(lexer_tester, spaces_test)
+{
+    lexer_tester tester("   1984\t\t3.14\n\n\nfoo\r\rbar \r(\n \r  \t)");
+
+    tester.expect(jbi::token::number(1984));
+    tester.expect(jbi::token::number(3.14));
+    tester.expect(jbi::token::identifier("foo"));
+    tester.expect(jbi::token::identifier("bar"));
+    tester.expect(jbi::token::left_parenthesis());
+    tester.expect(jbi::token::right_parenthesis());
+}
+
 TEST(lexer_tests, invalid_symbols_test)
 {
     jbi::lexer lexer("%foo");
