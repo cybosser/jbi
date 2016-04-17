@@ -21,7 +21,7 @@ letter  [a-zA-Z]
 "out"                       { return jbi::token::out(); }
 "print"                     { return jbi::token::print(); }
 
-{digit}+\.{digit}*         { return jbi::token::number(std::atof(yytext)); }
+{digit}+\.{digit}*          { return jbi::token::number(std::atof(yytext)); }
 {digit}+                    { return jbi::token::number(std::atoi(yytext)); }
 \"(\\.|[^\\"])*\"           { return jbi::token::string(yytext); }
 
@@ -42,5 +42,7 @@ letter  [a-zA-Z]
 "}"                         { return jbi::token::right_brace(); }
 
 [ \t\r\n]                   { }
+
+.                           { JBI_THROW(jbi::syntax_exception(std::string("unexpected token ")+ yytext)); }
 
 %%

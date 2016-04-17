@@ -77,3 +77,9 @@ TEST(lexer_tests, arrow_test)
 
     tester.expect(jbi::token::arrow());
 }
+
+TEST(lexer_tests, invalid_symbols_test)
+{
+    jbi::lexer lexer("%foo");
+    EXPECT_THROW(lexer.read_token(), jbi::syntax_exception);
+}
