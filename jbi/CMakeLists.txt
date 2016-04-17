@@ -6,11 +6,20 @@ set(JBI_HEADER_FILES
     core/string.h
     core/type_traits.h
 
-    interpreter/interpreter.h
+    interpreter/ast/arithmetic_operator.h
+    interpreter/ast/assignment_statement.h
+    interpreter/ast/expression.h
+    interpreter/ast/node.h
+    interpreter/ast/numbers.h
+    interpreter/ast/statement.h
+    interpreter/ast/output_statement.h
+
     interpreter/lexer/flex/scanner.h
     interpreter/lexer/flex/scanner_generated.h
     interpreter/lexer/lexer.h
     interpreter/lexer/token.h
+
+    interpreter/interpreter.h
     interpreter/type.h
 
     variant/static_visitor.h
