@@ -1,8 +1,8 @@
-#ifndef JBI_INTERPRETER_AST_ASSIGNMENT_STATEMENT_H
-#define JBI_INTERPRETER_AST_ASSIGNMENT_STATEMENT_H
+#ifndef JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_ASSIGNMENT_STATEMENT_H
+#define JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_ASSIGNMENT_STATEMENT_H
 
-#include <jbi/interpreter/ast/expression.h>
-#include <jbi/interpreter/ast/statement.h>
+#include <jbi/interpreter/abstract_syntax_tree/expression.h>
+#include <jbi/interpreter/abstract_syntax_tree/statement.h>
 
 #include <memory>
 

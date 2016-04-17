@@ -461,7 +461,7 @@ static yyconst flex_int16_t yy_chk[85] =
 #define YY_RESTORE_YY_MORE_OFFSET
 #line 1 "scanner.l"
 #line 2 "scanner.l"
-#include <jbi/interpreter/lexer/token.h>
+#include <jbi/interpreter/lexical_analyser/token.h>
 
 #define YY_DECL jbi::token yylex(yyscan_t yyscanner)
 

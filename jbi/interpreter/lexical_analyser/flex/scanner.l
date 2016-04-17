@@ -1,5 +1,5 @@
 %{
-#include <jbi/interpreter/lexer/token.h>
+#include <jbi/interpreter/lexical_analyser/token.h>
 
 #define YY_DECL jbi::token yylex(yyscan_t yyscanner)
 

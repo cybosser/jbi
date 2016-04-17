@@ -6,18 +6,18 @@ set(JBI_HEADER_FILES
     core/string.h
     core/type_traits.h
 
-    interpreter/ast/arithmetic_operator.h
-    interpreter/ast/assignment_statement.h
-    interpreter/ast/expression.h
-    interpreter/ast/node.h
-    interpreter/ast/numbers.h
-    interpreter/ast/statement.h
-    interpreter/ast/output_statement.h
+    interpreter/abstract_syntax_tree/arithmetic_operator.h
+    interpreter/abstract_syntax_tree/assignment_statement.h
+    interpreter/abstract_syntax_tree/expression.h
+    interpreter/abstract_syntax_tree/node.h
+    interpreter/abstract_syntax_tree/numbers.h
+    interpreter/abstract_syntax_tree/statement.h
+    interpreter/abstract_syntax_tree/output_statement.h
 
-    interpreter/lexer/flex/scanner.h
-    interpreter/lexer/flex/scanner_generated.h
-    interpreter/lexer/lexer.h
-    interpreter/lexer/token.h
+    interpreter/lexical_analyser/flex/scanner.h
+    interpreter/lexical_analyser/flex/scanner_generated.h
+    interpreter/lexical_analyser/lexical_analyser.h
+    interpreter/lexical_analyser/token.h
 
     interpreter/interpreter.h
     interpreter/type.h
@@ -30,8 +30,10 @@ set(JBI_SOURCE_FILES
     core/none.cpp
 
     interpreter/interpreter.cpp
-    interpreter/lexer/flex/scanner.cpp
-    interpreter/lexer/lexer.cpp
+
+    interpreter/lexical_analyser/flex/scanner.cpp
+    interpreter/lexical_analyser/lexical_analyser.cpp
+
     interpreter/type.cpp
 )
 

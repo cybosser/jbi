@@ -1,7 +1,7 @@
-#ifndef JBI_INTERPRETER_AST_NUMBERS_H
-#define JBI_INTERPRETER_AST_NUMBERS_H
+#ifndef JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_NUMBERS_H
+#define JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_NUMBERS_H
 
-#include <jbi/interpreter/ast/expression.h>
+#include <jbi/interpreter/abstract_syntax_tree/expression.h>
 
 namespace jbi
 {

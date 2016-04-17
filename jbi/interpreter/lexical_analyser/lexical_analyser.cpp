@@ -1,11 +1,11 @@
-#include <jbi/interpreter/lexer/lexer.h>
+#include <jbi/interpreter/lexical_analyser/lexical_analyser.h>
 
-#include <jbi/interpreter/lexer/flex/scanner.h>
+#include <jbi/interpreter/lexical_analyser/flex/scanner.h>
 
 namespace jbi
 {
 
-    class lexer::impl
+    class lexical_analyser::impl
     {
     private:
         yyscan_t        _scanner;
@@ -32,14 +32,14 @@ namespace jbi
         }
     };
 
-    lexer::lexer(const std::string& statement)
+    lexical_analyser::lexical_analyser(const std::string& statement)
         : _impl(new impl(statement))
     { }
 
-    lexer::~lexer()
+    lexical_analyser::~lexical_analyser()
     { }
 
-    token lexer::read_token()
+    token lexical_analyser::read_token()
     {
         return _impl->read_token();
     }

@@ -1,31 +1,31 @@
 #include <gtest/gtest.h>
 
-#include <jbi/interpreter/lexer/lexer.h>
+#include <jbi/interpreter/lexical_analyser/lexical_analyser.h>
 
-class lexer_tester
+class lexical_analyser_tester
 {
 private:
-    jbi::lexer  _lexer;
+    jbi::lexical_analyser  _analyser;
 
 public:
-    explicit lexer_tester(const std::string& statement)
-        : _lexer(statement)
+    explicit lexical_analyser_tester(const std::string& statement)
+        : _analyser(statement)
     { }
 
-    ~lexer_tester()
+    ~lexical_analyser_tester()
     {
         expect(jbi::token::eof());
     }
 
     void expect(const jbi::token& expected)
     {
-        EXPECT_EQ(expected, _lexer.read_token());
+        EXPECT_EQ(expected, _analyser.read_token());
     }
 };
 
-TEST(lexer_tests, keywords_test)
+TEST(lexical_analyser_tests, keywords_test)
 {
-    lexer_tester tester("var in out print");
+    lexical_analyser_tester tester("var in out print");
 
     tester.expect(jbi::token::var());
     tester.expect(jbi::token::in());
@@ -33,18 +33,18 @@ TEST(lexer_tests, keywords_test)
     tester.expect(jbi::token::print());
 }
 
-TEST(lexer_tests, identifiers_test)
+TEST(lexical_analyser_tests, identifiers_test)
 {
-    lexer_tester tester("a foo b2");
+    lexical_analyser_tester tester("a foo b2");
 
     tester.expect(jbi::token::identifier("a"));
     tester.expect(jbi::token::identifier("foo"));
     tester.expect(jbi::token::identifier("b2"));
 }
 
-TEST(lexer_tests, numbers_test)
+TEST(lexical_analyser_tests, numbers_test)
 {
-    lexer_tester tester("7 42 1984 3.14 0.5 9.");
+    lexical_analyser_tester tester("7 42 1984 3.14 0.5 9.");
 
     tester.expect(jbi::token::number(7));
     tester.expect(jbi::token::number(42));
@@ -54,9 +54,9 @@ TEST(lexer_tests, numbers_test)
     tester.expect(jbi::token::number(9.0));
 }
 
-TEST(lexer_tests, symbols_test)
+TEST(lexical_analyser_tests, symbols_test)
 {
-    lexer_tester tester("= , + - / * ^ {} ( )");
+    lexical_analyser_tester tester("= , + - / * ^ {} ( )");
 
     tester.expect(jbi::token::equals());
     tester.expect(jbi::token::comma());
@@ -71,16 +71,16 @@ TEST(lexer_tests, symbols_test)
     tester.expect(jbi::token::right_parenthesis());
 }
 
-TEST(lexer_tests, arrow_test)
+TEST(lexical_analyser_tests, arrow_test)
 {
-    lexer_tester tester("->");
+    lexical_analyser_tester tester("->");
 
     tester.expect(jbi::token::arrow());
 }
 
-TEST(lexer_tester, spaces_test)
+TEST(lexical_analyser_tester, spaces_test)
 {
-    lexer_tester tester("   1984\t\t3.14\n\n\nfoo\r\rbar \r(\n \r  \t)");
+    lexical_analyser_tester tester("   1984\t\t3.14\n\n\nfoo\r\rbar \r(\n \r  \t)");
 
     tester.expect(jbi::token::number(1984));
     tester.expect(jbi::token::number(3.14));
@@ -90,8 +90,8 @@ TEST(lexer_tester, spaces_test)
     tester.expect(jbi::token::right_parenthesis());
 }
 
-TEST(lexer_tests, invalid_symbols_test)
+TEST(lexical_analyser_tests, invalid_symbols_test)
 {
-    jbi::lexer lexer("%foo");
-    EXPECT_THROW(lexer.read_token(), jbi::syntax_exception);
+    jbi::lexical_analyser analyser("%foo");
+    EXPECT_THROW(analyser.read_token(), jbi::syntax_exception);
 }
