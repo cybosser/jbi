@@ -19,6 +19,7 @@ set(JBI_HEADER_FILES
     interpreter/lexical_analyser/token.h
 
     interpreter/interpreter.h
+    interpreter/syntactic_analyser.h
     interpreter/type.h
 
     variant/static_visitor.h
@@ -27,6 +28,7 @@ set(JBI_HEADER_FILES
 
 set(JBI_SOURCE_FILES
     interpreter/interpreter.cpp
+    interpreter/syntactic_analyser.cpp
 
     interpreter/lexical_analyser/flex/scanner.cpp
     interpreter/lexical_analyser/lexical_analyser.cpp
