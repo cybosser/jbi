@@ -5,6 +5,7 @@ set(JBI_TESTS_SOURCE_FILES
 
     core_tests/exceptions_tests.cpp
     core_tests/string_tests.cpp
+    core_tests/utility_tests.cpp
 
     interpreter_tests/lexical_analyser_tests/lexical_analyser_tests.cpp
     interpreter_tests/type_tests.cpp
