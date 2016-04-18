@@ -7,5 +7,6 @@ addons:
     packages:
       - gcc-5
       - g++-5
+      - valgrind
 script:
-    - mkdir build && cd build && cmake .. && make && ./jbi_tests/jbi_tests
+    - mkdir build && cd build && cmake .. && make && valgrind --error-exitcode=1 ./jbi_tests/jbi_tests
