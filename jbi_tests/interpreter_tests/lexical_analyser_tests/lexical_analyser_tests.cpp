@@ -78,7 +78,7 @@ TEST(lexical_analyser_tests, arrow_test)
     tester.expect(jbi::token::arrow());
 }
 
-TEST(lexical_analyser_tester, spaces_test)
+TEST(lexical_analyser_tests, spaces_test)
 {
     lexical_analyser_tester tester("   1984\t\t3.14\n\n\nfoo\r\rbar \r(\n \r  \t)");
 
