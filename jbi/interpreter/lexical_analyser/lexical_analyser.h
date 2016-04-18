@@ -17,6 +17,12 @@ namespace jbi
         explicit lexical_analyser(const std::string& statement);
         ~lexical_analyser();
 
+        lexical_analyser(lexical_analyser&) = delete;
+        lexical_analyser(lexical_analyser&&);
+
+        lexical_analyser& operator=(lexical_analyser&) = delete;
+        lexical_analyser& operator=(lexical_analyser&&);
+
         token read_token();
     };
 

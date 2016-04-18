@@ -36,8 +36,11 @@ namespace jbi
         : _impl(new impl(statement))
     { }
 
-    lexical_analyser::~lexical_analyser()
-    { }
+    lexical_analyser::~lexical_analyser() = default;
+
+    lexical_analyser::lexical_analyser(lexical_analyser&&) = default;
+
+    lexical_analyser& lexical_analyser::operator=(lexical_analyser&&) = default;
 
     token lexical_analyser::read_token()
     {
