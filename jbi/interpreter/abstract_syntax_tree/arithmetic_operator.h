@@ -11,7 +11,7 @@ namespace jbi
     enum class arithmetic_operation
     {
         addition,
-        substraction,
+        subtraction,
         multiplication,
         division,
         exponentiation
