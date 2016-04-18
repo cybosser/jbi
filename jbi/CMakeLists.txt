@@ -4,6 +4,7 @@ set(JBI_HEADER_FILES
     core/exceptions.h
     core/string.h
     core/type_traits.h
+    core/utility.h
 
     interpreter/abstract_syntax_tree/arithmetic_operator.h
     interpreter/abstract_syntax_tree/assignment_statement.h
