@@ -23,7 +23,7 @@ namespace jbi
         lexical_analyser& operator=(lexical_analyser&) = delete;
         lexical_analyser& operator=(lexical_analyser&&);
 
-        token read_token();
+        token read();
     };
 
 }

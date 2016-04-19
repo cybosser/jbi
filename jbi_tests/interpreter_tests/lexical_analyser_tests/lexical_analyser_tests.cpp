@@ -5,11 +5,11 @@
 class lexical_analyser_tester
 {
 private:
-    jbi::lexical_analyser  _analyser;
+    jbi::lexical_analyser  _tokenizer;
 
 public:
     explicit lexical_analyser_tester(const std::string& statement)
-        : _analyser(statement)
+        : _tokenizer(statement)
     { }
 
     ~lexical_analyser_tester()
@@ -19,7 +19,7 @@ public:
 
     void expect(const jbi::token& expected)
     {
-        EXPECT_EQ(expected, _analyser.read_token());
+        EXPECT_EQ(expected, _tokenizer.read());
     }
 };
 
@@ -93,5 +93,5 @@ TEST(lexical_analyser_tests, spaces_test)
 TEST(lexical_analyser_tests, invalid_symbols_test)
 {
     jbi::lexical_analyser analyser("%foo");
-    EXPECT_THROW(analyser.read_token(), jbi::syntax_exception);
+    EXPECT_THROW(analyser.read(), jbi::syntax_exception);
 }

@@ -26,7 +26,7 @@ namespace jbi
             yylex_destroy(_scanner);
         }
 
-        token read_token()
+        token read()
         {
             return yylex(_scanner);
         }
@@ -42,9 +42,9 @@ namespace jbi
 
     lexical_analyser& lexical_analyser::operator=(lexical_analyser&&) = default;
 
-    token lexical_analyser::read_token()
+    token lexical_analyser::read()
     {
-        return _impl->read_token();
+        return _impl->read();
     }
 
 }
