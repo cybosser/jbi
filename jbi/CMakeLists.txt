@@ -19,6 +19,7 @@ set(JBI_HEADER_FILES
     interpreter/lexical_analyser/lexical_analyser.h
     interpreter/lexical_analyser/token.h
 
+    interpreter/arithmetic_operation.h
     interpreter/interpreter.h
     interpreter/statement_evaluator.h
     interpreter/syntactic_analyser.h

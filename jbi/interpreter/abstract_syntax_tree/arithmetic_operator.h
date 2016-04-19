@@ -2,21 +2,12 @@
 #define JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_ARITHMETIC_OPERATOR
 
 #include <jbi/interpreter/abstract_syntax_tree/expression.h>
+#include <jbi/interpreter/arithmetic_operation.h>
 
 #include <memory>
 
 namespace jbi
 {
-
-    enum class arithmetic_operation
-    {
-        addition,
-        subtraction,
-        multiplication,
-        division,
-        exponentiation
-    };
-
 
     class arithmetic_operator : public expression
     {
