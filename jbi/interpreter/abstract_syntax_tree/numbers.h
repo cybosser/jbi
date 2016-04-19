@@ -16,11 +16,11 @@ namespace jbi
             T _value;
 
         public:
-            explicit number(T value)
+            explicit number(T value) noexcept
                 : _value(value)
             { }
 
-            T value() const { return _value; }
+            T value() const noexcept { return _value; }
         };
 
     }

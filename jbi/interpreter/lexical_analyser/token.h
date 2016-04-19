@@ -35,8 +35,8 @@ namespace jbi
         token_value   _value;
 
     public:
-        token_tag tag() const       { return _tag; }
-        token_value value() const   { return _value; }
+        token_tag tag() const noexcept               { return _tag; }
+        const token_value& value() const noexcept   { return _value; }
 
         bool equals(const token& other) const
         {

@@ -18,14 +18,14 @@ namespace jbi
         std::unique_ptr<expression> _right;
 
     public:
-        arithmetic_operator(arithmetic_operation operation, std::unique_ptr<expression> left, std::unique_ptr<expression> right)
+        arithmetic_operator(arithmetic_operation operation, std::unique_ptr<expression> left, std::unique_ptr<expression> right) noexcept
             : _operation(operation), _left(std::move(left)), _right(std::move(right))
         { }
 
-        arithmetic_operation operation() const { return _operation; }
+        arithmetic_operation operation() const noexcept { return _operation; }
 
-        const std::unique_ptr<expression>& left() const  { return _left; }
-        const std::unique_ptr<expression>& right() const { return _right; }
+        const std::unique_ptr<expression>& left() const noexcept  { return _left; }
+        const std::unique_ptr<expression>& right() const noexcept { return _right; }
     };
 
 }

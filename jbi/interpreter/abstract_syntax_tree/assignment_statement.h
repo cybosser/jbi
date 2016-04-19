@@ -16,12 +16,12 @@ namespace jbi
         std::unique_ptr<expression> _initializer;
 
     public:
-        assignment_statement(std::string identifier, std::unique_ptr<expression> initializer)
+        assignment_statement(std::string identifier, std::unique_ptr<expression> initializer) noexcept
             : _identifier(std::move(identifier)), _initializer(std::move(initializer))
         { }
 
-        const std::string& identifier() const                   { return _identifier; }
-        const std::unique_ptr<expression>& initializer() const  { return _initializer; }
+        const std::string& identifier() const noexcept                   { return _identifier; }
+        const std::unique_ptr<expression>& initializer() const noexcept  { return _initializer; }
     };
 
 }
