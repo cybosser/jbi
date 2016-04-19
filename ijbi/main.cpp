@@ -24,8 +24,15 @@ int main()
             if (statement == "exit")
                 return EXIT_SUCCESS;
 
-            const jbi::value result = interpreter.interpret(statement);
-            jbi::apply_visitor(result, printer);
+            try
+            {
+                const jbi::value result = interpreter.interpret(statement);
+                jbi::apply_visitor(result, printer);
+            }
+            catch (const jbi::syntax_exception& ex)
+            {
+                console.write_line(ex.what());
+            }
         }
     }
     catch (const std::exception& ex)
