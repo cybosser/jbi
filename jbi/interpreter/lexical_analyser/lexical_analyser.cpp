@@ -38,9 +38,9 @@ namespace jbi
 
     lexical_analyser::~lexical_analyser() = default;
 
-    lexical_analyser::lexical_analyser(lexical_analyser&&) = default;
+    lexical_analyser::lexical_analyser(lexical_analyser&&) noexcept = default;
 
-    lexical_analyser& lexical_analyser::operator=(lexical_analyser&&) = default;
+    lexical_analyser& lexical_analyser::operator=(lexical_analyser&&) noexcept = default;
 
     token lexical_analyser::read()
     {

@@ -18,10 +18,10 @@ namespace jbi
         ~lexical_analyser();
 
         lexical_analyser(lexical_analyser&) = delete;
-        lexical_analyser(lexical_analyser&&);
+        lexical_analyser(lexical_analyser&&) noexcept;
 
         lexical_analyser& operator=(lexical_analyser&) = delete;
-        lexical_analyser& operator=(lexical_analyser&&);
+        lexical_analyser& operator=(lexical_analyser&&) noexcept;
 
         token read();
     };
