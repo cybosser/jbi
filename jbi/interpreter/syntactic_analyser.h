@@ -10,12 +10,18 @@ namespace jbi
     class syntactic_analyser
     {
     private:
-        lexical_analyser    _tokenizer;
+        class impl;
+        std::unique_ptr<impl>   _impl;
 
     public:
-        explicit syntactic_analyser(lexical_analyser tokenizer)
-            : _tokenizer(std::move(tokenizer))
-        { }
+        explicit syntactic_analyser(lexical_analyser tokenizer) noexcept;
+        ~syntactic_analyser();
+
+        syntactic_analyser(const syntactic_analyser&) = delete;
+        syntactic_analyser(syntactic_analyser&&) noexcept;
+
+        syntactic_analyser& operator=(const syntactic_analyser&) = delete;
+        syntactic_analyser& operator=(syntactic_analyser&&) noexcept;
 
         std::unique_ptr<statement> parse();
     };
