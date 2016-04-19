@@ -2,13 +2,14 @@
 #define JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_OUTPUT_STATEMENT_H
 
 #include <jbi/interpreter/abstract_syntax_tree/expression.h>
+#include <jbi/interpreter/abstract_syntax_tree/statement.h>
 
 #include <memory>
 
 namespace jbi
 {
 
-    class output_statement
+    class output_statement : public statement
     {
     private:
         std::unique_ptr<expression> _value;
