@@ -14,6 +14,7 @@ namespace jbi
     public:
         std::string                 _identifier;
         std::unique_ptr<expression> _initializer;
+
     public:
         assignment_statement(std::string identifier, std::unique_ptr<expression> initializer)
             : _identifier(std::move(identifier)), _initializer(std::move(initializer))
