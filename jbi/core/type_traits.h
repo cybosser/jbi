@@ -24,6 +24,9 @@ namespace jbi
     template < std::size_t Value >
     using size_t_constant = std::integral_constant<std::size_t, Value>;
 
+    template < typename T >
+    using return_type_of = typename T::return_type;
+
 }
 
 #endif
