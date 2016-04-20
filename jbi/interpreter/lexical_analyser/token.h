@@ -54,7 +54,7 @@ namespace jbi
 
         static token identifier(const std::string& identifier)
         {
-            JBI_THROW_IF(identifier.empty(), argument_exception());
+            JBI_THROW_IF(identifier.empty(), argument_exception("identifier"));
             return token(token_tag::identifier, identifier);
         }
 

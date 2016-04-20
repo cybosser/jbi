@@ -26,7 +26,7 @@ namespace jbi
 
         static arithmetic_operation from_symbol(char symbol)
         {
-            JBI_THROW_IF(!is_one_of(symbol, '+', '-', '*', '/', '^'), argument_exception());
+            JBI_THROW_IF(!is_one_of(symbol, '+', '-', '*', '/', '^'), argument_exception("symbol"));
             return arithmetic_operation(symbol);
         }
 

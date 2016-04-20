@@ -38,7 +38,8 @@ namespace jbi
     class not_implemented_exception : public std::runtime_error
     {
     public:
-        not_implemented_exception() : std::runtime_error("The method or function is not implemented")
+        not_implemented_exception()
+            : std::runtime_error("The method or function is not implemented")
         { }
     };
 
@@ -46,8 +47,11 @@ namespace jbi
     class argument_exception : public std::runtime_error
     {
     public:
-        argument_exception() : std::runtime_error("Invalid argument")
-        { }
+        argument_exception(const std::string& name)
+            : std::runtime_error("Invalid argument: " + name)
+        {
+
+        }
     };
 
 
