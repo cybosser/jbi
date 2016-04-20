@@ -120,6 +120,13 @@ namespace jbi
             if (lookahead.tag() == token_tag::floating_point_literal)
                 return make_unique<floating_point_literal>(get<double>(lookahead.value()));
 
+            if (lookahead == token::left_parenthesis())
+            {
+                std::unique_ptr<expression> result = parse_expression();
+                JBI_THROW_IF(_tokens.pop() != token::right_parenthesis(), syntax_exception("missing )"));
+                return result;
+            }
+
             JBI_THROW(not_implemented_exception());
         }
 
