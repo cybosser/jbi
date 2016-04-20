@@ -102,7 +102,7 @@ namespace jbi
             for ( ; is_one_of(lookahead, token::asterisk(), token::slash()); lookahead = _tokens.pop())
             {
                 const arithmetic_operation operation = arithmetic_operation::from_symbol(get<char>(lookahead.value()));
-                expression = make_unique<arithmetic_operator>(operation, std::move(expression), parse_term());
+                expression = make_unique<arithmetic_operator>(operation, std::move(expression), parse_factor());
             }
 
             _tokens.push(lookahead);
