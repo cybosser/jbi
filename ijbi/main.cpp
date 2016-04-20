@@ -5,6 +5,30 @@
 
 #include <ijbi/printer.h>
 
+void run(ijbi::console& console)
+{
+    ijbi::printer printer(console);
+
+    jbi::interpreter interpreter;
+
+    while (true)
+    {
+        const std::string statement = console.read_line();
+        if (statement == "exit")
+            return;
+
+        try
+        {
+            const jbi::value result = interpreter.interpret(statement);
+            jbi::apply_visitor(result, printer);
+        }
+        catch (const jbi::syntax_exception& ex)
+        {
+            console.write_line(ex.what());
+        }
+    }
+}
+
 int main()
 {
     ijbi::console console;
@@ -14,26 +38,7 @@ int main()
 
     try
     {
-        jbi::interpreter interpreter;
-
-        ijbi::printer printer(console);
-
-        while (true)
-        {
-            const std::string statement = console.read_line();
-            if (statement == "exit")
-                return EXIT_SUCCESS;
-
-            try
-            {
-                const jbi::value result = interpreter.interpret(statement);
-                jbi::apply_visitor(result, printer);
-            }
-            catch (const jbi::syntax_exception& ex)
-            {
-                console.write_line(ex.what());
-            }
-        }
+        run(console);
     }
     catch (const std::exception& ex)
     {
