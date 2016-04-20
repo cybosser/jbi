@@ -5,6 +5,7 @@
 std::string parse(const std::string& statement)
 {
     // TODO mock lexical_analyser
+    // TODO get rid of dependency on node::to_string method implementation
     jbi::syntactic_analyser parser{ jbi::lexical_analyser(statement) };
     return jbi::to_string(*parser.parse());
 }
