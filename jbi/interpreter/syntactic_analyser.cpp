@@ -2,7 +2,7 @@
 
 #include <jbi/interpreter/abstract_syntax_tree/arithmetic_operator.h>
 #include <jbi/interpreter/abstract_syntax_tree/assignment_statement.h>
-#include <jbi/interpreter/abstract_syntax_tree/numbers.h>
+#include <jbi/interpreter/abstract_syntax_tree/literals.h>
 #include <jbi/interpreter/abstract_syntax_tree/output_statement.h>
 
 #include <jbi/core/memory.h>
@@ -115,10 +115,10 @@ namespace jbi
             const token lookahead = _tokens.pop();
 
             if (lookahead.tag() == token_tag::integer)
-                return make_unique<integer_number>(get<int>(lookahead.value()));
+                return make_unique<integer_literal>(get<int>(lookahead.value()));
 
             if (lookahead.tag() == token_tag::float_)
-                return make_unique<floating_point_number>(get<double>(lookahead.value()));
+                return make_unique<floating_point_literal>(get<double>(lookahead.value()));
 
             JBI_THROW(not_implemented_exception());
         }

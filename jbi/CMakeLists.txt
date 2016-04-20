@@ -10,10 +10,10 @@ set(JBI_HEADER_FILES
     interpreter/abstract_syntax_tree/arithmetic_operator.h
     interpreter/abstract_syntax_tree/assignment_statement.h
     interpreter/abstract_syntax_tree/expression.h
+    interpreter/abstract_syntax_tree/literals.h
     interpreter/abstract_syntax_tree/node.h
-    interpreter/abstract_syntax_tree/numbers.h
-    interpreter/abstract_syntax_tree/statement.h
     interpreter/abstract_syntax_tree/output_statement.h
+    interpreter/abstract_syntax_tree/statement.h
 
     interpreter/lexical_analyser/flex/scanner.h
     interpreter/lexical_analyser/flex/scanner_generated.h

@@ -1,5 +1,5 @@
-#ifndef JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_NUMBERS_H
-#define JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_NUMBERS_H
+#ifndef JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_LITERALS_H
+#define JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_LITERALS_H
 
 #include <jbi/interpreter/abstract_syntax_tree/expression.h>
 
@@ -10,13 +10,13 @@ namespace jbi
     {
 
         template < typename T >
-        class number : public expression
+        class literal : public expression
         {
         private:
             T _value;
 
         public:
-            explicit number(T value) noexcept
+            explicit literal(T value) noexcept
                 : _value(value)
             { }
 
@@ -25,8 +25,8 @@ namespace jbi
 
     }
 
-    using integer_number = detail::number<int>;
-    using floating_point_number = detail::number<double>;
+    using integer_literal = detail::literal<int>;
+    using floating_point_literal = detail::literal<double>;
 
 }
 
