@@ -13,9 +13,9 @@ namespace jbi
         out,
         print,
 
-        integer,
-        float_,
-        string,
+        interger_literal,
+        floating_point_literal,
+        string_literal,
 
         identifier,
 
@@ -48,9 +48,9 @@ namespace jbi
         static token out()      { return token(token_tag::out); }
         static token print()    { return token(token_tag::print); }
 
-        static token number(int number)                 { return token(token_tag::integer, number); }
-        static token number(double number)              { return token(token_tag::float_, number); }
-        static token string(const std::string& string)  { return token(token_tag::string, string); }
+        static token literal(int number)                 { return token(token_tag::interger_literal, number); }
+        static token literal(double number)              { return token(token_tag::floating_point_literal, number); }
+        static token literal(const std::string& string)  { return token(token_tag::string_literal, string); }
 
         static token identifier(const std::string& identifier)
         {

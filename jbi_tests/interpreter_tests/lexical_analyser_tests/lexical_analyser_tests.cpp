@@ -46,12 +46,12 @@ TEST(lexical_analyser_tests, numbers_test)
 {
     lexical_analyser_tester tester("7 42 1984 3.14 0.5 9.");
 
-    tester.expect(jbi::token::number(7));
-    tester.expect(jbi::token::number(42));
-    tester.expect(jbi::token::number(1984));
-    tester.expect(jbi::token::number(3.14));
-    tester.expect(jbi::token::number(0.5));
-    tester.expect(jbi::token::number(9.0));
+    tester.expect(jbi::token::literal(7));
+    tester.expect(jbi::token::literal(42));
+    tester.expect(jbi::token::literal(1984));
+    tester.expect(jbi::token::literal(3.14));
+    tester.expect(jbi::token::literal(0.5));
+    tester.expect(jbi::token::literal(9.0));
 }
 
 TEST(lexical_analyser_tests, symbols_test)
@@ -82,8 +82,8 @@ TEST(lexical_analyser_tests, spaces_test)
 {
     lexical_analyser_tester tester("   1984\t\t3.14\n\n\nfoo\r\rbar \r(\n \r  \t)");
 
-    tester.expect(jbi::token::number(1984));
-    tester.expect(jbi::token::number(3.14));
+    tester.expect(jbi::token::literal(1984));
+    tester.expect(jbi::token::literal(3.14));
     tester.expect(jbi::token::identifier("foo"));
     tester.expect(jbi::token::identifier("bar"));
     tester.expect(jbi::token::left_parenthesis());

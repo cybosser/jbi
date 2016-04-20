@@ -9,7 +9,7 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 39
+#define YY_FLEX_SUBMINOR_VERSION 37
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -181,7 +181,6 @@ typedef size_t yy_size_t;
 #define EOB_ACT_LAST_MATCH 2
 
     #define YY_LESS_LINENO(n)
-    #define YY_LINENO_REWIND_TO(ptr)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -466,7 +465,7 @@ static yyconst flex_int16_t yy_chk[85] =
 #define YY_DECL jbi::token yylex(yyscan_t yyscanner)
 
 #define yyterminate() return jbi::token::eof()
-#line 470 "scanner.cpp"
+#line 469 "scanner.cpp"
 
 #define INITIAL 0
 
@@ -691,6 +690,11 @@ YY_DECL
 	register int yy_act;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
+#line 17 "scanner.l"
+
+
+#line 697 "scanner.cpp"
+
 	if ( !yyg->yy_init )
 		{
 		yyg->yy_init = 1;
@@ -717,12 +721,6 @@ YY_DECL
 		yy_load_buffer_state(yyscanner );
 		}
 
-	{
-#line 17 "scanner.l"
-
-
-#line 725 "scanner.cpp"
-
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
 		yy_cp = yyg->yy_c_buf_p;
@@ -739,7 +737,7 @@ YY_DECL
 yy_match:
 		do
 			{
-			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
+			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
 			if ( yy_accept[yy_current_state] )
 				{
 				yyg->yy_last_accepting_state = yy_current_state;
@@ -797,18 +795,18 @@ YY_RULE_SETUP
 case 5:
 YY_RULE_SETUP
 #line 24 "scanner.l"
-{ return jbi::token::number(std::atof(yytext)); }
+{ return jbi::token::literal(std::atof(yytext)); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 25 "scanner.l"
-{ return jbi::token::number(std::atoi(yytext)); }
+{ return jbi::token::literal(std::atoi(yytext)); }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
 #line 26 "scanner.l"
-{ return jbi::token::string(yytext); }
+{ return jbi::token::literal(yytext); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
@@ -891,7 +889,7 @@ YY_RULE_SETUP
 #line 48 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 895 "scanner.cpp"
+#line 893 "scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1023,7 +1021,6 @@ case YY_STATE_EOF(INITIAL):
 			"fatal flex scanner internal error--no action found" );
 	} /* end of action switch */
 		} /* end of scanning one token */
-	} /* end of user's declarations */
 } /* end of yylex */
 
 /* yy_get_next_buffer - try to read in a new buffer

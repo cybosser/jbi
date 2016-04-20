@@ -114,10 +114,10 @@ namespace jbi
         {
             const token lookahead = _tokens.pop();
 
-            if (lookahead.tag() == token_tag::integer)
+            if (lookahead.tag() == token_tag::interger_literal)
                 return make_unique<integer_literal>(get<int>(lookahead.value()));
 
-            if (lookahead.tag() == token_tag::float_)
+            if (lookahead.tag() == token_tag::floating_point_literal)
                 return make_unique<floating_point_literal>(get<double>(lookahead.value()));
 
             JBI_THROW(not_implemented_exception());
