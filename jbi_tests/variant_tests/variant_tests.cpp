@@ -2,9 +2,6 @@
 
 #include <jbi/variant/variant.h>
 
-using namespace ::testing;
-
-
 template < typename T >
 jbi::variant<int, float> make_variant(T value)
 {
@@ -99,6 +96,8 @@ TEST(core_variant_tests, move_assignment_test)
 
 TEST(core_variant_tests, apply_visitor_test)
 {
+    using namespace ::testing;
+
     constexpr int expected_int = 1948;
     constexpr float expected_float = 3.14f;
 
