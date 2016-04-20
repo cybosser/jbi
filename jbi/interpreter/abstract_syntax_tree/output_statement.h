@@ -12,14 +12,19 @@ namespace jbi
     class output_statement : public statement
     {
     private:
-        std::unique_ptr<expression> _value;
+        std::unique_ptr<expression> _expression;
 
     public:
-        output_statement(std::unique_ptr<expression> value) noexcept
-            : _value(std::move(value))
+        output_statement(std::unique_ptr<expression> expression) noexcept
+            : _expression(std::move(expression))
         { }
 
-        const std::unique_ptr<expression>& value() const noexcept { return _value; }
+        const std::unique_ptr<expression>& value() const noexcept { return _expression; }
+
+        virtual std::string to_string() const override
+        {
+            return jbi::to_string(*_expression);
+        }
     };
 
 }

@@ -30,6 +30,8 @@ namespace jbi
             return arithmetic_operation(symbol);
         }
 
+        std::string to_string() const { return jbi::to_string(_symbol); }
+
     private:
         arithmetic_operation(char symbol) noexcept
             : _symbol(symbol)

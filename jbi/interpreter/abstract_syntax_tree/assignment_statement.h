@@ -22,6 +22,11 @@ namespace jbi
 
         const std::string& identifier() const noexcept                   { return _identifier; }
         const std::unique_ptr<expression>& initializer() const noexcept  { return _initializer; }
+
+        std::string to_string() const override
+        {
+            return "id:" + _identifier + " = " + jbi::to_string(*_initializer);
+        }
     };
 
 }
