@@ -1,6 +1,8 @@
 #ifndef JBI_VISITOR_VISITABLE_H
 #define JBI_VISITOR_VISITABLE_H
 
+#include <cstddef>
+
 #define JBI_DEFINE_VISITABLE(Class) \
     private: \
         virtual std::size_t detail_tag() const noexcept override \
