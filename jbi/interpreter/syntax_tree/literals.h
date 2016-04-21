@@ -19,11 +19,6 @@ namespace jbi
 
         T value() const noexcept { return _value; }
 
-        virtual std::string to_string() const override
-        {
-            return "const:" + jbi::to_string(_value);
-        }
-
         JBI_DEFINE_VISITABLE(numeric_literal)
     };
 

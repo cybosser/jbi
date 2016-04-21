@@ -30,11 +30,6 @@ namespace jbi
         const std::unique_ptr<expression>& left() const noexcept  { return _left; }
         const std::unique_ptr<expression>& right() const noexcept { return _right; }
 
-        virtual std::string to_string() const override
-        {
-            return "(" + jbi::to_string(*_left) + " " + jbi::to_string(_operation) + " " + jbi::to_string(*_right) + ")";
-        }
-
         JBI_DEFINE_VISITABLE(arithmetic_operator)
     };
 

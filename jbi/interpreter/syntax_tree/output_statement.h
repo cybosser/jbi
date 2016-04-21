@@ -23,11 +23,6 @@ namespace jbi
 
         const std::unique_ptr<expression>& value() const noexcept { return _value; }
 
-        virtual std::string to_string() const override
-        {
-            return jbi::to_string(*_value);
-        }
-
         JBI_DEFINE_VISITABLE(output_statement)
     };
 
