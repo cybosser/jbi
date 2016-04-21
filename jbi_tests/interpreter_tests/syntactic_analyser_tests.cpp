@@ -4,7 +4,7 @@
 #include <jbi/interpreter/syntax_tree/visitor.h>
 #include <jbi/visitor/accept_visitor.h>
 
-struct lisp_generator : public jbi::syntax_tree_visitor<std::string>
+struct lispifier : public jbi::syntax_tree_visitor<std::string>
 {
     std::string operator()(const jbi::arithmetic_operator& op)
     {
@@ -29,29 +29,37 @@ struct lisp_generator : public jbi::syntax_tree_visitor<std::string>
 };
 
 
-std::string parse(const std::string& statement)
+std::string lispify(const std::string& statement)
 {
     // TODO mock lexical_analyser
     jbi::syntactic_analyser parser{ jbi::lexical_analyser(statement) };
 
-    lisp_generator generator;
-    return jbi::accept_visitor(generator, *parser.parse());
+    lispifier lispifier_;
+    return jbi::accept_visitor(lispifier_, *parser.parse());
 }
 
 TEST(syntactic_analyser_tests, assignment_statement_test)
 {
-    EXPECT_EQ("(var foo 1)", parse("var foo = 1"));
+    EXPECT_EQ("(var foo 1)", lispify("var foo = 1"));
 
-    EXPECT_THROW(parse("var * = 1"), jbi::syntax_exception);
-    EXPECT_THROW(parse("var 1 = 1"), jbi::syntax_exception);
-    EXPECT_THROW(parse("var out = 1"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("var * = 1"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("var 1 = 1"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("var out = 1"), jbi::syntax_exception);
 }
 
 TEST(syntactic_analyser_tests, associativity_test)
 {
-    EXPECT_EQ("(var foo (- (+ 1 2) 3))", parse("var foo = 1 + 2 - 3"));
-    EXPECT_EQ("(var foo (+ (- 1 2) 3))", parse("var foo = 1 - 2 + 3"));
+    EXPECT_EQ("(var foo (- (+ 1 2) 3))", lispify("var foo = 1 + 2 - 3"));
+    EXPECT_EQ("(var foo (+ (- 1 2) 3))", lispify("var foo = 1 - 2 + 3"));
 
-    EXPECT_EQ("(var foo (/ (* 1 2) 3))", parse("var foo = 1 * 2 / 3"));
-    EXPECT_EQ("(var foo (* (/ 1 2) 3))", parse("var foo = 1 / 2 * 3"));
+    EXPECT_EQ("(var foo (/ (* 1 2) 3))", lispify("var foo = 1 * 2 / 3"));
+    EXPECT_EQ("(var foo (* (/ 1 2) 3))", lispify("var foo = 1 / 2 * 3"));
+}
+
+TEST(syntactic_analyser_tests, precedence_test)
+{
+    EXPECT_EQ("(var foo (+ 1 (* 2 3)))", lispify("var foo = 1 + 2 * 3"));
+    EXPECT_EQ("(var foo (+ 1 (/ 2 3)))", lispify("var foo = 1 + 2 / 3"));
+    EXPECT_EQ("(var foo (- 1 (* 2 3)))", lispify("var foo = 1 - 2 * 3"));
+    EXPECT_EQ("(var foo (- 1 (/ 2 3)))", lispify("var foo = 1 - 2 / 3"));
 }
