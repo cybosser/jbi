@@ -30,6 +30,8 @@ namespace jbi
         {
             return "id:" + _identifier + " = " + jbi::to_string(*_initializer);
         }
+
+        JBI_DEFINE_VISITABLE(assignment_statement)
     };
 
 }

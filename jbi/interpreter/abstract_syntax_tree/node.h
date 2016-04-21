@@ -3,13 +3,14 @@
 
 #include <string>
 
+#include <jbi/visitor/visitable.h>
+
 namespace jbi
 {
 
-    struct node
+    class node : public visitable
     {
-        virtual ~node() = default;
-
+    public:
         virtual std::string to_string() const = 0;
     };
 

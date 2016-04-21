@@ -6,32 +6,29 @@
 namespace jbi
 {
 
-    namespace detail
+    template < typename T >
+    class numeric_literal : public expression
     {
+    private:
+        T _value;
 
-        template < typename T >
-        class literal : public expression
+    public:
+        explicit numeric_literal(T value) noexcept
+            : _value(value)
+        { }
+
+        T value() const noexcept { return _value; }
+
+        virtual std::string to_string() const override
         {
-        private:
-            T _value;
+            return "const:" + jbi::to_string(_value);
+        }
 
-        public:
-            explicit literal(T value) noexcept
-                : _value(value)
-            { }
+        JBI_DEFINE_VISITABLE(numeric_literal)
+    };
 
-            T value() const noexcept { return _value; }
-
-            virtual std::string to_string() const override
-            {
-                return "const:" + jbi::to_string(_value);
-            }
-        };
-
-    }
-
-    using integer_literal = detail::literal<int>;
-    using floating_point_literal = detail::literal<double>;
+    using integer_literal = numeric_literal<int>;
+    using floating_point_literal = numeric_literal<double>;
 
 }
 

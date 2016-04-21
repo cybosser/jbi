@@ -27,6 +27,8 @@ namespace jbi
         {
             return jbi::to_string(*_value);
         }
+
+        JBI_DEFINE_VISITABLE(output_statement)
     };
 
 }

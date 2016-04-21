@@ -34,6 +34,8 @@ namespace jbi
         {
             return "(" + jbi::to_string(*_left) + " " + jbi::to_string(_operation) + " " + jbi::to_string(*_right) + ")";
         }
+
+        JBI_DEFINE_VISITABLE(arithmetic_operator)
     };
 
 }
