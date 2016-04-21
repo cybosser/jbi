@@ -39,7 +39,7 @@ namespace jbi
 
             void push(token token)
             {
-                _tokens.push(std::move(token));
+                _tokens.emplace(std::move(token));
             }
         };
 
