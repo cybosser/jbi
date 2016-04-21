@@ -56,6 +56,13 @@ TEST(syntactic_analyser_tests, output_statement_test)
     EXPECT_THROW(lispify("out var"), jbi::syntax_exception);
 }
 
+TEST(syntactic_analyser_tests, literals_test)
+{
+    EXPECT_EQ("(var foo (+ 1948 3.14))", lispify("var foo = 1948 + 3.14"));
+
+    EXPECT_THROW(lispify("var foo = \"foo\""), jbi::syntax_exception);
+}
+
 TEST(syntactic_analyser_tests, associativity_test)
 {
     EXPECT_EQ("(var foo (- (+ 1 2) 3))", lispify("var foo = 1 + 2 - 3"));
