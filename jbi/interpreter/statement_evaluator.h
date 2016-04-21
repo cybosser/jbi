@@ -1,7 +1,7 @@
 #ifndef JBI_INTERPRETER_STATEMENT_EVALUATOR_H
 #define JBI_INTERPRETER_STATEMENT_EVALUATOR_H
 
-#include <jbi/interpreter/abstract_syntax_tree/statement.h>
+#include <jbi/interpreter/syntax_tree/statement.h>
 
 #include <memory>
 

@@ -1,7 +1,7 @@
-#ifndef JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_LITERALS_H
-#define JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_LITERALS_H
+#ifndef JBI_INTERPRETER_SYNTAX_TREE_LITERALS_H
+#define JBI_INTERPRETER_SYNTAX_TREE_LITERALS_H
 
-#include <jbi/interpreter/abstract_syntax_tree/expression.h>
+#include <jbi/interpreter/syntax_tree/expression.h>
 
 namespace jbi
 {

@@ -1,7 +1,7 @@
-#ifndef JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_ARITHMETIC_OPERATOR
-#define JBI_INTERPRETER_ABSTRACT_SYNTAX_TREE_ARITHMETIC_OPERATOR
+#ifndef JBI_INTERPRETER_SYNTAX_TREE_ARITHMETIC_OPERATOR
+#define JBI_INTERPRETER_SYNTAX_TREE_ARITHMETIC_OPERATOR
 
-#include <jbi/interpreter/abstract_syntax_tree/expression.h>
+#include <jbi/interpreter/syntax_tree/expression.h>
 #include <jbi/interpreter/arithmetic_operation.h>
 
 #include <memory>
