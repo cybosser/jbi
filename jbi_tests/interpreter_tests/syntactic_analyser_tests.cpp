@@ -42,6 +42,7 @@ TEST(syntactic_analyser_tests, assignment_statement_test)
 {
     EXPECT_EQ("(var foo 1)", lispify("var foo = 1"));
 
+    EXPECT_THROW(lispify("var"), jbi::syntax_exception);
     EXPECT_THROW(lispify("var * = 1"), jbi::syntax_exception);
     EXPECT_THROW(lispify("var 1 = 1"), jbi::syntax_exception);
     EXPECT_THROW(lispify("var out = 1"), jbi::syntax_exception);
