@@ -11,14 +11,17 @@ namespace jbi
 
     class assignment_statement : public statement
     {
-    public:
+    private:
         std::string                 _identifier;
         std::unique_ptr<expression> _initializer;
 
     public:
-        assignment_statement(std::string identifier, std::unique_ptr<expression> initializer) noexcept
+        assignment_statement(std::string identifier, std::unique_ptr<expression> initializer)
             : _identifier(std::move(identifier)), _initializer(std::move(initializer))
-        { }
+        {
+            JBI_THROW_IF(_identifier.empty(), argument_exception("identifier"));
+            JBI_THROW_IF(!_initializer, argument_exception("initializer"));
+        }
 
         const std::string& identifier() const noexcept                   { return _identifier; }
         const std::unique_ptr<expression>& initializer() const noexcept  { return _initializer; }

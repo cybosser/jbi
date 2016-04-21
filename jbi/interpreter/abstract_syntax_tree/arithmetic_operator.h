@@ -18,9 +18,12 @@ namespace jbi
         std::unique_ptr<expression> _right;
 
     public:
-        arithmetic_operator(arithmetic_operation operation, std::unique_ptr<expression> left, std::unique_ptr<expression> right) noexcept
+        arithmetic_operator(arithmetic_operation operation, std::unique_ptr<expression> left, std::unique_ptr<expression> right)
             : _operation(operation), _left(std::move(left)), _right(std::move(right))
-        { }
+        {
+            JBI_THROW_IF(!_left, argument_exception("left"));
+            JBI_THROW_IF(!_right, argument_exception("right"));
+        }
 
         arithmetic_operation operation() const noexcept { return _operation; }
 
