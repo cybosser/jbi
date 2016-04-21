@@ -19,6 +19,7 @@ set(JBI_HEADER_FILES
     interpreter/syntax_tree/node.h
     interpreter/syntax_tree/output_statement.h
     interpreter/syntax_tree/statement.h
+    interpreter/syntax_tree/visitor.h
 
     interpreter/arithmetic_operation.h
     interpreter/interpreter.h
