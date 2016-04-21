@@ -13,6 +13,8 @@ set(JBI_TESTS_SOURCE_FILES
     interpreter_tests/type_tests.cpp
 
     variant_tests/variant_tests.cpp
+
+    visitable_tests/visitable_tests.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")

@@ -28,6 +28,10 @@ set(JBI_HEADER_FILES
 
     variant/static_visitor.h
     variant/variant.h
+
+    visitor/accept_visitor.h
+    visitor/visitable.h
+    visitor/visitor.h
 )
 
 set(JBI_SOURCE_FILES
