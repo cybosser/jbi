@@ -60,7 +60,7 @@ namespace jbi
         {
             const token lookahead = _tokens.pop();
             if (lookahead == token::var())
-                return parse_assignment();
+                return parse_assignment_statement();
 
             if (lookahead == token::out())
                 return make_unique<output_statement>(parse_expression());
@@ -69,7 +69,7 @@ namespace jbi
         }
 
     private:
-        std::unique_ptr<statement> parse_assignment()
+        std::unique_ptr<statement> parse_assignment_statement()
         {
             const std::string identifier = parse_identifier();
             JBI_THROW_IF(_tokens.pop() != token::equals(), syntax_exception("missing ="));
