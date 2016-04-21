@@ -27,6 +27,10 @@ namespace jbi
     template < typename T >
     using return_type_of = typename T::return_type;
 
+    template < typename... Ts >
+    struct parameter_pack
+    { };
+
 }
 
 #endif

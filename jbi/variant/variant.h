@@ -52,11 +52,6 @@ namespace jbi
         };
 
 
-        template < typename... Ts >
-        struct parameter_pack
-        { };
-
-
         template < typename Visitor, typename Storage, typename Head, typename... Tail >
         return_type_of<Visitor> apply_visitor(Visitor& visitor, Storage&& storage, std::size_t index, parameter_pack<Head, Tail...>)
         {
@@ -186,19 +181,19 @@ namespace jbi
         template < typename Visitor >
         return_type_of<Visitor> apply_visitor(Visitor& visitor) &
         {
-            return detail::apply_visitor(visitor, _storage, _which, detail::parameter_pack<Ts...>());
+            return detail::apply_visitor(visitor, _storage, _which, parameter_pack<Ts...>());
         }
 
         template < typename Visitor >
         return_type_of<Visitor> apply_visitor(Visitor& visitor) const &
         {
-            return detail::apply_visitor(visitor, _storage, _which, detail::parameter_pack<Ts...>());
+            return detail::apply_visitor(visitor, _storage, _which, parameter_pack<Ts...>());
         }
 
         template < typename Visitor >
         return_type_of<Visitor> apply_visitor(Visitor& visitor) &&
         {
-            return detail::apply_visitor(visitor, std::move(_storage), _which, detail::parameter_pack<Ts...>());
+            return detail::apply_visitor(visitor, std::move(_storage), _which, parameter_pack<Ts...>());
         }
 
     private:
