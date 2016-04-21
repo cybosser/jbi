@@ -127,7 +127,7 @@ namespace jbi
                 return result;
             }
 
-            JBI_THROW(not_implemented_exception());
+            JBI_THROW(syntax_exception("missing expression"));
         }
 
         std::string parse_identifier()
