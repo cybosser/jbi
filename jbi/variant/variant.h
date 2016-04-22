@@ -53,16 +53,16 @@ namespace jbi
 
 
         template < typename Visitor, typename Storage, typename Head, typename... Tail >
-        return_type_of<Visitor> apply_visitor(Visitor& visitor, Storage&& storage, std::size_t index, parameter_pack<Head, Tail...>)
+        return_type_of_decayed<Visitor> apply_visitor(Visitor&& visitor, Storage&& storage, std::size_t index, parameter_pack<Head, Tail...>)
         {
             if (index == 0)
-                return visitor(std::forward<Storage>(storage).template value<Head>());
+                return std::forward<Visitor>(visitor)(std::forward<Storage>(storage).template value<Head>());
 
-            return apply_visitor(visitor, std::forward<Storage>(storage), index - 1, parameter_pack<Tail...>());
+            return apply_visitor(std::forward<Visitor>(visitor), std::forward<Storage>(storage), index - 1, parameter_pack<Tail...>());
         };
 
         template < typename Visitor, typename Storage >
-        return_type_of<Visitor> apply_visitor(Visitor&, Storage&&, std::size_t, parameter_pack<>)
+        return_type_of_decayed<Visitor> apply_visitor(Visitor&&, Storage&&, std::size_t, parameter_pack<>)
         {
             JBI_THROW(std::logic_error("Should never get here"));
         };
@@ -179,21 +179,21 @@ namespace jbi
         }
 
         template < typename Visitor >
-        return_type_of<Visitor> apply_visitor(Visitor& visitor) &
+        return_type_of_decayed<Visitor> apply_visitor(Visitor&& visitor) &
         {
-            return detail::apply_visitor(visitor, _storage, _which, parameter_pack<Ts...>());
+            return detail::apply_visitor(std::forward<Visitor>(visitor), _storage, _which, parameter_pack<Ts...>());
         }
 
         template < typename Visitor >
-        return_type_of<Visitor> apply_visitor(Visitor& visitor) const &
+        return_type_of_decayed<Visitor> apply_visitor(Visitor&& visitor) const &
         {
-            return detail::apply_visitor(visitor, _storage, _which, parameter_pack<Ts...>());
+            return detail::apply_visitor(std::forward<Visitor>(visitor), _storage, _which, parameter_pack<Ts...>());
         }
 
         template < typename Visitor >
-        return_type_of<Visitor> apply_visitor(Visitor& visitor) &&
+        return_type_of_decayed<Visitor> apply_visitor(Visitor&& visitor) &&
         {
-            return detail::apply_visitor(visitor, std::move(_storage), _which, parameter_pack<Ts...>());
+            return detail::apply_visitor(std::forward<Visitor>(visitor), std::move(_storage), _which, parameter_pack<Ts...>());
         }
 
     private:
@@ -231,10 +231,28 @@ namespace jbi
     };
 
 
+    template < typename... Ts, typename Visitor >
+    return_type_of_decayed<Visitor> apply_visitor(variant<Ts...>& variant, Visitor&& visitor)
+    {
+        return variant.apply_visitor(std::forward<Visitor>(visitor));
+    };
+
+    template < typename... Ts, typename Visitor >
+    return_type_of_decayed<Visitor> apply_visitor(const variant<Ts...>& variant, Visitor&& visitor)
+    {
+        return variant.apply_visitor(std::forward<Visitor>(visitor));
+    };
+
+    template < typename... Ts, typename Visitor >
+    return_type_of_decayed<Visitor> apply_visitor(variant<Ts...>&& variant, Visitor&& visitor)
+    {
+        return std::move(variant).apply_visitor(std::forward<Visitor>(visitor));
+    };
+
+
     // TODO add descriptive message
     class bad_get : public std::bad_cast
     { };
-
 
     namespace detail
     {
@@ -255,25 +273,6 @@ namespace jbi
         };
 
     }
-
-    template < typename... Ts, typename Visitor >
-    return_type_of<Visitor> apply_visitor(variant<Ts...>& variant, Visitor& visitor)
-    {
-        return variant.apply_visitor(visitor);
-    };
-
-    template < typename... Ts, typename Visitor >
-    return_type_of<Visitor> apply_visitor(const variant<Ts...>& variant, Visitor& visitor)
-    {
-        return variant.apply_visitor(visitor);
-    };
-
-    template < typename... Ts, typename Visitor >
-    return_type_of<Visitor> apply_visitor(variant<Ts...>&& variant, Visitor& visitor)
-    {
-        return std::move(variant).apply_visitor(visitor);
-    };
-
 
     template < typename T, typename... Ts >
     T& get(variant<Ts...>& variant)
