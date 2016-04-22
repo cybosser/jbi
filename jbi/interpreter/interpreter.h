@@ -1,14 +1,12 @@
 #ifndef JBI_INTERPRETER_INTERPRETER_H
 #define JBI_INTERPRETER_INTERPRETER_H
 
-#include <jbi/variant/variant.h>
+#include <jbi/interpreter/value.h>
 
 #include <string>
 
 namespace jbi
 {
-
-    using value = variant<int, float>;
 
     class interpreter
     {

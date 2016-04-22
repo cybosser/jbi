@@ -27,6 +27,7 @@ set(JBI_HEADER_FILES
     interpreter/statement_evaluator.h
     interpreter/syntactic_analyser.h
     interpreter/type.h
+    interpreter/value.h
 
     variant/static_visitor.h
     variant/variant.h
