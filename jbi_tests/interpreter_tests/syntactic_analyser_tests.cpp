@@ -77,3 +77,10 @@ TEST(syntactic_analyser_tests, precedence_test)
     EXPECT_EQ("(var foo (- 1 (* 2 3)))", lispify("var foo = 1 - 2 * 3"));
     EXPECT_EQ("(var foo (- 1 (/ 2 3)))", lispify("var foo = 1 - 2 / 3"));
 }
+
+TEST(syntactic_analyser_tests, parentheses_test)
+{
+    EXPECT_EQ("(var foo (/ (* 1 (- 2 3)) 4))", lispify("var foo = (1 * (2 - 3)) / 4"));
+
+    EXPECT_THROW(lispify("var foo = 1 + (2 * 3"), jbi::syntax_exception);
+}
