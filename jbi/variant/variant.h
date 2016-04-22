@@ -231,22 +231,25 @@ namespace jbi
     };
 
 
-    template < typename... Ts, typename Visitor >
-    return_type_of_decayed<Visitor> apply_visitor(Visitor&& visitor, variant<Ts...>& variant)
+    namespace detail
     {
-        return variant.apply_visitor(std::forward<Visitor>(visitor));
-    };
 
-    template < typename... Ts, typename Visitor >
-    return_type_of_decayed<Visitor> apply_visitor(Visitor&& visitor, const variant<Ts...>& variant)
-    {
-        return variant.apply_visitor(std::forward<Visitor>(visitor));
-    };
+        template < typename >
+        struct is_variant : std::false_type
+        { };
 
-    template < typename... Ts, typename Visitor >
-    return_type_of_decayed<Visitor> apply_visitor(Visitor&& visitor, variant<Ts...>&& variant)
+        template < typename... Ts >
+        struct is_variant<variant<Ts...>> : std::true_type
+        { };
+
+    }
+
+    template < typename Visitor, typename Variant >
+    enable_if_t<
+        detail::is_variant<decay_t<Variant>>::value, return_type_of_decayed<Visitor>
+    > apply_visitor(Visitor&& visitor, Variant&& variant)
     {
-        return std::move(variant).apply_visitor(std::forward<Visitor>(visitor));
+        return std::forward<Variant>(variant).apply_visitor(std::forward<Visitor>(visitor));
     };
 
 
