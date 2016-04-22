@@ -253,6 +253,64 @@ namespace jbi
     };
 
 
+    namespace detail
+    {
+
+        template < typename Visitor, typename Variant >
+        class multivisitor : public static_visitor<return_type_of_decayed<Visitor>>
+        {
+        public:
+            using return_type = return_type_of_decayed<Visitor>;
+
+        private:
+            template < typename Left >
+            class applier : public static_visitor<return_type>
+            {
+            private:
+                Visitor&&   _visitor;
+                Left&&      _left;
+
+            public:
+                applier(Visitor&& visitor, Left&& left)
+                    : _visitor(std::forward<Visitor>(visitor)), _left(std::forward<Left>(left))
+                { }
+
+                template < typename Right >
+                return_type operator()(Right&& right) const
+                {
+                    return std::forward<Visitor>(_visitor)(std::forward<Left>(_left), std::forward<Right>(right));
+                }
+            };
+
+        private:
+            Visitor&&   _visitor;
+            Variant&&   _right;
+
+        public:
+            multivisitor(Visitor&& visitor, Variant&& right)
+                : _visitor(std::forward<Visitor>(visitor)), _right(std::forward<Variant>(right))
+            { }
+
+            template < typename Left >
+            return_type operator()(Left&& left) const
+            {
+                applier<Left> applier(std::forward<Visitor>(_visitor), std::forward<Left>(left));
+                return apply_visitor(applier, std::forward<Variant>(_right));
+            }
+        };
+
+    }
+
+    template < typename Visitor, typename Variant >
+    enable_if_t<
+        detail::is_variant<decay_t<Variant>>::value, return_type_of_decayed<Visitor>
+    > apply_visitor(Visitor&& visitor, Variant&& left, Variant&& right)
+    {
+        detail::multivisitor<Visitor, Variant> multivisitor(std::forward<Visitor>(visitor), std::forward<Variant>(right));
+        return apply_visitor(multivisitor, std::forward<Variant>(left));
+    };
+
+
     // TODO add descriptive message
     class bad_get : public std::bad_cast
     { };
