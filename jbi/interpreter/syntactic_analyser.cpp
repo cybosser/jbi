@@ -72,9 +72,12 @@ namespace jbi
     private:
         std::unique_ptr<statement> parse_assignment_statement()
         {
-            const std::string identifier = parse_identifier();
-            JBI_THROW_IF(_tokens.pop() != token::equals(), syntax_exception("missing ="));
-            return make_unique<assignment_statement>(identifier, parse_expression());
+            const token lookahead = _tokens.pop();
+            JBI_THROW_IF(lookahead.tag() != token_tag::identifier, syntax_exception("missing identifier"));
+
+            expect_token(token::equals(), "missing =");
+
+            return make_unique<assignment_statement>(get<std::string>(lookahead.value()), parse_expression());
         }
 
         std::unique_ptr<expression> parse_expression()
@@ -127,18 +130,16 @@ namespace jbi
             if (lookahead == token::left_parenthesis())
             {
                 std::unique_ptr<expression> result = parse_expression();
-                JBI_THROW_IF(_tokens.pop() != token::right_parenthesis(), syntax_exception("missing )"));
+                expect_token(token::right_parenthesis(), "missing )");
                 return result;
             }
 
             JBI_THROW(syntax_exception("missing expression"));
         }
 
-        std::string parse_identifier()
+        void expect_token(token expected, const std::string& message)
         {
-            const token lookahead = _tokens.pop();
-            JBI_THROW_IF(lookahead.tag() != token_tag::identifier, syntax_exception("missing identifier"));
-            return get<std::string>(lookahead.value());
+            JBI_THROW_IF(_tokens.pop() != expected, syntax_exception(message));
         }
     };
 
