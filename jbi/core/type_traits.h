@@ -27,6 +27,9 @@ namespace jbi
     template < typename T >
     using return_type_of = typename T::return_type;
 
+    template < typename T >
+    using return_type_of_decayed = return_type_of<decay_t<T>>;
+
     template < typename... Ts >
     struct parameter_pack
     { };
