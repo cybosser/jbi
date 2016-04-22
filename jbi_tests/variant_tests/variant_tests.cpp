@@ -116,10 +116,10 @@ TEST(core_variant_tests, apply_visitor_test)
     EXPECT_CALL(visitor, call_operator_float(expected_float)).WillOnce(Return(1));
 
     jbi::variant<int, float> int_variant(expected_int);
-    EXPECT_EQ(0, jbi::apply_visitor(int_variant, visitor));
+    EXPECT_EQ(0, jbi::apply_visitor(visitor, int_variant));
 
     const jbi::variant<int, float> float_variant(expected_float);
-    EXPECT_EQ(1, jbi::apply_visitor(float_variant, visitor));
+    EXPECT_EQ(1, jbi::apply_visitor(visitor, float_variant));
 }
 
 TEST(core_variant_tests, get_test)

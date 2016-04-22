@@ -232,19 +232,19 @@ namespace jbi
 
 
     template < typename... Ts, typename Visitor >
-    return_type_of_decayed<Visitor> apply_visitor(variant<Ts...>& variant, Visitor&& visitor)
+    return_type_of_decayed<Visitor> apply_visitor(Visitor&& visitor, variant<Ts...>& variant)
     {
         return variant.apply_visitor(std::forward<Visitor>(visitor));
     };
 
     template < typename... Ts, typename Visitor >
-    return_type_of_decayed<Visitor> apply_visitor(const variant<Ts...>& variant, Visitor&& visitor)
+    return_type_of_decayed<Visitor> apply_visitor(Visitor&& visitor, const variant<Ts...>& variant)
     {
         return variant.apply_visitor(std::forward<Visitor>(visitor));
     };
 
     template < typename... Ts, typename Visitor >
-    return_type_of_decayed<Visitor> apply_visitor(variant<Ts...>&& variant, Visitor&& visitor)
+    return_type_of_decayed<Visitor> apply_visitor(Visitor&& visitor, variant<Ts...>&& variant)
     {
         return std::move(variant).apply_visitor(std::forward<Visitor>(visitor));
     };
@@ -278,21 +278,21 @@ namespace jbi
     T& get(variant<Ts...>& variant)
     {
         detail::value_getter<T&> getter;
-        return apply_visitor(variant, getter);
+        return apply_visitor(getter, variant);
     }
 
     template < typename T, typename... Ts >
     const T& get(const variant<Ts...>& variant)
     {
         detail::value_getter<const T&> getter;
-        return apply_visitor(variant, getter);
+        return apply_visitor(getter, variant);
     }
 
     template < typename T, typename... Ts >
     T&& get(variant<Ts...>&& variant)
     {
         detail::value_getter<T&&> getter;
-        return apply_visitor(std::move(variant), getter);
+        return apply_visitor(getter, std::move(variant));
     }
 
 
@@ -326,7 +326,7 @@ namespace jbi
             return false;
 
         detail::value_equality_comparer<Ts...> comparer(left);
-        return apply_visitor(right, comparer);
+        return apply_visitor(comparer, right);
     }
 
     template < typename... Ts >

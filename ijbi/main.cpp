@@ -20,7 +20,7 @@ void run(ijbi::console& console)
         try
         {
             const jbi::value result = interpreter.interpret(statement);
-            jbi::apply_visitor(result, printer);
+            jbi::apply_visitor(printer, result);
         }
         catch (const jbi::syntax_exception& ex)
         {
