@@ -26,6 +26,11 @@ struct lispifier : public jbi::syntax_tree_visitor<std::string>
     {
         return jbi::to_string(literal.value());
     }
+
+    std::string operator()(const jbi::identifier& identifier) const
+    {
+        return identifier.name();
+    }
 };
 
 
@@ -38,17 +43,17 @@ std::string lispify(const std::string& statement)
 
 TEST(syntactic_analyser_tests, assignment_statement_test)
 {
-    EXPECT_EQ("(var foo 1)", lispify("var foo = 1"));
+    EXPECT_EQ("(var foo a)", lispify("var foo = a"));
 
     EXPECT_THROW(lispify("var"), jbi::syntax_exception);
-    EXPECT_THROW(lispify("var * = 1"), jbi::syntax_exception);
-    EXPECT_THROW(lispify("var 1 = 1"), jbi::syntax_exception);
-    EXPECT_THROW(lispify("var out = 1"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("var * = a"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("var 1 = a"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("var out = a"), jbi::syntax_exception);
 }
 
 TEST(syntactic_analyser_tests, output_statement_test)
 {
-    EXPECT_EQ("(out (+ 1 2))", lispify("out 1 + 2"));
+    EXPECT_EQ("(out (+ a b))", lispify("out a + b"));
 
     EXPECT_THROW(lispify("out"), jbi::syntax_exception);
     EXPECT_THROW(lispify("out var"), jbi::syntax_exception);
@@ -63,24 +68,24 @@ TEST(syntactic_analyser_tests, literals_test)
 
 TEST(syntactic_analyser_tests, associativity_test)
 {
-    EXPECT_EQ("(var foo (- (+ 1 2) 3))", lispify("var foo = 1 + 2 - 3"));
-    EXPECT_EQ("(var foo (+ (- 1 2) 3))", lispify("var foo = 1 - 2 + 3"));
+    EXPECT_EQ("(var foo (- (+ a b) c))", lispify("var foo = a + b - c"));
+    EXPECT_EQ("(var foo (+ (- a b) c))", lispify("var foo = a - b + c"));
 
-    EXPECT_EQ("(var foo (/ (* 1 2) 3))", lispify("var foo = 1 * 2 / 3"));
-    EXPECT_EQ("(var foo (* (/ 1 2) 3))", lispify("var foo = 1 / 2 * 3"));
+    EXPECT_EQ("(var foo (/ (* a b) c))", lispify("var foo = a * b / c"));
+    EXPECT_EQ("(var foo (* (/ a b) c))", lispify("var foo = a / b * c"));
 }
 
 TEST(syntactic_analyser_tests, precedence_test)
 {
-    EXPECT_EQ("(var foo (+ 1 (* 2 3)))", lispify("var foo = 1 + 2 * 3"));
-    EXPECT_EQ("(var foo (+ 1 (/ 2 3)))", lispify("var foo = 1 + 2 / 3"));
-    EXPECT_EQ("(var foo (- 1 (* 2 3)))", lispify("var foo = 1 - 2 * 3"));
-    EXPECT_EQ("(var foo (- 1 (/ 2 3)))", lispify("var foo = 1 - 2 / 3"));
+    EXPECT_EQ("(var foo (+ a (* b c)))", lispify("var foo = a + b * c"));
+    EXPECT_EQ("(var foo (+ a (/ b c)))", lispify("var foo = a + b / c"));
+    EXPECT_EQ("(var foo (- a (* b c)))", lispify("var foo = a - b * c"));
+    EXPECT_EQ("(var foo (- a (/ b c)))", lispify("var foo = a - b / c"));
 }
 
 TEST(syntactic_analyser_tests, parentheses_test)
 {
-    EXPECT_EQ("(var foo (/ (* 1 (- 2 3)) 4))", lispify("var foo = (1 * (2 - 3)) / 4"));
+    EXPECT_EQ("(var foo (/ (* a (- b c)) d))", lispify("var foo = (a * (b - c)) / d"));
 
-    EXPECT_THROW(lispify("var foo = 1 + (2 * 3"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("var foo = a + (b * c"), jbi::syntax_exception);
 }

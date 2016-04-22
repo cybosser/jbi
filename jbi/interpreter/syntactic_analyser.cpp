@@ -2,6 +2,7 @@
 
 #include <jbi/interpreter/syntax_tree/arithmetic_operator.h>
 #include <jbi/interpreter/syntax_tree/assignment_statement.h>
+#include <jbi/interpreter/syntax_tree/identifier.h>
 #include <jbi/interpreter/syntax_tree/literals.h>
 #include <jbi/interpreter/syntax_tree/output_statement.h>
 
@@ -119,6 +120,9 @@ namespace jbi
 
             if (lookahead.tag() == token_tag::floating_point_literal)
                 return make_unique<floating_point_literal>(get<double>(lookahead.value()));
+
+            if (lookahead.tag() == token_tag::identifier)
+                return make_unique<identifier>(get<std::string>(lookahead.value()));
 
             if (lookahead == token::left_parenthesis())
             {
