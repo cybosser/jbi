@@ -63,6 +63,15 @@ namespace jbi
         { }
     };
 
+
+    class type_exception : public std::runtime_error
+    {
+    public:
+        explicit type_exception(const std::string& message)
+            : std::runtime_error(message)
+        { }
+    };
+
 }
 
 #endif
