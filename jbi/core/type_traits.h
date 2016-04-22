@@ -21,6 +21,9 @@ namespace jbi
     template < typename From, typename To >
     using is_convertible_t = typename std::is_convertible<From, To>::type;
 
+    template < bool Value >
+    using bool_constant = std::integral_constant<bool, Value>;
+
     template < std::size_t Value >
     using size_t_constant = std::integral_constant<std::size_t, Value>;
 
