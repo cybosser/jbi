@@ -39,29 +39,27 @@ TEST(core_variant_tests, move_constructor_test)
 
 TEST(core_variant_tests, destructor_test)
 {
-    class destructable_type
+    using namespace ::testing;
+
+    struct destructable_mock
     {
-    private:
-        bool& _destructor_called;
+        MOCK_METHOD0(destructor, void());
 
-    public:
-        destructable_type(bool& destructor_called)
-            : _destructor_called(destructor_called)
-        { }
-
-        ~destructable_type()
+        ~destructable_mock()
         {
-            _destructor_called = true;
+            destructor();
         }
     };
 
-    bool destructor_called = false;
+    destructable_mock* mock(new destructable_mock());
+
+    EXPECT_CALL(*mock, destructor());
 
     {
-        jbi::variant<int, destructable_type> variant{ destructable_type(destructor_called) };
+        jbi::variant<int, std::unique_ptr<destructable_mock>> variant{ std::unique_ptr<destructable_mock>(mock) };
     }
 
-    EXPECT_TRUE(destructor_called);
+    Mock::VerifyAndClearExpectations(mock);
 };
 
 TEST(core_variant_tests, copy_assignment_test)
