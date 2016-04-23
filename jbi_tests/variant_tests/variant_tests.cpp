@@ -101,23 +101,43 @@ TEST(core_variant_tests, apply_visitor_test)
 
     struct mock_visitor : public jbi::static_visitor<int>
     {
-        MOCK_METHOD1(call_operator_int, int(int value));
-        MOCK_METHOD1(call_operator_float, int(float value));
+        MOCK_CONST_METHOD1(call_operator_i, int(int));
+        MOCK_CONST_METHOD1(call_operator_f, int(float));
 
-        int operator()(int value) { return call_operator_int(value); }
-        int operator()(float value) { return call_operator_float(value); }
+        int operator()(int i) const { return call_operator_i(i); }
+        int operator()(float f) const { return call_operator_f(f); }
+
+        MOCK_CONST_METHOD2(call_operator_if, int(int, float));
+        MOCK_CONST_METHOD2(call_operator_fi, int(float, int));
+        MOCK_CONST_METHOD2(call_operator_ii, int(int, int));
+        MOCK_CONST_METHOD2(call_operator_ff, int(float, float));
+
+        int operator()(int i, float f) const { return call_operator_if(i, f); }
+        int operator()(float f, int i) const { return call_operator_fi(f, i); }
+        int operator()(int i1, int i2) const { return call_operator_ii(i1, i2); }
+        int operator()(float f1, float f2) const { return call_operator_ff(f1, f2); }
     };
 
     mock_visitor visitor;
 
-    EXPECT_CALL(visitor, call_operator_int(expected_int)).WillOnce(Return(0));
-    EXPECT_CALL(visitor, call_operator_float(expected_float)).WillOnce(Return(1));
+    EXPECT_CALL(visitor, call_operator_i(expected_int)).WillOnce(Return(0));
+    EXPECT_CALL(visitor, call_operator_f(expected_float)).WillOnce(Return(1));
+
+    EXPECT_CALL(visitor, call_operator_if(expected_int, expected_float)).WillOnce(Return(2));
+    EXPECT_CALL(visitor, call_operator_fi(expected_float, expected_int)).WillOnce(Return(3));
+    EXPECT_CALL(visitor, call_operator_ii(expected_int, expected_int)).WillOnce(Return(4));
+    EXPECT_CALL(visitor, call_operator_ff(expected_float, expected_float)).WillOnce(Return(5));
 
     jbi::variant<int, float> int_variant(expected_int);
-    EXPECT_EQ(0, jbi::apply_visitor(visitor, int_variant));
+    jbi::variant<int, float> float_variant(expected_float);
 
-    const jbi::variant<int, float> float_variant(expected_float);
+    EXPECT_EQ(0, jbi::apply_visitor(visitor, int_variant));
     EXPECT_EQ(1, jbi::apply_visitor(visitor, float_variant));
+
+    EXPECT_EQ(2, jbi::apply_visitor(visitor, int_variant, float_variant));
+    EXPECT_EQ(3, jbi::apply_visitor(visitor, float_variant, int_variant));
+    EXPECT_EQ(4, jbi::apply_visitor(visitor, int_variant, int_variant));
+    EXPECT_EQ(5, jbi::apply_visitor(visitor, float_variant, float_variant));
 }
 
 TEST(core_variant_tests, get_test)
