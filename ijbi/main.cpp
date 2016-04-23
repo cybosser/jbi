@@ -1,6 +1,6 @@
 #include <ijbi/console.h>
 
-#include <jbi/core/exceptions.h>
+#include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/interpreter.h>
 
 #include <ijbi/printer.h>
