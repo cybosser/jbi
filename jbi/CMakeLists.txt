@@ -22,6 +22,8 @@ set(JBI_HEADER_FILES
     interpreter/syntax_tree/statement.h
     interpreter/syntax_tree/visitor.h
 
+    interpreter/types/none.h
+
     interpreter/arithmetic_operation.h
     interpreter/interpreter.h
     interpreter/statement_evaluator.h
@@ -41,11 +43,12 @@ set(JBI_SOURCE_FILES
     interpreter/interpreter.cpp
     interpreter/statement_evaluator.cpp
     interpreter/syntactic_analyser.cpp
+    interpreter/type.cpp
 
     interpreter/lexical_analyser/flex/scanner.cpp
     interpreter/lexical_analyser/lexical_analyser.cpp
 
-    interpreter/type.cpp
+    interpreter/types/none.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
