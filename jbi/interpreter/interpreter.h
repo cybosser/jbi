@@ -1,7 +1,7 @@
 #ifndef JBI_INTERPRETER_INTERPRETER_H
 #define JBI_INTERPRETER_INTERPRETER_H
 
-#include <jbi/interpreter/value.h>
+#include <jbi/interpreter/types/value.h>
 
 #include <string>
 

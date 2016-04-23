@@ -23,13 +23,13 @@ set(JBI_HEADER_FILES
     interpreter/syntax_tree/visitor.h
 
     interpreter/types/none.h
+    interpreter/types/value.h
 
     interpreter/arithmetic_operation.h
     interpreter/interpreter.h
     interpreter/statement_evaluator.h
     interpreter/syntactic_analyser.h
     interpreter/type.h
-    interpreter/value.h
 
     variant/static_visitor.h
     variant/variant.h
