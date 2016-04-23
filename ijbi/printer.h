@@ -15,7 +15,7 @@ namespace ijbi
         console _console;
 
     public:
-        explicit printer(console console);
+        explicit printer(console console) noexcept;
 
         template < typename T >
         void operator()(const T& value)
