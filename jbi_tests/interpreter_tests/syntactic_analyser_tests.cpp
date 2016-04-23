@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/syntactic_analyser.h>
 #include <jbi/interpreter/syntax_tree/visitor.h>
 #include <jbi/visitor/accept_visitor.h>

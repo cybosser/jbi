@@ -1,5 +1,6 @@
 #include <jbi/interpreter/statement_evaluator.h>
 
+#include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/syntax_tree/visitor.h>
 #include <jbi/visitor/accept_visitor.h>
 

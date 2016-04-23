@@ -1,4 +1,5 @@
 %{
+#include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/lexical_analyser/token.h>
 
 #define YY_DECL jbi::token yylex(yyscan_t yyscanner)

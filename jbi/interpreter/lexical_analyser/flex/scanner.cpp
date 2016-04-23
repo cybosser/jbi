@@ -460,12 +460,13 @@ static yyconst flex_int16_t yy_chk[85] =
 #define YY_RESTORE_YY_MORE_OFFSET
 #line 1 "scanner.l"
 #line 2 "scanner.l"
+#include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/lexical_analyser/token.h>
 
 #define YY_DECL jbi::token yylex(yyscan_t yyscanner)
 
 #define yyterminate() return jbi::token::eof()
-#line 469 "scanner.cpp"
+#line 470 "scanner.cpp"
 
 #define INITIAL 0
 
@@ -690,10 +691,10 @@ YY_DECL
 	register int yy_act;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
-#line 17 "scanner.l"
+#line 18 "scanner.l"
 
 
-#line 697 "scanner.cpp"
+#line 698 "scanner.cpp"
 
 	if ( !yyg->yy_init )
 		{
@@ -774,122 +775,122 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 19 "scanner.l"
+#line 20 "scanner.l"
 { return jbi::token::var(); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 20 "scanner.l"
+#line 21 "scanner.l"
 { return jbi::token::in(); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 21 "scanner.l"
+#line 22 "scanner.l"
 { return jbi::token::out(); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 22 "scanner.l"
+#line 23 "scanner.l"
 { return jbi::token::print(); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 24 "scanner.l"
+#line 25 "scanner.l"
 { return jbi::token::literal(std::atof(yytext)); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 25 "scanner.l"
+#line 26 "scanner.l"
 { return jbi::token::literal(std::atoi(yytext)); }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 26 "scanner.l"
+#line 27 "scanner.l"
 { return jbi::token::literal(yytext); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 28 "scanner.l"
+#line 29 "scanner.l"
 { return jbi::token::identifier(yytext); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 30 "scanner.l"
+#line 31 "scanner.l"
 { return jbi::token::arrow(); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 32 "scanner.l"
+#line 33 "scanner.l"
 { return jbi::token::equals(); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 33 "scanner.l"
+#line 34 "scanner.l"
 { return jbi::token::plus(); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 34 "scanner.l"
+#line 35 "scanner.l"
 { return jbi::token::minus(); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 35 "scanner.l"
+#line 36 "scanner.l"
 { return jbi::token::asterisk(); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 36 "scanner.l"
+#line 37 "scanner.l"
 { return jbi::token::slash(); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 37 "scanner.l"
+#line 38 "scanner.l"
 { return jbi::token::carret(); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 38 "scanner.l"
+#line 39 "scanner.l"
 { return jbi::token::comma(); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 39 "scanner.l"
+#line 40 "scanner.l"
 { return jbi::token::left_parenthesis(); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 40 "scanner.l"
+#line 41 "scanner.l"
 { return jbi::token::right_parenthesis(); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 41 "scanner.l"
+#line 42 "scanner.l"
 { return jbi::token::left_brace(); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 42 "scanner.l"
+#line 43 "scanner.l"
 { return jbi::token::right_brace(); }
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 44 "scanner.l"
+#line 45 "scanner.l"
 { }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 46 "scanner.l"
+#line 47 "scanner.l"
 { JBI_THROW(jbi::syntax_exception(std::string("unexpected token ")+ yytext)); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 48 "scanner.l"
+#line 49 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 893 "scanner.cpp"
+#line 894 "scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2042,7 +2043,7 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 48 "scanner.l"
+#line 49 "scanner.l"
 
 
 

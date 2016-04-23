@@ -1,12 +1,12 @@
 #include <jbi/interpreter/syntactic_analyser.h>
 
+#include <jbi/core/memory.h>
+#include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/syntax_tree/arithmetic_operator.h>
 #include <jbi/interpreter/syntax_tree/assignment_statement.h>
 #include <jbi/interpreter/syntax_tree/identifier.h>
 #include <jbi/interpreter/syntax_tree/literals.h>
 #include <jbi/interpreter/syntax_tree/output_statement.h>
-
-#include <jbi/core/memory.h>
 
 #include <stack>
 

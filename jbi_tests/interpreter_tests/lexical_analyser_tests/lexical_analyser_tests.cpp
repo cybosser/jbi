@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/lexical_analyser/lexical_analyser.h>
 
 class lexical_analyser_tester
