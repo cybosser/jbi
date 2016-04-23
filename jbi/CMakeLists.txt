@@ -29,6 +29,7 @@ set(JBI_HEADER_FILES
     interpreter/exceptions.h
     interpreter/interpreter.h
     interpreter/statement_evaluator.h
+    interpreter/symbol_table.h
     interpreter/syntactic_analyser.h
 
     variant/static_visitor.h
@@ -42,6 +43,7 @@ set(JBI_HEADER_FILES
 set(JBI_SOURCE_FILES
     interpreter/interpreter.cpp
     interpreter/statement_evaluator.cpp
+    interpreter/symbol_table.cpp
     interpreter/syntactic_analyser.cpp
 
     interpreter/lexical_analyser/flex/scanner.cpp
