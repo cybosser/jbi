@@ -93,6 +93,12 @@ TEST(lexical_analyser_tests, spaces_test)
 
 TEST(lexical_analyser_tests, invalid_symbols_test)
 {
-    jbi::lexical_analyser analyser("%foo");
-    EXPECT_THROW(analyser.read(), jbi::syntax_exception);
+    jbi::lexical_analyser tokenizer("%foo");
+    EXPECT_THROW(tokenizer.read(), jbi::syntax_exception);
+}
+
+TEST(lexical_analyser_tests, empty_statement)
+{
+    jbi::lexical_analyser tokenizer("");
+    EXPECT_EQ(jbi::token::eof(), tokenizer.read());
 }
