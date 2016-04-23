@@ -7,4 +7,7 @@ namespace ijbi
         : _console(std::move(console))
     { }
 
+    void printer::operator()(const jbi::none_t&)
+    { }
+
 }

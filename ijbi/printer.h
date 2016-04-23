@@ -4,6 +4,7 @@
 #include <ijbi/console.h>
 
 #include <jbi/core/string.h>
+#include <jbi/interpreter/types/none.h>
 #include <jbi/variant/static_visitor.h>
 
 namespace ijbi
@@ -16,6 +17,8 @@ namespace ijbi
 
     public:
         explicit printer(console console) noexcept;
+
+        void operator()(const jbi::none_t&);
 
         template < typename T >
         void operator()(const T& value)
