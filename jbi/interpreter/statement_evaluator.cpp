@@ -48,10 +48,20 @@ namespace jbi
             };
         };
 
-        class evaluator : public syntax_tree_visitor<value>
+
+        class evaluation_performer : public syntax_tree_visitor<value>
         {
+        private:
+            std::shared_ptr<symbol_table> _symbols;
+
         public:
-            value operator()(const arithmetic_operator& op) const
+            explicit evaluation_performer(std::shared_ptr<symbol_table> symbols)
+                : _symbols(std::move(symbols))
+            {
+                JBI_THROW_IF(!_symbols, argument_exception("symbols"));
+            }
+
+            value operator()(const arithmetic_operator& op)
             {
                 return apply_visitor(arithmetic_operation_performer(op.operation()),
                     accept_visitor(*this, *op.left()), accept_visitor(*this, *op.right())
@@ -64,8 +74,20 @@ namespace jbi
                 return literal.value();
             }
 
-            template < typename T >
-            value operator()(const T&) const
+            value operator()(const assignment_statement& assignment)
+            {
+                _symbols->set(assignment.identifier(), accept_visitor(*this, *assignment.initializer()));
+                return none;
+            }
+
+            value operator()(const identifier& id) const
+            {
+                const std::string& name = id.name();
+                JBI_THROW_IF(!_symbols->contains(name), name_exception(name));
+                return _symbols->get(name);
+            }
+
+            value operator()(const output_statement&) const
             {
                 JBI_THROW(not_implemented_exception());
             }
@@ -73,10 +95,16 @@ namespace jbi
 
     }
 
+    statement_evaluator::statement_evaluator(std::shared_ptr<symbol_table> symbols)
+        : _symbols(std::move(symbols))
+    {
+        JBI_THROW_IF(!_symbols, argument_exception("symbols"));
+    }
+
     value statement_evaluator::evaluate(const std::unique_ptr<statement>& statement)
     {
         JBI_THROW_IF(!statement, argument_exception("statement"));
-        return accept_visitor(detail::evaluator(), *statement);
+        return accept_visitor(detail::evaluation_performer(_symbols), *statement);
     }
 
 }
