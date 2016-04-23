@@ -166,8 +166,8 @@ TEST(core_variant_tests, equality_operators_test)
     EXPECT_FALSE(first == third);
     EXPECT_TRUE(first != third);
 
-    jbi::variant<int, float> fifth(42.0f);
+    jbi::variant<int, float> fourth(42.0f);
 
-    EXPECT_FALSE(first == fifth);
-    EXPECT_TRUE(first != fifth);
+    EXPECT_FALSE(first == fourth);
+    EXPECT_TRUE(first != fourth);
 }
