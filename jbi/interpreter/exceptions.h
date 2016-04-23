@@ -6,6 +6,15 @@
 namespace jbi
 {
 
+    class name_exception : public std::runtime_error
+    {
+    public:
+        explicit name_exception(const std::string& name)
+            : std::runtime_error("Name '" + name + "' is not defined")
+        { }
+    };
+
+
     class syntax_exception : public std::runtime_error
     {
     public:
