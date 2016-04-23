@@ -8,7 +8,7 @@ jbi::variant<int, float> make_variant(T value)
     return jbi::variant<int, float>(value);
 };
 
-TEST(core_variant_tests, default_constructor_test)
+TEST(variant_tests, default_constructor_test)
 {
     jbi::variant<int, float> first;
     EXPECT_EQ(0, jbi::get<int>(first));
@@ -19,7 +19,7 @@ TEST(core_variant_tests, default_constructor_test)
     EXPECT_THROW(jbi::get<int>(second), jbi::bad_get);
 }
 
-TEST(core_variant_tests, copy_constructor_test)
+TEST(variant_tests, copy_constructor_test)
 {
     jbi::variant<int, float> variant(3.14f);
 
@@ -27,7 +27,7 @@ TEST(core_variant_tests, copy_constructor_test)
     EXPECT_EQ(3.14f, jbi::get<float>(copy));
 }
 
-TEST(core_variant_tests, move_constructor_test)
+TEST(variant_tests, move_constructor_test)
 {
     jbi::variant<int, float> int_variant(make_variant(1948));
     EXPECT_EQ(1948, jbi::get<int>(int_variant));
@@ -37,7 +37,7 @@ TEST(core_variant_tests, move_constructor_test)
 }
 
 
-TEST(core_variant_tests, destructor_test)
+TEST(variant_tests, destructor_test)
 {
     using namespace ::testing;
 
@@ -62,7 +62,7 @@ TEST(core_variant_tests, destructor_test)
     Mock::VerifyAndClearExpectations(mock);
 };
 
-TEST(core_variant_tests, copy_assignment_test)
+TEST(variant_tests, copy_assignment_test)
 {
     jbi::variant<int, float> variant(1948);
 
@@ -81,7 +81,7 @@ TEST(core_variant_tests, copy_assignment_test)
     EXPECT_EQ(3.14f, jbi::get<float>(float_variant));
 }
 
-TEST(core_variant_tests, move_assignment_test)
+TEST(variant_tests, move_assignment_test)
 {
     jbi::variant<int, float> variant(1948);
 
@@ -92,7 +92,7 @@ TEST(core_variant_tests, move_assignment_test)
     EXPECT_EQ(3.14f, jbi::get<float>(variant));
 }
 
-TEST(core_variant_tests, apply_visitor_test)
+TEST(variant_tests, apply_visitor_test)
 {
     using namespace ::testing;
 
@@ -140,7 +140,7 @@ TEST(core_variant_tests, apply_visitor_test)
     EXPECT_EQ(5, jbi::apply_visitor(visitor, float_variant, float_variant));
 }
 
-TEST(core_variant_tests, get_test)
+TEST(variant_tests, get_test)
 {
     jbi::variant<int, float> int_variant(1984);
     EXPECT_EQ(1984, jbi::get<int>(int_variant));
@@ -153,7 +153,7 @@ TEST(core_variant_tests, get_test)
     EXPECT_EQ(1948, jbi::get<int>(make_variant(1948)));
 }
 
-TEST(core_variant_tests, equality_operators_test)
+TEST(variant_tests, equality_operators_test)
 {
     jbi::variant<int, float> first(1984);
     jbi::variant<int, float> second(1984);

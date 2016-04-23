@@ -24,7 +24,7 @@ TEST(symbol_table_tests, override_test)
     EXPECT_EQ(1948, jbi::get<int>(symbols.get("foo")));
 }
 
-TEST(symbol_table_test, contains_test)
+TEST(symbol_table_tests, contains_test)
 {
     jbi::symbol_table symbols;
 

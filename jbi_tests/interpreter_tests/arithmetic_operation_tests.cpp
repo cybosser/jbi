@@ -2,7 +2,7 @@
 
 #include <jbi/interpreter/arithmetic_operation.h>
 
-TEST(interpreter_arithmetic_operation_tests, equality_operators_test)
+TEST(arithmetic_operation_tests, equality_operators_test)
 {
     EXPECT_TRUE(jbi::arithmetic_operation::addition() == jbi::arithmetic_operation::addition());
     EXPECT_FALSE(jbi::arithmetic_operation::addition() != jbi::arithmetic_operation::addition());
@@ -20,7 +20,7 @@ TEST(interpreter_arithmetic_operation_tests, equality_operators_test)
     EXPECT_FALSE(jbi::arithmetic_operation::addition() == jbi::arithmetic_operation::exponentiation());
 }
 
-TEST(interpreter_arithmetic_operation_tests, from_symbol_test)
+TEST(arithmetic_operation_tests, from_symbol_test)
 {
     EXPECT_EQ(jbi::arithmetic_operation::addition(), jbi::arithmetic_operation::from_symbol('+'));
     EXPECT_EQ(jbi::arithmetic_operation::subtraction(), jbi::arithmetic_operation::from_symbol('-'));
