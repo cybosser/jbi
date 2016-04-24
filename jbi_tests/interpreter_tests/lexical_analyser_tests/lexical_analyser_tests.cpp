@@ -55,6 +55,12 @@ TEST(lexical_analyser_tests, numbers_test)
     tester.expect(jbi::token::literal(-1.62));
 }
 
+TEST(lexical_analyser_tests, integer_overflow_test)
+{
+    jbi::lexical_analyser tokenizer(std::to_string(std::numeric_limits<unsigned int>::max()));
+    EXPECT_THROW(tokenizer.read(), jbi::value_exception);
+}
+
 TEST(lexical_analyser_tests, symbols_test)
 {
     lexical_analyser_tester tester("= , + - / * ^ {} ( )");

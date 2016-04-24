@@ -1,6 +1,6 @@
 %{
-#include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/lexical_analyser/token.h>
+#include <jbi/interpreter/string.h>
 
 #define YY_DECL jbi::token yylex(yyscan_t yyscanner)
 
@@ -22,8 +22,8 @@ letter  [a-zA-Z]
 "out"                       { return jbi::token::out(); }
 "print"                     { return jbi::token::print(); }
 
-"-"?{digit}+\.{digit}*      { return jbi::token::literal(std::atof(yytext)); }
-"-"?{digit}+                { return jbi::token::literal(std::atoi(yytext)); }
+"-"?{digit}+\.{digit}*      { return jbi::token::literal(jbi::from_string<double>(yytext)); }
+"-"?{digit}+                { return jbi::token::literal(jbi::from_string<int>(yytext)); }
 \"(\\.|[^\\"])*\"           { return jbi::token::literal(yytext); }
 
 {letter}({letter}|{digit})* { return jbi::token::identifier(yytext); }

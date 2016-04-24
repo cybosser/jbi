@@ -461,8 +461,8 @@ static yyconst flex_int16_t yy_chk[86] =
 #define YY_RESTORE_YY_MORE_OFFSET
 #line 1 "scanner.l"
 #line 2 "scanner.l"
-#include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/lexical_analyser/token.h>
+#include <jbi/interpreter/string.h>
 
 #define YY_DECL jbi::token yylex(yyscan_t yyscanner)
 
@@ -798,12 +798,12 @@ YY_RULE_SETUP
 case 5:
 YY_RULE_SETUP
 #line 25 "scanner.l"
-{ return jbi::token::literal(std::atof(yytext)); }
+{ return jbi::token::literal(jbi::from_string<double>(yytext)); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 26 "scanner.l"
-{ return jbi::token::literal(std::atoi(yytext)); }
+{ return jbi::token::literal(jbi::from_string<int>(yytext)); }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */

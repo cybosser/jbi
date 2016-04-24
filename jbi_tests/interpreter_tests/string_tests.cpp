@@ -17,7 +17,7 @@ TEST(from_string_tests, non_numbers_test)
     EXPECT_THROW(jbi::from_string<int>("bar"), jbi::value_exception);
 }
 
-TEST(from_string_tests, overflow_test)
+TEST(from_string_tests, integer_overflow_test)
 {
     EXPECT_THROW(jbi::from_string<int>(std::to_string(std::numeric_limits<unsigned int>::max())), jbi::value_exception);
 }
