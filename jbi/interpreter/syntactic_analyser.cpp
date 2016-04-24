@@ -71,7 +71,7 @@ namespace jbi
             if (lookahead == token::in())
                 return parse_input_statement();
 
-            JBI_THROW(not_implemented_exception());
+            JBI_THROW(syntax_exception("missing statement"));
         }
 
     private:
