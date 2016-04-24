@@ -44,7 +44,7 @@ namespace jbi
     class value_exception : public interpreter_exception
     {
     public:
-        value_exception(const std::string& message)
+        explicit value_exception(const std::string& message)
             : interpreter_exception(message)
         { }
     };
