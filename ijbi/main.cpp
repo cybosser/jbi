@@ -1,5 +1,4 @@
 #include <ijbi/console.h>
-#include <ijbi/printer.h>
 
 #include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/interpreter.h>
@@ -7,8 +6,6 @@
 void run(const std::shared_ptr<ijbi::console>& console)
 {
     JBI_THROW_IF(!console, jbi::argument_exception("console"));
-
-    ijbi::printer printer(console);
 
     jbi::interpreter interpreter(console);
 
@@ -20,8 +17,7 @@ void run(const std::shared_ptr<ijbi::console>& console)
 
         try
         {
-            const jbi::value result = interpreter.interpret(statement);
-            jbi::apply_visitor(printer, result);
+            interpreter.interpret(statement);
         }
         catch (const jbi::syntax_exception& ex)
         {

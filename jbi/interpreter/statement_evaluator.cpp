@@ -84,9 +84,9 @@ namespace jbi
                 return literal.value();
             }
 
-            value operator()(const assignment_statement& assignment)
+            value operator()(const assignment_statement& var)
             {
-                _symbols->set(assignment.identifier(), accept_visitor(*this, *assignment.initializer()));
+                _symbols->set(var.identifier(), accept_visitor(*this, *var.initializer()));
                 return none;
             }
 
@@ -113,10 +113,10 @@ namespace jbi
         JBI_THROW_IF(!_terminal, argument_exception("terminal"));
     }
 
-    value statement_evaluator::evaluate(const std::unique_ptr<statement>& statement)
+    void statement_evaluator::evaluate(const std::unique_ptr<statement>& statement)
     {
         JBI_THROW_IF(!statement, argument_exception("statement"));
-        return accept_visitor(detail::evaluation_performer(_symbols, _terminal), *statement);
+        accept_visitor(detail::evaluation_performer(_symbols, _terminal), *statement);
     }
 
 }

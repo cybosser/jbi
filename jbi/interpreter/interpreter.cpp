@@ -12,7 +12,7 @@ namespace jbi
         JBI_THROW_IF(!_terminal, argument_exception("terminal"));
     }
 
-    value interpreter::interpret(const std::string& statement_)
+    void interpreter::interpret(const std::string& statement_)
     {
         syntactic_analyser parser{ lexical_analyser(statement_) };
 
@@ -20,7 +20,7 @@ namespace jbi
 
         statement_evaluator evaluator(_symbols, _terminal);
 
-        return evaluator.evaluate(statement);
+        evaluator.evaluate(statement);
     }
 
 }

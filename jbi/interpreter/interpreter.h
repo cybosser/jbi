@@ -16,7 +16,7 @@ namespace jbi
     public:
         explicit interpreter(std::shared_ptr<iterminal> terminal);
 
-        value interpret(const std::string& statement);
+        void interpret(const std::string& statement);
     };
 
 }
