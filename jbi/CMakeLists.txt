@@ -28,6 +28,7 @@ set(JBI_HEADER_FILES
     interpreter/arithmetic_operation.h
     interpreter/exceptions.h
     interpreter/interpreter.h
+    interpreter/iterminal.h
     interpreter/statement_evaluator.h
     interpreter/symbol_table.h
     interpreter/syntactic_analyser.h
