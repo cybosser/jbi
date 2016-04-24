@@ -1,16 +1,16 @@
 #ifndef IJBI_CONSOLE_H
 #define IJBI_CONSOLE_H
 
-#include <string>
+#include <jbi/interpreter/iterminal.h>
 
 namespace ijbi
 {
 
-    class console
+    class console : public jbi::iterminal
     {
     public:
-        std::string read_line();
-        void write_line(const std::string& line);
+        virtual std::string read_line() override;
+        virtual void write_line(const std::string& line) override;
     };
 
 }
