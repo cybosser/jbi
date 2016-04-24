@@ -37,13 +37,15 @@ namespace jbi
         class evaluation_performer : public syntax_tree_visitor<value>
         {
         private:
-            std::shared_ptr<symbol_table> _symbols;
+            std::shared_ptr<symbol_table>   _symbols;
+            std::shared_ptr<iterminal>      _terminal;
 
         public:
-            explicit evaluation_performer(std::shared_ptr<symbol_table> symbols)
-                : _symbols(std::move(symbols))
+            explicit evaluation_performer(std::shared_ptr<symbol_table> symbols, std::shared_ptr<iterminal> terminal)
+                : _symbols(std::move(symbols)), _terminal(std::move(terminal))
             {
                 JBI_THROW_IF(!_symbols, argument_exception("symbols"));
+                JBI_THROW_IF(!_terminal, argument_exception("terminal"));
             }
 
             value operator()(const arithmetic_operator& op)
@@ -80,16 +82,17 @@ namespace jbi
 
     }
 
-    statement_evaluator::statement_evaluator(std::shared_ptr<symbol_table> symbols)
-        : _symbols(std::move(symbols))
+    statement_evaluator::statement_evaluator(std::shared_ptr<symbol_table> symbols, std::shared_ptr<iterminal> terminal)
+        : _symbols(std::move(symbols)), _terminal(std::move(terminal))
     {
         JBI_THROW_IF(!_symbols, argument_exception("symbols"));
+        JBI_THROW_IF(!_terminal, argument_exception("terminal"));
     }
 
     value statement_evaluator::evaluate(const std::unique_ptr<statement>& statement)
     {
         JBI_THROW_IF(!statement, argument_exception("statement"));
-        return accept_visitor(detail::evaluation_performer(_symbols), *statement);
+        return accept_visitor(detail::evaluation_performer(_symbols, _terminal), *statement);
     }
 
 }

@@ -6,9 +6,11 @@
 namespace jbi
 {
 
-    interpreter::interpreter()
-        : _symbols(std::make_shared<symbol_table>())
-    { }
+    interpreter::interpreter(std::shared_ptr<iterminal> terminal)
+        : _symbols(std::make_shared<symbol_table>()), _terminal(std::move(terminal))
+    {
+        JBI_THROW_IF(!_terminal, argument_exception("terminal"));
+    }
 
     value interpreter::interpret(const std::string& statement_)
     {
@@ -16,7 +18,7 @@ namespace jbi
 
         const std::unique_ptr<statement> statement = parser.parse();
 
-        statement_evaluator evaluator(_symbols);
+        statement_evaluator evaluator(_symbols, _terminal);
 
         return evaluator.evaluate(statement);
     }

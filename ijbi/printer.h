@@ -7,23 +7,25 @@
 #include <jbi/interpreter/types/none.h>
 #include <jbi/variant/static_visitor.h>
 
+#include <memory>
+
 namespace ijbi
 {
 
     class printer : public jbi::static_visitor<>
     {
     private:
-        console _console;
+        std::shared_ptr<console> _console;
 
     public:
-        explicit printer(console console) noexcept;
+        explicit printer(std::shared_ptr<console> console);
 
         void operator()(const jbi::none_t&);
 
         template < typename T >
         void operator()(const T& value)
         {
-            _console.write_line(jbi::to_string(value));
+            _console->write_line(jbi::to_string(value));
         }
     };
 
