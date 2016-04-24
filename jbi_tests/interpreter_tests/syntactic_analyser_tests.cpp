@@ -7,9 +7,9 @@
 
 struct lispifier : public jbi::syntax_tree_visitor<std::string>
 {
-    std::string operator()(const jbi::arithmetic_operator& op) const
+    std::string operator()(const jbi::declaration_statement& var) const
     {
-        return "(" + jbi::to_string(op.operation()) + " " + jbi::accept_visitor(*this, *op.left()) + " " + jbi::accept_visitor(*this, *op.right()) + ")";
+        return "(var " + var.identifier() + " " + jbi::accept_visitor(*this, *var.initializer()) + ")";
     }
 
     std::string operator()(const jbi::output_statement& out) const
@@ -17,9 +17,14 @@ struct lispifier : public jbi::syntax_tree_visitor<std::string>
         return "(out " + jbi::accept_visitor(*this, *out.value()) + ")";
     }
 
-    std::string operator()(const jbi::declaration_statement& var) const
+    std::string operator()(const jbi::input_statement& in) const
     {
-        return "(var " + var.identifier() + " " + jbi::accept_visitor(*this, *var.initializer()) + ")";
+        return "(in " + in.identifier() + ")";
+    }
+
+    std::string operator()(const jbi::arithmetic_operator& op) const
+    {
+        return "(" + jbi::to_string(op.operation()) + " " + jbi::accept_visitor(*this, *op.left()) + " " + jbi::accept_visitor(*this, *op.right()) + ")";
     }
 
     template < typename T >
@@ -42,7 +47,7 @@ std::string lispify(const std::string& statement)
     return jbi::accept_visitor(lispifier(), *parser.parse());
 }
 
-TEST(syntactic_analyser_tests, assignment_statement_test)
+TEST(syntactic_analyser_tests, declaration_statement_test)
 {
     EXPECT_EQ("(var foo a)", lispify("var foo = a"));
 
@@ -58,6 +63,15 @@ TEST(syntactic_analyser_tests, output_statement_test)
 
     EXPECT_THROW(lispify("out"), jbi::syntax_exception);
     EXPECT_THROW(lispify("out var"), jbi::syntax_exception);
+}
+
+TEST(syntactic_analyser_tests, input_statement_test)
+{
+    EXPECT_EQ("(in foo)", lispify("in foo"));
+
+    EXPECT_THROW(lispify("in"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("in var"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("in foo bar"), jbi::syntax_exception);
 }
 
 TEST(syntactic_analyser_tests, literals_test)

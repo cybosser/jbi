@@ -28,6 +28,11 @@ namespace jbi
             return none;
         }
 
+        value evaluation_performer::operator()(const jbi::input_statement&)
+        {
+            JBI_THROW(not_implemented_exception());
+        }
+
         value evaluation_performer::operator()(const jbi::arithmetic_operator& op)
         {
             return apply_visitor(arithmetic_operation_performer(op.operation()),

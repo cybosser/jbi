@@ -21,6 +21,7 @@ namespace jbi
 
             value operator()(const jbi::declaration_statement& var);
             value operator()(const jbi::output_statement& out);
+            value operator()(const jbi::input_statement& in);
 
             value operator()(const jbi::arithmetic_operator& op);
 

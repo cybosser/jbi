@@ -5,6 +5,7 @@
 #include <jbi/interpreter/syntax_tree/arithmetic_operator.h>
 #include <jbi/interpreter/syntax_tree/declaration_statement.h>
 #include <jbi/interpreter/syntax_tree/identifier.h>
+#include <jbi/interpreter/syntax_tree/input_statement.h>
 #include <jbi/interpreter/syntax_tree/literals.h>
 #include <jbi/interpreter/syntax_tree/output_statement.h>
 
@@ -60,11 +61,15 @@ namespace jbi
         std::unique_ptr<statement> parse()
         {
             const token lookahead = _tokens.pop();
+
             if (lookahead == token::var())
                 return parse_declaration_statement();
 
             if (lookahead == token::out())
                 return make_unique<output_statement>(parse_expression());
+
+            if (lookahead == token::in())
+                return parse_input_statement();
 
             JBI_THROW(not_implemented_exception());
         }
@@ -72,12 +77,16 @@ namespace jbi
     private:
         std::unique_ptr<statement> parse_declaration_statement()
         {
-            const token lookahead = _tokens.pop();
-            JBI_THROW_IF(lookahead.tag() != token_tag::identifier, syntax_exception("missing identifier"));
-
+            const std::string identifier = parse_identifier();
             expect_token(token::equals(), "missing =");
+            return make_unique<declaration_statement>(identifier, parse_expression());
+        }
 
-            return make_unique<declaration_statement>(get<std::string>(lookahead.value()), parse_expression());
+        std::unique_ptr<statement> parse_input_statement()
+        {
+            const std::string identifier = parse_identifier();
+            expect_token(token::eof(), "junk at end of line");
+            return make_unique<input_statement>(identifier);
         }
 
         std::unique_ptr<expression> parse_expression()
@@ -135,6 +144,13 @@ namespace jbi
             }
 
             JBI_THROW(syntax_exception("missing expression"));
+        }
+
+        std::string parse_identifier()
+        {
+            const token lookahead = _tokens.pop();
+            JBI_THROW_IF(lookahead.tag() != token_tag::identifier, syntax_exception("missing identifier"));
+            return get<std::string>(lookahead.value());
         }
 
         void expect_token(token expected, const std::string& message)

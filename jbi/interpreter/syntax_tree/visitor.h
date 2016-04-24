@@ -4,6 +4,7 @@
 #include <jbi/interpreter/syntax_tree/arithmetic_operator.h>
 #include <jbi/interpreter/syntax_tree/declaration_statement.h>
 #include <jbi/interpreter/syntax_tree/identifier.h>
+#include <jbi/interpreter/syntax_tree/input_statement.h>
 #include <jbi/interpreter/syntax_tree/literals.h>
 #include <jbi/interpreter/syntax_tree/output_statement.h>
 #include <jbi/visitor/visitor.h>
@@ -17,6 +18,7 @@ namespace jbi
         declaration_statement,
         floating_literal,
         identifier,
+        input_statement,
         integer_literal,
         output_statement
     >;

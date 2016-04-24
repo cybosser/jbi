@@ -22,6 +22,7 @@ set(JBI_HEADER_FILES
     interpreter/syntax_tree/declaration_statement.h
     interpreter/syntax_tree/expression.h
     interpreter/syntax_tree/identifier.h
+    interpreter/syntax_tree/input_statement.h
     interpreter/syntax_tree/literals.h
     interpreter/syntax_tree/node.h
     interpreter/syntax_tree/output_statement.h
