@@ -14,12 +14,12 @@ namespace jbi
         struct type_tag
         { };
 
-        inline int from_string(const std::string& str, type_tag<int>)
+        inline int from_string_impl(const std::string& str, type_tag<int>)
         {
             return std::stoi(str);
         }
 
-        inline double from_string(const std::string& str, type_tag<double>)
+        inline double from_string_impl(const std::string& str, type_tag<double>)
         {
             return std::stod(str);
         }
@@ -31,7 +31,7 @@ namespace jbi
     {
         try
         {
-            return detail::from_string(str, detail::type_tag<T>());
+            return detail::from_string_impl(str, detail::type_tag<T>());
         }
         catch (const std::invalid_argument& ex)
         {
