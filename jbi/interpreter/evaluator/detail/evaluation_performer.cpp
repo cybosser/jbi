@@ -17,6 +17,7 @@ namespace jbi
 
         value evaluation_performer::operator()(const jbi::declaration_statement& var)
         {
+            JBI_THROW_IF(_symbols.contains(var.identifier()), jbi::name_exception("Variable '" + var.identifier() + "' is already defined"));
             _symbols.set(var.identifier(), accept_visitor(*this, *var.initializer()));
             return none;
         }

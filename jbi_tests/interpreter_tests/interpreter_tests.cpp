@@ -20,22 +20,29 @@ protected:
     jbi::interpreter                interpreter;
 };
 
-TEST_F(interpreter_tests, out_test)
+TEST_F(interpreter_tests, output_test)
 {
     EXPECT_CALL(*terminal, write_line("1987.14"));
 
     interpreter.interpret("out 1984 + 3.14");
 }
 
-TEST_F(interpreter_tests, invalid_name_test)
+TEST_F(interpreter_tests, undeclared_variable_test)
 {
     EXPECT_THROW(interpreter.interpret("out foo"), jbi::name_exception);
 }
 
-TEST_F(interpreter_tests, var_test)
+TEST_F(interpreter_tests, variable_declaration_test)
 {
     EXPECT_CALL(*terminal, write_line("1987.14"));
 
     interpreter.interpret("var foo = 1984 + 3.14");
     interpreter.interpret("out foo");
+}
+
+TEST_F(interpreter_tests, variable_redeclaration_test)
+{
+    interpreter.interpret("var foo = 1");
+
+    EXPECT_THROW(interpreter.interpret("var foo = 2"), jbi::name_exception);
 }
