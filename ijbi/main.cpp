@@ -19,7 +19,7 @@ void run(const std::shared_ptr<ijbi::console>& console)
         {
             interpreter.interpret(statement);
         }
-        catch (const jbi::syntax_exception& ex)
+        catch (const jbi::interpreter_exception& ex)
         {
             console->write_line(ex.what());
         }
