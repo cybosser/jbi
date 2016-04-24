@@ -34,6 +34,29 @@ namespace jbi
         };
 
 
+        class value_printer : public static_visitor<>
+        {
+        private:
+            std::shared_ptr<iterminal> _terminal;
+
+        public:
+            explicit value_printer(std::shared_ptr<iterminal> terminal)
+                : _terminal(std::move(terminal))
+            {
+                JBI_THROW_IF(!_terminal, argument_exception("terminal"));
+            }
+
+            template < typename T >
+            void operator()(const T& value)
+            {
+                _terminal->write_line(to_string(value));
+            }
+
+            void operator()(none_t)
+            { }
+        };
+
+
         class evaluation_performer : public syntax_tree_visitor<value>
         {
         private:
@@ -74,9 +97,10 @@ namespace jbi
                 return _symbols->get(name);
             }
 
-            value operator()(const output_statement&) const
+            value operator()(const output_statement& out)
             {
-                JBI_THROW(not_implemented_exception());
+                apply_visitor(value_printer(_terminal), accept_visitor(*this, *out.value()));
+                return none;
             }
         };
 
