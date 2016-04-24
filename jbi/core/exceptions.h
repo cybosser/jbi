@@ -44,11 +44,11 @@ namespace jbi
     };
 
 
-    class argument_exception : public std::runtime_error
+    class argument_exception : public std::invalid_argument
     {
     public:
         argument_exception(const std::string& name)
-            : std::runtime_error("Invalid argument: " + name)
+            : std::invalid_argument("Invalid argument: " + name)
         { }
     };
 
