@@ -106,10 +106,9 @@ namespace jbi
 
     }
 
-    statement_evaluator::statement_evaluator(std::shared_ptr<symbol_table> symbols, std::shared_ptr<iterminal> terminal)
-        : _symbols(std::move(symbols)), _terminal(std::move(terminal))
+    statement_evaluator::statement_evaluator(std::shared_ptr<iterminal> terminal)
+        : _symbols(std::make_shared<symbol_table>()), _terminal(std::move(terminal))
     {
-        JBI_THROW_IF(!_symbols, argument_exception("symbols"));
         JBI_THROW_IF(!_terminal, argument_exception("terminal"));
     }
 

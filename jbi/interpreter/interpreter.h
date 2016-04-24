@@ -1,8 +1,7 @@
 #ifndef JBI_INTERPRETER_INTERPRETER_H
 #define JBI_INTERPRETER_INTERPRETER_H
 
-#include <jbi/interpreter/iterminal.h>
-#include <jbi/interpreter/symbol_table.h>
+#include <jbi/interpreter/statement_evaluator.h>
 
 namespace jbi
 {
@@ -10,8 +9,7 @@ namespace jbi
     class interpreter
     {
     private:
-        std::shared_ptr<symbol_table>   _symbols;
-        std::shared_ptr<iterminal>      _terminal;
+        statement_evaluator _evaluator;
 
     public:
         explicit interpreter(std::shared_ptr<iterminal> terminal);

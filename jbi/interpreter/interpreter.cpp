@@ -7,20 +7,15 @@ namespace jbi
 {
 
     interpreter::interpreter(std::shared_ptr<iterminal> terminal)
-        : _symbols(std::make_shared<symbol_table>()), _terminal(std::move(terminal))
+        : _evaluator(terminal)
+    { }
+
+    void interpreter::interpret(const std::string& statement)
     {
-        JBI_THROW_IF(!_terminal, argument_exception("terminal"));
-    }
+        lexical_analyser tokenizer(statement);
+        syntactic_analyser parser(std::move(tokenizer));
 
-    void interpreter::interpret(const std::string& statement_)
-    {
-        syntactic_analyser parser{ lexical_analyser(statement_) };
-
-        const std::unique_ptr<statement> statement = parser.parse();
-
-        statement_evaluator evaluator(_symbols, _terminal);
-
-        evaluator.evaluate(statement);
+        _evaluator.evaluate(parser.parse());
     }
 
 }

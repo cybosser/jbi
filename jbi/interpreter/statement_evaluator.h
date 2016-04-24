@@ -17,7 +17,7 @@ namespace jbi
         std::shared_ptr<iterminal>      _terminal;
 
     public:
-        statement_evaluator(std::shared_ptr<symbol_table> symbols, std::shared_ptr<iterminal> terminal);
+        explicit statement_evaluator(std::shared_ptr<iterminal> terminal);
 
         void evaluate(const std::unique_ptr<statement>& statement);
     };
