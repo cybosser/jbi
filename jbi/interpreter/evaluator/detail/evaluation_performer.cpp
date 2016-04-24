@@ -1,7 +1,6 @@
 #include <jbi/interpreter/evaluator/detail/evaluation_performer.h>
 
 #include <jbi/interpreter/evaluator/detail/arithmetic_operation_performer.h>
-#include <jbi/interpreter/evaluator/detail/value_printer.h>
 #include <jbi/interpreter/string.h>
 #include <jbi/visitor/accept_visitor.h>
 
@@ -11,7 +10,7 @@ namespace jbi
     {
 
         evaluation_performer::evaluation_performer(std::shared_ptr<iterminal> terminal)
-            : _terminal(move(terminal))
+            : _terminal(move(terminal)), _printer(_terminal)
         {
             JBI_THROW_IF(!_terminal, jbi::argument_exception("terminal"));
         }
@@ -27,7 +26,7 @@ namespace jbi
 
         value evaluation_performer::operator()(const jbi::output_statement& out)
         {
-            apply_visitor(value_printer(_terminal), accept_visitor(*this, *out.value()));
+            apply_visitor(_printer, accept_visitor(*this, *out.value()));
 
             return none;
         }

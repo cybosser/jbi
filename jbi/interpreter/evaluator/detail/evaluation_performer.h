@@ -1,7 +1,7 @@
 #ifndef JBI_INTERPRETER_EVALUATOR_DETAIL_EVALUATION_PERFORMER_H
 #define JBI_INTERPRETER_EVALUATOR_DETAIL_EVALUATION_PERFORMER_H
 
-#include <jbi/interpreter/iterminal.h>
+#include <jbi/interpreter/evaluator/detail/value_printer.h>
 #include <jbi/interpreter/symbol_table.h>
 #include <jbi/interpreter/syntax_tree/visitor.h>
 
@@ -13,8 +13,9 @@ namespace jbi
         class evaluation_performer : public jbi::syntax_tree_visitor<value>
         {
         private:
-            std::shared_ptr<iterminal> _terminal;
-            symbol_table               _symbols;
+            std::shared_ptr<iterminal>  _terminal;
+            value_printer               _printer;
+            symbol_table                _symbols;
 
         public:
             explicit evaluation_performer(std::shared_ptr<iterminal> terminal);
