@@ -22,8 +22,8 @@ letter  [a-zA-Z]
 "out"                       { return jbi::token::out(); }
 "print"                     { return jbi::token::print(); }
 
-{digit}+\.{digit}*          { return jbi::token::literal(std::atof(yytext)); }
-{digit}+                    { return jbi::token::literal(std::atoi(yytext)); }
+"-"?{digit}+\.{digit}*      { return jbi::token::literal(std::atof(yytext)); }
+"-"?{digit}+                { return jbi::token::literal(std::atoi(yytext)); }
 \"(\\.|[^\\"])*\"           { return jbi::token::literal(yytext); }
 
 {letter}({letter}|{digit})* { return jbi::token::identifier(yytext); }

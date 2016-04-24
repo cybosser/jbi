@@ -45,14 +45,14 @@ TEST(lexical_analyser_tests, identifiers_test)
 
 TEST(lexical_analyser_tests, numbers_test)
 {
-    lexical_analyser_tester tester("7 42 1984 3.14 0.5 9.");
+    lexical_analyser_tester tester("7 1984 3.14 9. -3 -1.62");
 
     tester.expect(jbi::token::literal(7));
-    tester.expect(jbi::token::literal(42));
     tester.expect(jbi::token::literal(1984));
     tester.expect(jbi::token::literal(3.14));
-    tester.expect(jbi::token::literal(0.5));
     tester.expect(jbi::token::literal(9.0));
+    tester.expect(jbi::token::literal(-3));
+    tester.expect(jbi::token::literal(-1.62));
 }
 
 TEST(lexical_analyser_tests, symbols_test)

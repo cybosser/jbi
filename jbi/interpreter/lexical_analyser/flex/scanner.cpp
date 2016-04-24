@@ -9,7 +9,7 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 37
+#define YY_FLEX_SUBMINOR_VERSION 39
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -181,6 +181,7 @@ typedef size_t yy_size_t;
 #define EOB_ACT_LAST_MATCH 2
 
     #define YY_LESS_LINENO(n)
+    #define YY_LINENO_REWIND_TO(ptr)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -363,7 +364,7 @@ static yyconst flex_int16_t yy_accept[43] =
     {   0,
         0,    0,   24,   22,   21,   21,   22,   17,   18,   13,
        11,   16,   12,   14,    6,   10,    8,   15,    8,    8,
-        8,    8,   19,   20,    0,    7,    0,    9,    5,    6,
+        8,    8,   19,   20,    0,    7,    0,    6,    9,    5,
         8,    2,    8,    8,    8,    5,    3,    8,    1,    8,
         4,    0
     } ;
@@ -409,11 +410,11 @@ static yyconst flex_int32_t yy_meta[30] =
 
 static yyconst flex_int16_t yy_base[45] =
     {   0,
-        0,    0,   54,   55,   55,   55,   26,   55,   55,   55,
-       55,   55,   38,   55,   20,   55,    0,   55,   31,   25,
-       26,   30,   55,   55,   28,   55,   45,   55,   31,   23,
-        0,    0,   17,   21,   16,   26,    0,   17,    0,   12,
-        0,   55,   45,   33
+        0,    0,   55,   56,   56,   56,   26,   56,   56,   56,
+       56,   56,   18,   56,   21,   56,    0,   56,   33,   27,
+       28,   32,   56,   56,   31,   56,   44,   25,   56,   33,
+        0,    0,   20,   24,   18,   28,    0,   19,    0,   14,
+        0,   56,   48,   35
     } ;
 
 static yyconst flex_int16_t yy_def[45] =
@@ -425,30 +426,30 @@ static yyconst flex_int16_t yy_def[45] =
        44,    0,   42,   42
     } ;
 
-static yyconst flex_int16_t yy_nxt[85] =
+static yyconst flex_int16_t yy_nxt[86] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
         4,   14,   15,   16,    4,   17,    4,   18,   17,   19,
        17,   20,   21,   17,   17,   17,   22,   23,   24,   26,
-       29,   26,   30,   29,   31,   30,   41,   40,   36,   39,
-       38,   37,   27,   36,   27,   25,   25,   42,   35,   34,
-       33,   32,   28,   42,    3,   42,   42,   42,   42,   42,
+       28,   30,   29,   28,   26,   30,   31,   28,   41,   40,
+       36,   39,   27,   38,   37,   36,   42,   27,   25,   25,
+       35,   34,   33,   32,   42,    3,   42,   42,   42,   42,
        42,   42,   42,   42,   42,   42,   42,   42,   42,   42,
        42,   42,   42,   42,   42,   42,   42,   42,   42,   42,
-       42,   42,   42,   42
+       42,   42,   42,   42,   42
     } ;
 
-static yyconst flex_int16_t yy_chk[85] =
+static yyconst flex_int16_t yy_chk[86] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    7,
-       15,   25,   15,   30,   44,   30,   40,   38,   36,   35,
-       34,   33,    7,   29,   25,   43,   43,   27,   22,   21,
-       20,   19,   13,    3,   42,   42,   42,   42,   42,   42,
+       13,   15,   13,   15,   25,   28,   44,   28,   40,   38,
+       36,   35,    7,   34,   33,   30,   27,   25,   43,   43,
+       22,   21,   20,   19,    3,   42,   42,   42,   42,   42,
        42,   42,   42,   42,   42,   42,   42,   42,   42,   42,
        42,   42,   42,   42,   42,   42,   42,   42,   42,   42,
-       42,   42,   42,   42
+       42,   42,   42,   42,   42
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -466,7 +467,7 @@ static yyconst flex_int16_t yy_chk[85] =
 #define YY_DECL jbi::token yylex(yyscan_t yyscanner)
 
 #define yyterminate() return jbi::token::eof()
-#line 470 "scanner.cpp"
+#line 471 "scanner.cpp"
 
 #define INITIAL 0
 
@@ -691,11 +692,6 @@ YY_DECL
 	register int yy_act;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
-#line 18 "scanner.l"
-
-
-#line 698 "scanner.cpp"
-
 	if ( !yyg->yy_init )
 		{
 		yyg->yy_init = 1;
@@ -722,6 +718,12 @@ YY_DECL
 		yy_load_buffer_state(yyscanner );
 		}
 
+	{
+#line 18 "scanner.l"
+
+
+#line 726 "scanner.cpp"
+
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
 		yy_cp = yyg->yy_c_buf_p;
@@ -738,7 +740,7 @@ YY_DECL
 yy_match:
 		do
 			{
-			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
+			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
 			if ( yy_accept[yy_current_state] )
 				{
 				yyg->yy_last_accepting_state = yy_current_state;
@@ -890,7 +892,7 @@ YY_RULE_SETUP
 #line 49 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 894 "scanner.cpp"
+#line 896 "scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1022,6 +1024,7 @@ case YY_STATE_EOF(INITIAL):
 			"fatal flex scanner internal error--no action found" );
 	} /* end of action switch */
 		} /* end of scanning one token */
+	} /* end of user's declarations */
 } /* end of yylex */
 
 /* yy_get_next_buffer - try to read in a new buffer
