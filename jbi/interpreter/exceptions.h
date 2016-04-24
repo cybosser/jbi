@@ -17,8 +17,8 @@ namespace jbi
     class name_exception : public interpreter_exception
     {
     public:
-        explicit name_exception(const std::string& name)
-            : interpreter_exception("Name '" + name + "' is not defined")
+        explicit name_exception(const std::string& message)
+            : interpreter_exception(message)
         { }
     };
 

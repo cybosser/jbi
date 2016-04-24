@@ -36,7 +36,7 @@ namespace jbi
 
         value evaluation_performer::operator()(const jbi::identifier& id) const
         {
-            JBI_THROW_IF(!_symbols.contains(id.name()), jbi::name_exception(id.name()));
+            JBI_THROW_IF(!_symbols.contains(id.name()), jbi::name_exception("Variable '" + id.name() + "' is not defined"));
             return _symbols.get(id.name());
         }
 
