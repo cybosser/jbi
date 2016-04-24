@@ -13,8 +13,8 @@ namespace jbi
         class evaluation_performer : public jbi::syntax_tree_visitor<value>
         {
         private:
-            std::shared_ptr<symbol_table>   _symbols;
-            std::shared_ptr<iterminal>      _terminal;
+            std::shared_ptr<iterminal> _terminal;
+            symbol_table               _symbols;
 
         public:
             explicit evaluation_performer(std::shared_ptr<iterminal> terminal);

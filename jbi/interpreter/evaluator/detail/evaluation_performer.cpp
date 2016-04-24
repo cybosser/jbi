@@ -10,14 +10,14 @@ namespace jbi
     {
 
         evaluation_performer::evaluation_performer(std::shared_ptr<iterminal> terminal)
-            : _symbols(std::make_shared<symbol_table>()), _terminal(move(terminal))
+            : _terminal(move(terminal))
         {
             JBI_THROW_IF(!_terminal, jbi::argument_exception("terminal"));
         }
 
         value evaluation_performer::operator()(const jbi::declaration_statement& var)
         {
-            _symbols->set(var.identifier(), accept_visitor(*this, *var.initializer()));
+            _symbols.set(var.identifier(), accept_visitor(*this, *var.initializer()));
             return none;
         }
 
@@ -36,8 +36,8 @@ namespace jbi
 
         value evaluation_performer::operator()(const jbi::identifier& id) const
         {
-            JBI_THROW_IF(!_symbols->contains(id.name()), jbi::name_exception(id.name()));
-            return _symbols->get(id.name());
+            JBI_THROW_IF(!_symbols.contains(id.name()), jbi::name_exception(id.name()));
+            return _symbols.get(id.name());
         }
 
     }
