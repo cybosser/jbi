@@ -1,4 +1,4 @@
-#include <jbi/interpreter/statement_evaluator.h>
+#include <jbi/interpreter/evaluator.h>
 
 #include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/syntax_tree/visitor.h>
@@ -106,13 +106,13 @@ namespace jbi
 
     }
 
-    statement_evaluator::statement_evaluator(std::shared_ptr<iterminal> terminal)
+    evaluator::evaluator(std::shared_ptr<iterminal> terminal)
         : _symbols(std::make_shared<symbol_table>()), _terminal(std::move(terminal))
     {
         JBI_THROW_IF(!_terminal, argument_exception("terminal"));
     }
 
-    void statement_evaluator::evaluate(const std::unique_ptr<statement>& statement)
+    void evaluator::evaluate(const std::unique_ptr<statement>& statement)
     {
         JBI_THROW_IF(!statement, argument_exception("statement"));
         accept_visitor(detail::evaluation_performer(_symbols, _terminal), *statement);

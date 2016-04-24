@@ -1,6 +1,5 @@
 #include <jbi/interpreter/interpreter.h>
 
-#include <jbi/interpreter/statement_evaluator.h>
 #include <jbi/interpreter/syntactic_analyser.h>
 
 namespace jbi

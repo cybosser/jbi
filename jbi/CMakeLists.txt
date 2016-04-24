@@ -26,10 +26,10 @@ set(JBI_HEADER_FILES
     interpreter/types/value.h
 
     interpreter/arithmetic_operation.h
+    interpreter/evaluator.h
     interpreter/exceptions.h
     interpreter/interpreter.h
     interpreter/iterminal.h
-    interpreter/statement_evaluator.h
     interpreter/symbol_table.h
     interpreter/syntactic_analyser.h
 
@@ -42,8 +42,8 @@ set(JBI_HEADER_FILES
 )
 
 set(JBI_SOURCE_FILES
+    interpreter/evaluator.cpp
     interpreter/interpreter.cpp
-    interpreter/statement_evaluator.cpp
     interpreter/symbol_table.cpp
     interpreter/syntactic_analyser.cpp
 
