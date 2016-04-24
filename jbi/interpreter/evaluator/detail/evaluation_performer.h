@@ -32,6 +32,10 @@ namespace jbi
             }
 
             value operator()(const jbi::identifier& id) const;
+
+        private:
+            void expect_undeclared(const std::string &identifier) const;
+            void expect_declared(const std::string &identifier) const;
         };
 
     }

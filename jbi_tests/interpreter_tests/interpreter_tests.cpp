@@ -27,6 +27,34 @@ TEST_F(interpreter_tests, output_test)
     interpreter.interpret("out 1984 + 3.14");
 }
 
+TEST_F(interpreter_tests, undeclared_variable_output_test)
+{
+    EXPECT_THROW(interpreter.interpret("out foo"), jbi::name_exception);
+}
+
+TEST_F(interpreter_tests, input_test)
+{
+    using namespace ::testing;
+
+    EXPECT_CALL(*terminal, read_line()).WillOnce(Return("1948"));
+    EXPECT_CALL(*terminal, write_line("1948"));
+
+    interpreter.interpret("in foo");
+    interpreter.interpret("out foo");
+}
+
+TEST_F(interpreter_tests, declared_variable_input_test)
+{
+    using namespace ::testing;
+
+    EXPECT_CALL(*terminal, read_line()).WillOnce(Return("1948"));
+
+    interpreter.interpret("in foo");
+
+    EXPECT_THROW(interpreter.interpret("in foo"), jbi::name_exception);
+}
+
+
 TEST_F(interpreter_tests, variable_declaration_test)
 {
     EXPECT_CALL(*terminal, write_line("1987.14"));
@@ -35,12 +63,7 @@ TEST_F(interpreter_tests, variable_declaration_test)
     interpreter.interpret("out foo");
 }
 
-TEST_F(interpreter_tests, undeclared_variable_test)
-{
-    EXPECT_THROW(interpreter.interpret("out foo"), jbi::name_exception);
-}
-
-TEST_F(interpreter_tests, variable_redeclaration_test)
+TEST_F(interpreter_tests, declared_variable_declaration_test)
 {
     interpreter.interpret("var foo = 1");
 
