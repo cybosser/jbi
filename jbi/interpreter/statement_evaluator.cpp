@@ -12,9 +12,6 @@ namespace jbi
 
         class arithmetic_operation_performer : public static_visitor<value>
         {
-            template < typename T, typename U >
-            using is_arithmetic = bool_constant<std::is_arithmetic<T>::value && std::is_arithmetic<U>::value>;
-
         private:
             arithmetic_operation _operation;
 

@@ -6,6 +6,12 @@
 namespace jbi
 {
 
+    template < bool Value >
+    using bool_constant = std::integral_constant<bool, Value>;
+
+    template < std::size_t Value >
+    using size_t_constant = std::integral_constant<std::size_t, Value>;
+
     template < std::size_t Length, typename... Ts >
     using aligned_union_t = typename std::aligned_union<Length, Ts...>::type;
 
@@ -24,11 +30,8 @@ namespace jbi
     template < typename From, typename To >
     using is_convertible_t = typename std::is_convertible<From, To>::type;
 
-    template < bool Value >
-    using bool_constant = std::integral_constant<bool, Value>;
-
-    template < std::size_t Value >
-    using size_t_constant = std::integral_constant<std::size_t, Value>;
+    template < typename T, typename U>
+    using is_arithmetic = bool_constant<std::is_arithmetic<T>::value && std::is_arithmetic<U>::value>;
 
     template < typename T >
     using return_type_of = typename T::return_type;
