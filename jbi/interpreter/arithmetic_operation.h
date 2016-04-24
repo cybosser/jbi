@@ -4,15 +4,33 @@
 #include <jbi/core/exceptions.h>
 #include <jbi/core/utility.h>
 
+#include <cmath>
+
 namespace jbi
 {
 
     class arithmetic_operation
     {
     private:
-        char    _symbol;
+        char _symbol;
 
     public:
+        template < typename T, typename U >
+        enable_if_t<
+            is_arithmetic<T, U>::value, common_type_t<T, U>
+        > apply(T left, U right) const
+        {
+            switch (_symbol)
+            {
+            case '+': return left + right;
+            case '-': return left - right;
+            case '*': return left * right;
+            case '/': return left / right;
+            case '^': return std::pow(left, right);
+            }
+            JBI_THROW(not_implemented_exception());
+        };
+
         bool equals(const arithmetic_operation& other) const noexcept
         {
             return _symbol == other._symbol;

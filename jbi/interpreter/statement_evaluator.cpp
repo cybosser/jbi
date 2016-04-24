@@ -23,19 +23,7 @@ namespace jbi
             template < typename T, typename U >
             enable_if_t<is_arithmetic<T, U>::value, value> operator()(const T& left, const U& right) const
             {
-                if (_operation == arithmetic_operation::addition())
-                    return left + right;
-
-                if (_operation == arithmetic_operation::subtraction())
-                    return left - right;
-
-                if (_operation == arithmetic_operation::multiplication())
-                    return left * right;
-
-                if (_operation == arithmetic_operation::division())
-                    return left / right;
-
-                JBI_THROW(not_implemented_exception());
+                return _operation.apply(left, right);
             };
 
             template < typename T, typename U >
