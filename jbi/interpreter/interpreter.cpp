@@ -6,7 +6,7 @@ namespace jbi
 {
 
     interpreter::interpreter(std::shared_ptr<iterminal> terminal)
-        : _evaluator(terminal)
+        : _evaluator(std::move(terminal))
     { }
 
     void interpreter::interpret(const std::string& statement)
