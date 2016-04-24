@@ -6,7 +6,7 @@ namespace jbi
 {
 
     evaluator::evaluator(std::shared_ptr<iterminal> terminal)
-        : _performer(terminal)
+        : _performer(std::move(terminal))
     { }
 
     void evaluator::evaluate(const std::unique_ptr<statement>& statement)
