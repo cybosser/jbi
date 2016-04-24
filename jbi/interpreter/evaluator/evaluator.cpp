@@ -1,4 +1,4 @@
-#include <jbi/interpreter/evaluator.h>
+#include <jbi/interpreter/evaluator/evaluator.h>
 
 #include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/syntax_tree/visitor.h>

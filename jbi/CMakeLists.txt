@@ -7,6 +7,8 @@ set(JBI_HEADER_FILES
     core/type_traits.h
     core/utility.h
 
+    interpreter/evaluator/evaluator.h
+
     interpreter/lexical_analyser/flex/scanner.h
     interpreter/lexical_analyser/flex/scanner_generated.h
     interpreter/lexical_analyser/lexical_analyser.h
@@ -26,7 +28,6 @@ set(JBI_HEADER_FILES
     interpreter/types/value.h
 
     interpreter/arithmetic_operation.h
-    interpreter/evaluator.h
     interpreter/exceptions.h
     interpreter/interpreter.h
     interpreter/iterminal.h
@@ -42,10 +43,11 @@ set(JBI_HEADER_FILES
 )
 
 set(JBI_SOURCE_FILES
-    interpreter/evaluator.cpp
     interpreter/interpreter.cpp
     interpreter/symbol_table.cpp
     interpreter/syntactic_analyser.cpp
+
+    interpreter/evaluator/evaluator.cpp
 
     interpreter/lexical_analyser/flex/scanner.cpp
     interpreter/lexical_analyser/lexical_analyser.cpp

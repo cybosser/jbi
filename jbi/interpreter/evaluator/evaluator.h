@@ -1,5 +1,5 @@
-#ifndef JBI_INTERPRETER_EVALUATOR_H
-#define JBI_INTERPRETER_EVALUATOR_H
+#ifndef JBI_INTERPRETER_EVALUATOR_EVALUATOR_H
+#define JBI_INTERPRETER_EVALUATOR_EVALUATOR_H
 
 #include <jbi/interpreter/iterminal.h>
 #include <jbi/interpreter/symbol_table.h>

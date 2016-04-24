@@ -1,7 +1,7 @@
 #ifndef JBI_INTERPRETER_INTERPRETER_H
 #define JBI_INTERPRETER_INTERPRETER_H
 
-#include <jbi/interpreter/evaluator.h>
+#include <jbi/interpreter/evaluator/evaluator.h>
 
 namespace jbi
 {
