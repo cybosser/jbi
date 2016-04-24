@@ -20,6 +20,7 @@ namespace jbi
             is_arithmetic<T, U>::value, common_type_t<T, U>
         > apply(T left, U right) const
         {
+            // TODO add overflow check
             switch (_symbol)
             {
             case '+': return left + right;
