@@ -8,6 +8,7 @@ set(JBI_TESTS_SOURCE_FILES
     core_tests/utility_tests.cpp
 
     interpreter_tests/arithmetic_operation_tests.cpp
+    interpreter_tests/interpreter_tests.cpp
     interpreter_tests/lexical_analyser_tests/lexical_analyser_tests.cpp
     interpreter_tests/symbol_table_tests.cpp
     interpreter_tests/syntactic_analyser_tests.cpp
