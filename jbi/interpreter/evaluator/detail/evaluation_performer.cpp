@@ -15,7 +15,7 @@ namespace jbi
             JBI_THROW_IF(!_terminal, jbi::argument_exception("terminal"));
         }
 
-        value evaluation_performer::operator()(const jbi::assignment_statement& var)
+        value evaluation_performer::operator()(const jbi::declaration_statement& var)
         {
             _symbols->set(var.identifier(), accept_visitor(*this, *var.initializer()));
             return none;

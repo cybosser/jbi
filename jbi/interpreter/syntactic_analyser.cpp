@@ -3,7 +3,7 @@
 #include <jbi/core/memory.h>
 #include <jbi/interpreter/exceptions.h>
 #include <jbi/interpreter/syntax_tree/arithmetic_operator.h>
-#include <jbi/interpreter/syntax_tree/assignment_statement.h>
+#include <jbi/interpreter/syntax_tree/declaration_statement.h>
 #include <jbi/interpreter/syntax_tree/identifier.h>
 #include <jbi/interpreter/syntax_tree/literals.h>
 #include <jbi/interpreter/syntax_tree/output_statement.h>
@@ -61,7 +61,7 @@ namespace jbi
         {
             const token lookahead = _tokens.pop();
             if (lookahead == token::var())
-                return parse_assignment_statement();
+                return parse_declaration_statement();
 
             if (lookahead == token::out())
                 return make_unique<output_statement>(parse_expression());
@@ -70,14 +70,14 @@ namespace jbi
         }
 
     private:
-        std::unique_ptr<statement> parse_assignment_statement()
+        std::unique_ptr<statement> parse_declaration_statement()
         {
             const token lookahead = _tokens.pop();
             JBI_THROW_IF(lookahead.tag() != token_tag::identifier, syntax_exception("missing identifier"));
 
             expect_token(token::equals(), "missing =");
 
-            return make_unique<assignment_statement>(get<std::string>(lookahead.value()), parse_expression());
+            return make_unique<declaration_statement>(get<std::string>(lookahead.value()), parse_expression());
         }
 
         std::unique_ptr<expression> parse_expression()

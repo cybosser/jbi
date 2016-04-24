@@ -19,7 +19,7 @@ namespace jbi
         public:
             explicit evaluation_performer(std::shared_ptr<iterminal> terminal);
 
-            value operator()(const jbi::assignment_statement& var);
+            value operator()(const jbi::declaration_statement& var);
             value operator()(const jbi::output_statement& out);
 
             value operator()(const jbi::arithmetic_operator& op);

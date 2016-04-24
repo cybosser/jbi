@@ -17,7 +17,7 @@ struct lispifier : public jbi::syntax_tree_visitor<std::string>
         return "(out " + jbi::accept_visitor(*this, *out.value()) + ")";
     }
 
-    std::string operator()(const jbi::assignment_statement& var) const
+    std::string operator()(const jbi::declaration_statement& var) const
     {
         return "(var " + var.identifier() + " " + jbi::accept_visitor(*this, *var.initializer()) + ")";
     }
