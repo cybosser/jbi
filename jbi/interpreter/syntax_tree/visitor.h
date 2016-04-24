@@ -15,7 +15,7 @@ namespace jbi
     using syntax_tree_visitor = visitor<ReturnType,
         arithmetic_operator,
         assignment_statement,
-        floating_point_literal,
+        floating_literal,
         identifier,
         integer_literal,
         output_statement

@@ -23,7 +23,7 @@ namespace jbi
     };
 
     using integer_literal = numeric_literal<int>;
-    using floating_point_literal = numeric_literal<double>;
+    using floating_literal = numeric_literal<double>;
 
 }
 
