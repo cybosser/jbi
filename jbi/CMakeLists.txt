@@ -36,6 +36,7 @@ set(JBI_HEADER_FILES
     interpreter/exceptions.h
     interpreter/interpreter.h
     interpreter/iterminal.h
+    interpreter/string.h
     interpreter/symbol_table.h
     interpreter/syntactic_analyser.h
 

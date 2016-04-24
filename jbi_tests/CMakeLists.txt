@@ -10,6 +10,7 @@ set(JBI_TESTS_SOURCE_FILES
     interpreter_tests/arithmetic_operation_tests.cpp
     interpreter_tests/interpreter_tests.cpp
     interpreter_tests/lexical_analyser_tests/lexical_analyser_tests.cpp
+    interpreter_tests/string_tests.cpp
     interpreter_tests/symbol_table_tests.cpp
     interpreter_tests/syntactic_analyser_tests.cpp
 
