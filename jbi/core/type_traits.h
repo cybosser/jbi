@@ -9,6 +9,9 @@ namespace jbi
     template < std::size_t Length, typename... Ts >
     using aligned_union_t = typename std::aligned_union<Length, Ts...>::type;
 
+    template < typename... Ts >
+    using common_type_t = typename std::common_type<Ts...>::type;
+
     template < bool Condition, typename T, typename F >
     using conditional_t = typename std::conditional<Condition, T, F>::type;
 
