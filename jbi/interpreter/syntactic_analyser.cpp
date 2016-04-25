@@ -108,14 +108,31 @@ namespace jbi
 
         std::unique_ptr<expression> parse_term()
         {
-            std::unique_ptr<expression> expression = parse_factor();
+            std::unique_ptr<expression> expression = parse_power();
 
             token lookahead = _tokens.pop();
 
             for ( ; is_one_of(lookahead, token::asterisk(), token::slash()); lookahead = _tokens.pop())
             {
                 const arithmetic_operation operation = arithmetic_operation::from_symbol(get<char>(lookahead.value()));
-                expression = make_unique<arithmetic_operator>(operation, std::move(expression), parse_factor());
+                expression = make_unique<arithmetic_operator>(operation, std::move(expression), parse_power());
+            }
+
+            _tokens.push(lookahead);
+
+            return expression;
+        }
+
+        std::unique_ptr<expression> parse_power()
+        {
+            std::unique_ptr<expression> expression = parse_factor();
+
+            token lookahead = _tokens.pop();
+
+            if (lookahead == token::carret())
+            {
+                const arithmetic_operation operation = arithmetic_operation::from_symbol(get<char>(lookahead.value()));
+                expression = make_unique<arithmetic_operator>(operation, std::move(expression), parse_power());
             }
 
             _tokens.push(lookahead);

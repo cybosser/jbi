@@ -82,7 +82,7 @@ TEST_F(interpreter_tests, arithmetic_test)
         EXPECT_CALL(*terminal, write_line("22.14"));
     }
 
-    interpreter.interpret("out 8 - 42 * 0.5 / (10 - 3)");
+    interpreter.interpret("out 8 - 42 * 0.5 / (10 - 3) + 2 ^ 3");
     interpreter.interpret("out (25 - 7) / 2 * 3 - 8.5");
     interpreter.interpret("out 3.14 + 2 * (16 - 9) + 8 - 2 - 1");
 }

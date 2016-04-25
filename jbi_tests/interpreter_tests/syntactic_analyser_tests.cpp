@@ -83,19 +83,24 @@ TEST(syntactic_analyser_tests, literals_test)
 
 TEST(syntactic_analyser_tests, associativity_test)
 {
-    EXPECT_EQ("(var foo (- (+ a b) c))", lispify("var foo = a + b - c"));
+    EXPECT_EQ("(var foo (+ (+ a b) c))", lispify("var foo = a + b + c"));
+    EXPECT_EQ("(var foo (- (- a b) c))", lispify("var foo = a - b - c"));
     EXPECT_EQ("(var foo (+ (- a b) c))", lispify("var foo = a - b + c"));
 
-    EXPECT_EQ("(var foo (/ (* a b) c))", lispify("var foo = a * b / c"));
+    EXPECT_EQ("(var foo (* (* a b) c))", lispify("var foo = a * b * c"));
+    EXPECT_EQ("(var foo (/ (/ a b) c))", lispify("var foo = a / b / c"));
     EXPECT_EQ("(var foo (* (/ a b) c))", lispify("var foo = a / b * c"));
+
+    EXPECT_EQ("(var foo (^ a (^ b c)))", lispify("var foo = a ^ b ^ c"));
 }
 
 TEST(syntactic_analyser_tests, precedence_test)
 {
-    EXPECT_EQ("(var foo (+ a (* b c)))", lispify("var foo = a + b * c"));
-    EXPECT_EQ("(var foo (+ a (/ b c)))", lispify("var foo = a + b / c"));
-    EXPECT_EQ("(var foo (- a (* b c)))", lispify("var foo = a - b * c"));
-    EXPECT_EQ("(var foo (- a (/ b c)))", lispify("var foo = a - b / c"));
+    EXPECT_EQ("(var foo (+ a (* b (^ c d))))", lispify("var foo = a + b * c ^ d"));
+    EXPECT_EQ("(var foo (+ a (/ b (^ c d))))", lispify("var foo = a + b / c ^ d"));
+    EXPECT_EQ("(var foo (- a (* b (^ c d))))", lispify("var foo = a - b * c ^ d"));
+    EXPECT_EQ("(var foo (- a (/ b (^ c d))))", lispify("var foo = a - b / c ^ d"));
+    EXPECT_EQ("(var foo (- a (/ b (^ c d))))", lispify("var foo = a - b / c ^ d"));
 }
 
 TEST(syntactic_analyser_tests, parentheses_test)
