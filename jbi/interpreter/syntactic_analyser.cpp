@@ -78,14 +78,14 @@ namespace jbi
         std::unique_ptr<statement> parse_declaration_statement()
         {
             const std::string identifier = parse_identifier();
-            expect_token(token::equals(), "missing =");
+            match_token(token::equals(), "missing =");
             return make_unique<declaration_statement>(identifier, parse_expression());
         }
 
         std::unique_ptr<statement> parse_input_statement()
         {
             const std::string identifier = parse_identifier();
-            expect_token(token::eof(), "junk at end of line");
+            match_token(token::eof(), "junk at end of line");
             return make_unique<input_statement>(identifier);
         }
 
@@ -156,7 +156,7 @@ namespace jbi
             if (lookahead == token::left_parenthesis())
             {
                 std::unique_ptr<expression> result = parse_expression();
-                expect_token(token::right_parenthesis(), "missing )");
+                match_token(token::right_parenthesis(), "missing )");
                 return result;
             }
 
@@ -170,7 +170,7 @@ namespace jbi
             return get<std::string>(lookahead.value());
         }
 
-        void expect_token(token expected, const std::string& message)
+        void match_token(token expected, const std::string& message)
         {
             JBI_THROW_IF(_tokens.pop() != expected, syntax_exception(message));
         }
