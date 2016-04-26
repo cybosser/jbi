@@ -38,6 +38,15 @@ namespace jbi
     }
 
 
+    class invalid_operation_exception : public std::runtime_error
+    {
+    public:
+        explicit invalid_operation_exception(const std::string& message)
+            : std::runtime_error(message)
+        { }
+    };
+
+
     class not_implemented_exception : public std::runtime_error
     {
     public:
@@ -50,7 +59,7 @@ namespace jbi
     class argument_exception : public std::invalid_argument
     {
     public:
-        argument_exception(const std::string& name)
+        explicit argument_exception(const std::string& name)
             : std::invalid_argument("Invalid argument: " + name)
         { }
     };
