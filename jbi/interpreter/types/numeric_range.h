@@ -12,9 +12,9 @@ namespace jbi
     class numeric_range
     {
     private:
-        class range_iterator : public std::iterator<std::input_iterator_tag, T>
+        class range_iterator : public std::iterator<std::input_iterator_tag, const T>
         {
-            using base = std::iterator<std::input_iterator_tag, T>;
+            using base = std::iterator<std::input_iterator_tag, const T>;
 
         private:
             T _start;
@@ -83,8 +83,8 @@ namespace jbi
         T start() const noexcept { return _start; }
         T stop() const noexcept { return _stop; }
 
-        iterator begin() noexcept { return iterator(_start, _stop, _start); }
-        iterator end() noexcept { return iterator(_start, _stop, _stop); }
+        iterator begin() const noexcept { return iterator(_start, _stop, _start); }
+        iterator end() const noexcept { return iterator(_start, _stop, _stop); }
     };
 
 }
