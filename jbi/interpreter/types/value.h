@@ -3,11 +3,12 @@
 
 #include <jbi/variant/variant.h>
 #include <jbi/interpreter/types/none.h>
+#include <jbi/interpreter/types/numeric_range.h>
 
 namespace jbi
 {
 
-    using value = variant<none_t, int, double>;
+    using value = variant<none_t, int, double, numeric_range<int>>;
 
 }
 

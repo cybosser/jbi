@@ -97,3 +97,23 @@ TEST_F(interpreter_tests, division_by_zero_test)
     EXPECT_NO_THROW(interpreter.interpret("out 1.0 / 0"));
     EXPECT_NO_THROW(interpreter.interpret("out 1 / 0.0"));
 }
+
+TEST_F(interpreter_tests, range_test)
+{
+    EXPECT_CALL(*terminal, write_line("[0, 1)"));
+
+    interpreter.interpret("out { 6 - 3 * 2, 4 / 4 }");
+}
+
+TEST_F(interpreter_tests, invalid_range_test)
+{
+    EXPECT_THROW(interpreter.interpret("out { , 1 }"), jbi::syntax_exception);
+    EXPECT_THROW(interpreter.interpret("out { 0, }"), jbi::syntax_exception);
+    EXPECT_THROW(interpreter.interpret("out { 0 1 }"), jbi::syntax_exception);
+
+    EXPECT_THROW(interpreter.interpret("out { 0.0, 1 }"), jbi::type_exception);
+    EXPECT_THROW(interpreter.interpret("out { 0, 1.0 }"), jbi::type_exception);
+
+    EXPECT_THROW(interpreter.interpret("out { 1, 0 }"), jbi::value_exception);
+    EXPECT_THROW(interpreter.interpret("out { 0, 0 }"), jbi::value_exception);
+}

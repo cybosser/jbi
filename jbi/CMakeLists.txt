@@ -9,6 +9,7 @@ set(JBI_HEADER_FILES
 
     interpreter/evaluator/detail/arithmetic_operation_performer.h
     interpreter/evaluator/detail/evaluation_performer.h
+    interpreter/evaluator/detail/numeric_range_builder.h
     interpreter/evaluator/detail/value_printer.h
 
     interpreter/evaluator/evaluator.h

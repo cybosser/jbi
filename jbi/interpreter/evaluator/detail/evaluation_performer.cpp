@@ -1,6 +1,7 @@
 #include <jbi/interpreter/evaluator/detail/evaluation_performer.h>
 
 #include <jbi/interpreter/evaluator/detail/arithmetic_operation_performer.h>
+#include <jbi/interpreter/evaluator/detail/numeric_range_builder.h>
 #include <jbi/interpreter/string.h>
 #include <jbi/visitor/accept_visitor.h>
 
@@ -56,7 +57,9 @@ namespace jbi
 
         value evaluation_performer::operator()(const range& range)
         {
-            JBI_THROW(not_implemented_exception());
+            return apply_visitor(numeric_range_builder(),
+                accept_visitor(*this, *range.start()), accept_visitor(*this, *range.stop())
+            );
         }
 
         void evaluation_performer::expect_undeclared(const std::string &identifier) const
