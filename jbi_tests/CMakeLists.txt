@@ -14,6 +14,8 @@ set(JBI_TESTS_SOURCE_FILES
     interpreter_tests/symbol_table_tests.cpp
     interpreter_tests/syntactic_analyser_tests.cpp
 
+    interpreter_tests/types_tests/range_tests.cpp
+
     variant_tests/variant_tests.cpp
 
     visitable_tests/visitable_tests.cpp

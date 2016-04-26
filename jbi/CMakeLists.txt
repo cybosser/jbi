@@ -30,6 +30,7 @@ set(JBI_HEADER_FILES
     interpreter/syntax_tree/visitor.h
 
     interpreter/types/none.h
+    interpreter/types/range.h
     interpreter/types/value.h
 
     interpreter/arithmetic_operation.h
