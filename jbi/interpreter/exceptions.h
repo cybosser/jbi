@@ -14,6 +14,16 @@ namespace jbi
         { }
     };
 
+
+    class arithmetic_exception : public interpreter_exception
+    {
+    public:
+        explicit arithmetic_exception(const std::string& message)
+            : interpreter_exception(message)
+        { }
+    };
+
+
     class name_exception : public interpreter_exception
     {
     public:
