@@ -92,7 +92,7 @@ namespace jbi
 
         std::unique_ptr<expression> parse_expression()
         {
-            std::unique_ptr<expression> expression = parse_term();
+            auto expression = parse_term();
 
             token lookahead = _tokens.pop();
 
@@ -109,7 +109,7 @@ namespace jbi
 
         std::unique_ptr<expression> parse_term()
         {
-            std::unique_ptr<expression> expression = parse_power();
+            auto expression = parse_power();
 
             token lookahead = _tokens.pop();
 
@@ -126,7 +126,7 @@ namespace jbi
 
         std::unique_ptr<expression> parse_power()
         {
-            std::unique_ptr<expression> expression = parse_factor();
+            auto expression = parse_factor();
 
             token lookahead = _tokens.pop();
 
@@ -156,17 +156,17 @@ namespace jbi
 
             if (lookahead == token::left_parenthesis())
             {
-                std::unique_ptr<expression> result = parse_expression();
+                auto result = parse_expression();
                 match_token(token::right_parenthesis(), "missing )");
                 return result;
             }
 
             if (lookahead == token::left_brace())
             {
-                std::unique_ptr<expression> start = parse_expression();
+                auto start = parse_expression();
                 match_token(token::comma(), "missing ,");
 
-                std::unique_ptr<expression> stop = parse_expression();
+                auto stop = parse_expression();
                 match_token(token::right_brace(), "missing }");
 
                 return make_unique<range>(std::move(start), std::move(stop));
