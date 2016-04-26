@@ -3,6 +3,7 @@
 
 #include <jbi/core/exceptions.h>
 #include <jbi/core/utility.h>
+#include <jbi/interpreter/exceptions.h>
 
 #include <cmath>
 
@@ -26,7 +27,7 @@ namespace jbi
             case '+': return left + right;
             case '-': return left - right;
             case '*': return left * right;
-            case '/': return left / right;
+            case '/': return divide(left, right);
             case '^': return std::pow(left, right);
             }
             JBI_THROW(not_implemented_exception());
@@ -55,6 +56,23 @@ namespace jbi
         arithmetic_operation(char symbol) noexcept
             : _symbol(symbol)
         { }
+
+        template < typename T, typename U >
+        static enable_if_t<
+            is_integral<T, U>::value, common_type_t<T, U>
+        > divide(T left, U right)
+        {
+            JBI_THROW_IF(right == U(), arithmetic_exception("Attempted to divide by zero"));
+            return left / right;
+        };
+
+        template < typename T, typename U >
+        static enable_if_t<
+            !is_integral<T, U>::value, common_type_t<T, U>
+        > divide(T left, U right)
+        {
+            return left / right;
+        };
     };
 
     inline bool operator==(const arithmetic_operation& left, const arithmetic_operation& right) noexcept

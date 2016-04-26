@@ -35,6 +35,15 @@ TEST(arithmetic_operation_tests, apply_test)
     EXPECT_DOUBLE_EQ(8.0, exponentiate.apply(64, 0.5));
 }
 
+TEST(arithmetic_operation_tests, division_by_zero_test)
+{
+    jbi::arithmetic_operation division = jbi::arithmetic_operation::division();
+
+    EXPECT_THROW(division.apply(1, 0), jbi::arithmetic_exception);
+    EXPECT_NO_THROW(division.apply(1.0, 0));
+    EXPECT_NO_THROW(division.apply(1, 0.0));
+}
+
 TEST(arithmetic_operation_tests, equality_operators_test)
 {
     EXPECT_TRUE(jbi::arithmetic_operation::addition() == jbi::arithmetic_operation::addition());

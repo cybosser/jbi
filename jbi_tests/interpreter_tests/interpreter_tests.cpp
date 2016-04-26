@@ -86,3 +86,14 @@ TEST_F(interpreter_tests, arithmetic_test)
     interpreter.interpret("out (25 - 7) / 2 * 3 - 8.5");
     interpreter.interpret("out 3.14 + 2 * (16 - 9) + 8 - 2 - 1");
 }
+
+TEST_F(interpreter_tests, division_by_zero_test)
+{
+    using namespace ::testing;
+
+    EXPECT_CALL(*terminal, write_line(_)).Times(2);
+
+    EXPECT_THROW(interpreter.interpret("out 1 / 0"), jbi::arithmetic_exception);
+    EXPECT_NO_THROW(interpreter.interpret("out 1.0 / 0"));
+    EXPECT_NO_THROW(interpreter.interpret("out 1 / 0.0"));
+}
