@@ -12,10 +12,10 @@ namespace jbi
         evaluation_performer::evaluation_performer(std::shared_ptr<iterminal> terminal)
             : _terminal(move(terminal)), _printer(_terminal)
         {
-            JBI_THROW_IF(!_terminal, jbi::argument_exception("terminal"));
+            JBI_THROW_IF(!_terminal, argument_exception("terminal"));
         }
 
-        value evaluation_performer::operator()(const jbi::declaration_statement& var)
+        value evaluation_performer::operator()(const declaration_statement& var)
         {
             expect_undeclared(var.identifier());
 
@@ -24,14 +24,14 @@ namespace jbi
             return none;
         }
 
-        value evaluation_performer::operator()(const jbi::output_statement& out)
+        value evaluation_performer::operator()(const output_statement& out)
         {
             apply_visitor(_printer, accept_visitor(*this, *out.value()));
 
             return none;
         }
 
-        value evaluation_performer::operator()(const jbi::input_statement& in)
+        value evaluation_performer::operator()(const input_statement& in)
         {
             expect_undeclared(in.identifier());
 
@@ -40,28 +40,33 @@ namespace jbi
             return none;
         }
 
-        value evaluation_performer::operator()(const jbi::arithmetic_operator& op)
+        value evaluation_performer::operator()(const arithmetic_operator& op)
         {
             return apply_visitor(arithmetic_operation_performer(op.operation()),
                  accept_visitor(*this, *op.left()), accept_visitor(*this, *op.right())
             );
         }
 
-        value evaluation_performer::operator()(const jbi::identifier& id) const
+        value evaluation_performer::operator()(const identifier& id) const
         {
             expect_declared(id.name());
 
             return _symbols.get(id.name());
         }
 
+        value evaluation_performer::operator()(const range& range)
+        {
+            JBI_THROW(not_implemented_exception());
+        }
+
         void evaluation_performer::expect_undeclared(const std::string &identifier) const
         {
-            JBI_THROW_IF(_symbols.contains(identifier), jbi::name_exception("Variable '" + identifier + "' is already defined"));
+            JBI_THROW_IF(_symbols.contains(identifier), name_exception("Variable '" + identifier + "' is already defined"));
         }
 
         void evaluation_performer::expect_declared(const std::string &identifier) const
         {
-            JBI_THROW_IF(!_symbols.contains(identifier), jbi::name_exception("Variable '" + identifier + "' is not defined"));
+            JBI_THROW_IF(!_symbols.contains(identifier), name_exception("Variable '" + identifier + "' is not defined"));
         }
     }
 }

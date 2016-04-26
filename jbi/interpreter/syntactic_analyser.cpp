@@ -8,6 +8,7 @@
 #include <jbi/interpreter/syntax_tree/input_statement.h>
 #include <jbi/interpreter/syntax_tree/literals.h>
 #include <jbi/interpreter/syntax_tree/output_statement.h>
+#include <jbi/interpreter/syntax_tree/range.h>
 
 #include <stack>
 
@@ -158,6 +159,17 @@ namespace jbi
                 std::unique_ptr<expression> result = parse_expression();
                 match_token(token::right_parenthesis(), "missing )");
                 return result;
+            }
+
+            if (lookahead == token::left_brace())
+            {
+                std::unique_ptr<expression> start = parse_expression();
+                match_token(token::comma(), "missing ,");
+
+                std::unique_ptr<expression> stop = parse_expression();
+                match_token(token::right_brace(), "missing }");
+
+                return make_unique<range>(std::move(start), std::move(stop));
             }
 
             JBI_THROW(syntax_exception("missing expression"));

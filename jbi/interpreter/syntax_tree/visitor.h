@@ -7,6 +7,7 @@
 #include <jbi/interpreter/syntax_tree/input_statement.h>
 #include <jbi/interpreter/syntax_tree/literals.h>
 #include <jbi/interpreter/syntax_tree/output_statement.h>
+#include <jbi/interpreter/syntax_tree/range.h>
 #include <jbi/visitor/visitor.h>
 
 namespace jbi
@@ -20,7 +21,8 @@ namespace jbi
         identifier,
         input_statement,
         integer_literal,
-        output_statement
+        output_statement,
+        range
     >;
 }
 

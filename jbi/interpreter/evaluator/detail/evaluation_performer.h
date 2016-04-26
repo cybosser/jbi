@@ -10,7 +10,7 @@ namespace jbi
     namespace detail
     {
 
-        class evaluation_performer : public jbi::syntax_tree_visitor<value>
+        class evaluation_performer : public syntax_tree_visitor<value>
         {
         private:
             std::shared_ptr<iterminal>  _terminal;
@@ -20,19 +20,20 @@ namespace jbi
         public:
             explicit evaluation_performer(std::shared_ptr<iterminal> terminal);
 
-            value operator()(const jbi::declaration_statement& var);
-            value operator()(const jbi::output_statement& out);
-            value operator()(const jbi::input_statement& in);
+            value operator()(const declaration_statement& var);
+            value operator()(const output_statement& out);
+            value operator()(const input_statement& in);
 
-            value operator()(const jbi::arithmetic_operator& op);
+            value operator()(const arithmetic_operator& op);
 
             template < typename T >
-            value operator()(const jbi::numeric_literal<T>& literal) const
+            value operator()(const numeric_literal<T>& literal) const
             {
                 return literal.value();
             }
 
-            value operator()(const jbi::identifier& id) const;
+            value operator()(const identifier& id) const;
+            value operator()(const range& range);
 
         private:
             void expect_undeclared(const std::string &identifier) const;

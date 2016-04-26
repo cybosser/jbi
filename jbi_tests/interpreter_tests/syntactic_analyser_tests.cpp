@@ -37,6 +37,11 @@ struct lispifier : public jbi::syntax_tree_visitor<std::string>
     {
         return identifier.name();
     }
+
+    std::string operator()(const jbi::range& range) const
+    {
+        return "(range " + jbi::accept_visitor(*this, *range.start()) + " " + jbi::accept_visitor(*this, *range.stop()) + ")";
+    }
 };
 
 
@@ -108,4 +113,14 @@ TEST(syntactic_analyser_tests, parentheses_test)
     EXPECT_EQ("(var foo (/ (* a (- b c)) d))", lispify("var foo = (a * (b - c)) / d"));
 
     EXPECT_THROW(lispify("var foo = a + (b * c"), jbi::syntax_exception);
+}
+
+TEST(syntactic_analyser_tests, range_test)
+{
+    EXPECT_EQ("(var foo (range (+ a b) (* c d)))", lispify("var foo = { a + b, c * d }"));
+
+    EXPECT_THROW(lispify("var foo = { , b }"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("var foo = { a, }"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("var foo = { , }"), jbi::syntax_exception);
+    EXPECT_THROW(lispify("var foo = { a b }"), jbi::syntax_exception);
 }
