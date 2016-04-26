@@ -18,6 +18,9 @@
     } \
     while (false)
 
+#define JBI_THROW_UNLESS(Condition, Exception) \
+    JBI_THROW_IF(!(Condition), Exception)
+
 namespace jbi
 {
 

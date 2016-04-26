@@ -15,3 +15,9 @@ TEST(exceptions_test, throw_if_test)
     EXPECT_THROW(JBI_THROW_IF(1 == 1, dummy_exception()), dummy_exception);
     EXPECT_NO_THROW(JBI_THROW_IF(1 != 1, dummy_exception()));
 }
+
+TEST(exceptions_test, throw_unless_test)
+{
+    EXPECT_THROW(JBI_THROW_UNLESS(1 != 1, dummy_exception()), dummy_exception);
+    EXPECT_NO_THROW(JBI_THROW_UNLESS(1 == 1, dummy_exception()));
+}
