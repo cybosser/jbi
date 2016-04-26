@@ -61,6 +61,14 @@ namespace jbi
 
         std::unique_ptr<statement> parse()
         {
+            auto statement = parse_statement();
+            JBI_THROW_IF(_tokens.pop() != token::eof(), syntax_exception("junk at end of line"));
+            return statement;
+        }
+
+    private:
+        std::unique_ptr<statement> parse_statement()
+        {
             const token lookahead = _tokens.pop();
 
             if (lookahead == token::var())
@@ -70,24 +78,16 @@ namespace jbi
                 return make_unique<output_statement>(parse_expression());
 
             if (lookahead == token::in())
-                return parse_input_statement();
+                return make_unique<input_statement>(parse_identifier());
 
             JBI_THROW(syntax_exception("missing statement"));
         }
 
-    private:
         std::unique_ptr<statement> parse_declaration_statement()
         {
             const std::string identifier = parse_identifier();
             match_token(token::equals(), "missing =");
             return make_unique<declaration_statement>(identifier, parse_expression());
-        }
-
-        std::unique_ptr<statement> parse_input_statement()
-        {
-            const std::string identifier = parse_identifier();
-            match_token(token::eof(), "junk at end of line");
-            return make_unique<input_statement>(identifier);
         }
 
         std::unique_ptr<expression> parse_expression()
