@@ -77,14 +77,18 @@ TEST_F(interpreter_tests, arithmetic_test)
     {
         InSequence sequence;
 
-        EXPECT_CALL(*terminal, write_line("5"));
+        EXPECT_CALL(*terminal, write_line("13"));
         EXPECT_CALL(*terminal, write_line("18.5"));
         EXPECT_CALL(*terminal, write_line("22.14"));
+        EXPECT_CALL(*terminal, write_line("512"));
+        EXPECT_CALL(*terminal, write_line("515"));
     }
 
     interpreter.interpret("out 8 - 42 * 0.5 / (10 - 3) + 2 ^ 3");
-    interpreter.interpret("out (25 - 7) / 2 * 3 - 8.5");
+    interpreter.interpret("out (25.0 - 7) / 2 * 3 - 8.5");
     interpreter.interpret("out 3.14 + 2 * (16 - 9) + 8 - 2 - 1");
+    interpreter.interpret("out 2 ^ 3 ^ 2");
+    interpreter.interpret("out 2 ^ 3 ^ 2 + 3");
 }
 
 TEST_F(interpreter_tests, division_by_zero_test)
