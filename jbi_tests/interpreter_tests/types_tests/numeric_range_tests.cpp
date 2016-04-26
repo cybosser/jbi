@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
 
-#include <jbi/interpreter/types/range.h>
+#include <jbi/interpreter/types/numeric_range.h>
 
 TEST(range_tests, begin_end_test)
 {
-    jbi::range<int> range(0, 10);
+    jbi::numeric_range<int> range(0, 10);
 
     auto expected = range.start();
     for (auto it = std::begin(range); it != std::end(range); ++it, ++expected)
@@ -15,12 +15,12 @@ TEST(range_tests, begin_end_test)
 
 TEST(range_tests, invalid_range_test)
 {
-    EXPECT_THROW(jbi::range<int>(1, 0), jbi::argument_exception);
+    EXPECT_THROW(jbi::numeric_range<int>(1, 0), jbi::argument_exception);
 }
 
 TEST(range_tests, empty_range_test)
 {
-    jbi::range<int> range(0, 0);
+    jbi::numeric_range<int> range(0, 0);
 
     auto begin = std::begin(range);
     auto end = std::end(range);

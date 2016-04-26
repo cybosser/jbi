@@ -1,5 +1,5 @@
-#ifndef JBI_INTERPRETER_TYPES_RANGE_H
-#define JBI_INTERPRETER_TYPES_RANGE_H
+#ifndef JBI_INTERPRETER_TYPES_NUMERIC_RANGE_H
+#define JBI_INTERPRETER_TYPES_NUMERIC_RANGE_H
 
 #include <jbi/core/exceptions.h>
 
@@ -9,7 +9,7 @@ namespace jbi
 {
 
     template < typename T >
-    class range
+    class numeric_range
     {
     private:
         class range_iterator : public std::iterator<std::input_iterator_tag, T>
@@ -74,7 +74,7 @@ namespace jbi
     public:
         using iterator = range_iterator;
 
-        range(T begin, T end)
+        numeric_range(T begin, T end)
             : _start(begin), _stop(end)
         {
             JBI_THROW_IF(_start > _stop, argument_exception("stop"));
