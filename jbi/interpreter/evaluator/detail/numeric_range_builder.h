@@ -15,7 +15,7 @@ namespace jbi
         public:
             numeric_range<int> operator()(int start, int stop) const
             {
-                JBI_THROW_UNLESS(start < stop, value_exception("Invalid range end"));
+                JBI_THROW_IF(start > stop, value_exception("Invalid range end"));
                 return numeric_range<int>(start, stop);
             }
 
