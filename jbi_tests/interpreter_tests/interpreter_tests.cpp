@@ -120,3 +120,14 @@ TEST_F(interpreter_tests, invalid_range_test)
 
     EXPECT_THROW(interpreter.interpret("out { 1, 0 }"), jbi::value_exception);
 }
+
+TEST_F(interpreter_tests, range_arithmetic_test)
+{
+    EXPECT_THROW(interpreter.interpret("out { 0, 1 } + 1"), jbi::type_exception);
+    EXPECT_THROW(interpreter.interpret("out 1 - { 0, 1 }"), jbi::type_exception);
+
+    EXPECT_THROW(interpreter.interpret("out { 0, 1 } + 1.0"), jbi::type_exception);
+    EXPECT_THROW(interpreter.interpret("out 1.0 - { 0, 1 }"), jbi::type_exception);
+
+    EXPECT_THROW(interpreter.interpret("out { 0, 1 } - { 0, 1 }"), jbi::type_exception);
+}
