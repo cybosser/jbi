@@ -33,6 +33,9 @@ namespace jbi
     template < typename T, typename U>
     using is_arithmetic = bool_constant<std::is_arithmetic<T>::value && std::is_arithmetic<U>::value>;
 
+    template < typename T, typename U>
+    using is_integral = bool_constant<std::is_integral<T>::value && std::is_integral<U>::value>;
+
     template < typename T >
     using return_type_of = typename T::return_type;
 
