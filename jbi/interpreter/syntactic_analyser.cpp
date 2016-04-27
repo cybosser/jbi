@@ -15,7 +15,7 @@
 namespace jbi
 {
 
-    namespace detail
+    namespace
     {
 
         class token_source
@@ -23,7 +23,7 @@ namespace jbi
         private:
             lexical_analyser    _tokenizer;
 
-            std::stack<token>   _tokens;
+            std::stack<token>   _pushed;
 
         public:
             explicit token_source(lexical_analyser tokenizer) noexcept
@@ -32,17 +32,17 @@ namespace jbi
 
             token pop()
             {
-                if (_tokens.empty())
+                if (_pushed.empty())
                     return _tokenizer.read();
 
-                token result = _tokens.top();
-                _tokens.pop();
+                token result = _pushed.top();
+                _pushed.pop();
                 return result;
             }
 
             void push(token token)
             {
-                _tokens.emplace(std::move(token));
+                _pushed.emplace(std::move(token));
             }
         };
 
@@ -52,7 +52,7 @@ namespace jbi
     class syntactic_analyser::impl
     {
     private:
-        detail::token_source    _tokens;
+        token_source _tokens;
 
     public:
         explicit impl(lexical_analyser tokenizer) noexcept
