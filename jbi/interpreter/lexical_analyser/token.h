@@ -8,10 +8,7 @@ namespace jbi
 
     enum class token_tag
     {
-        var,
-        in,
-        out,
-        print,
+        builtin,
 
         integer_literal,
         floating_literal,
@@ -43,10 +40,10 @@ namespace jbi
             return _tag == other._tag && _value == other._value;
         }
 
-        static token var()      { return token(token_tag::var); }
-        static token in()       { return token(token_tag::in); }
-        static token out()      { return token(token_tag::out); }
-        static token print()    { return token(token_tag::print); }
+        static token var()      { return builtin("var"); }
+        static token in()       { return builtin("in"); }
+        static token out()      { return builtin("out"); }
+        static token print()    { return builtin("print"); }
 
         static token literal(int number)                 { return token(token_tag::integer_literal, number); }
         static token literal(double number)              { return token(token_tag::floating_literal, number); }
@@ -60,17 +57,17 @@ namespace jbi
 
         static token arrow()                { return token(token_tag::arrow); }
 
-        static token equals()               { return token(token_tag::symbol, '='); }
-        static token plus()                 { return token(token_tag::symbol, '+'); }
-        static token minus()                { return token(token_tag::symbol, '-'); }
-        static token asterisk()             { return token(token_tag::symbol, '*'); }
-        static token slash()                { return token(token_tag::symbol, '/'); }
-        static token carret()               { return token(token_tag::symbol, '^'); }
-        static token comma()                { return token(token_tag::symbol, ','); }
-        static token left_parenthesis()     { return token(token_tag::symbol, '('); }
-        static token right_parenthesis()    { return token(token_tag::symbol, ')'); }
-        static token left_brace()           { return token(token_tag::symbol, '{'); }
-        static token right_brace()          { return token(token_tag::symbol, '}'); }
+        static token equals()               { return symbol('='); }
+        static token plus()                 { return symbol('+'); }
+        static token minus()                { return symbol('-'); }
+        static token asterisk()             { return symbol('*'); }
+        static token slash()                { return symbol('/'); }
+        static token carret()               { return symbol('^'); }
+        static token comma()                { return symbol(','); }
+        static token left_parenthesis()     { return symbol('('); }
+        static token right_parenthesis()    { return symbol(')'); }
+        static token left_brace()           { return symbol('{'); }
+        static token right_brace()          { return symbol('}'); }
 
         // TODO find better solution
         static token eof()                  { return token(token_tag::eof); }
@@ -87,6 +84,9 @@ namespace jbi
         token(token_tag tag, T&& value)
             : _tag(tag), _value(std::forward<T>(value))
         { }
+
+        static token builtin(const std::string& keyword)    { return token(token_tag::builtin, keyword); }
+        static token symbol(char symbol)                    { return token(token_tag::symbol, symbol); }
     };
 
     inline bool operator==(const token& left, const token& right)
