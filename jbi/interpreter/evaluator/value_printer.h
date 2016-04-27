@@ -3,7 +3,6 @@
 
 #include <jbi/core/exceptions.h>
 #include <jbi/interpreter/iterminal.h>
-#include <jbi/interpreter/types/none.h>
 #include <jbi/interpreter/types/numeric_range.h>
 #include <jbi/variant/static_visitor.h>
 
@@ -30,13 +29,11 @@ namespace jbi
             _terminal->write_line(to_string(value));
         }
 
-        void operator()(const numeric_range<int>& range)
+        template < typename T >
+        void operator()(const numeric_range<T>& range)
         {
             _terminal->write_line("[" + to_string(range.start()) + ", " + to_string(range.stop()) + ")");
         }
-
-        void operator()(none_t)
-        { }
     };
 
 }

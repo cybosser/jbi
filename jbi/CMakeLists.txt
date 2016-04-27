@@ -28,7 +28,6 @@ set(JBI_HEADER_FILES
     interpreter/syntax_tree/statement.h
     interpreter/syntax_tree/visitor.h
 
-    interpreter/types/none.h
     interpreter/types/numeric_range.h
     interpreter/types/value.h
 
@@ -58,8 +57,6 @@ set(JBI_SOURCE_FILES
 
     interpreter/lexical_analyser/flex/scanner.cpp
     interpreter/lexical_analyser/lexical_analyser.cpp
-
-    interpreter/types/none.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
