@@ -14,16 +14,21 @@ namespace jbi
 {
 
     template < typename ReturnType >
-    using syntax_tree_visitor = visitor<ReturnType,
-        arithmetic_operator,
+    using statement_visitor = visitor<ReturnType,
         declaration_statement,
+        input_statement,
+        output_statement
+    >;
+
+    template < typename ReturnType >
+    using expression_visitor = visitor<ReturnType,
+        arithmetic_operator,
         floating_literal,
         identifier,
-        input_statement,
         integer_literal,
-        output_statement,
         range
     >;
+
 }
 
 #endif

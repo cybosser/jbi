@@ -1,6 +1,7 @@
 #include <jbi/interpreter/interpreter.h>
 
 #include <jbi/interpreter/syntactic_analyser.h>
+#include <jbi/visitor/accept_visitor.h>
 
 namespace jbi
 {
@@ -11,10 +12,8 @@ namespace jbi
 
     void interpreter::interpret(const std::string& statement)
     {
-        lexical_analyser tokenizer(statement);
-        syntactic_analyser parser(std::move(tokenizer));
-
-        _evaluator.evaluate(parser.parse());
+        syntactic_analyser parser{ lexical_analyser(statement) };
+        accept_visitor(_evaluator, *parser.parse());
     }
 
 }

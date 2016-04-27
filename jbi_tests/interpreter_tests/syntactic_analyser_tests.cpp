@@ -5,23 +5,8 @@
 #include <jbi/interpreter/syntax_tree/visitor.h>
 #include <jbi/visitor/accept_visitor.h>
 
-struct lispifier : public jbi::syntax_tree_visitor<std::string>
+struct expression_lispifier : public jbi::expression_visitor<std::string>
 {
-    std::string operator()(const jbi::declaration_statement& var) const
-    {
-        return "(var " + var.identifier() + " " + jbi::accept_visitor(*this, *var.initializer()) + ")";
-    }
-
-    std::string operator()(const jbi::output_statement& out) const
-    {
-        return "(out " + jbi::accept_visitor(*this, *out.value()) + ")";
-    }
-
-    std::string operator()(const jbi::input_statement& in) const
-    {
-        return "(in " + in.identifier() + ")";
-    }
-
     std::string operator()(const jbi::arithmetic_operator& op) const
     {
         return "(" + jbi::to_string(op.operation()) + " " + jbi::accept_visitor(*this, *op.left()) + " " + jbi::accept_visitor(*this, *op.right()) + ")";
@@ -44,12 +29,30 @@ struct lispifier : public jbi::syntax_tree_visitor<std::string>
     }
 };
 
+struct statement_lispifier : public jbi::statement_visitor<std::string>
+{
+    std::string operator()(const jbi::declaration_statement& var) const
+    {
+        return "(var " + var.identifier() + " " + jbi::accept_visitor(expression_lispifier(), *var.initializer()) + ")";
+    }
+
+    std::string operator()(const jbi::output_statement& out) const
+    {
+        return "(out " + jbi::accept_visitor(expression_lispifier(), *out.value()) + ")";
+    }
+
+    std::string operator()(const jbi::input_statement& in) const
+    {
+        return "(in " + in.identifier() + ")";
+    }
+};
+
 
 std::string lispify(const std::string& statement)
 {
     // TODO mock lexical_analyser
     jbi::syntactic_analyser parser{ jbi::lexical_analyser(statement) };
-    return jbi::accept_visitor(lispifier(), *parser.parse());
+    return jbi::accept_visitor(statement_lispifier(), *parser.parse());
 }
 
 TEST(syntactic_analyser_tests, declaration_statement_test)
