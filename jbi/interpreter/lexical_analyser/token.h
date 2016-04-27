@@ -45,6 +45,9 @@ namespace jbi
         static token out()      { return builtin("out"); }
         static token print()    { return builtin("print"); }
 
+        static token map()      { return builtin("map"); }
+        static token reduce()   { return builtin("reduce"); }
+
         static token literal(int number)                 { return token(token_tag::integer_literal, number); }
         static token literal(double number)              { return token(token_tag::floating_literal, number); }
         static token literal(const std::string& string)  { return token(token_tag::string_literal, string); }

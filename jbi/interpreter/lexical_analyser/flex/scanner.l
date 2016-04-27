@@ -22,6 +22,9 @@ letter  [a-zA-Z]
 "out"                       { return jbi::token::out(); }
 "print"                     { return jbi::token::print(); }
 
+"map"                       { return jbi::token::map(); }
+"reduce"                    { return jbi::token::reduce(); }
+
 "-"?{digit}+\.{digit}*      { return jbi::token::literal(jbi::from_string<double>(yytext)); }
 "-"?{digit}+                { return jbi::token::literal(jbi::from_string<int>(yytext)); }
 \"(\\.|[^\\"])*\"           { return jbi::token::literal(yytext); }

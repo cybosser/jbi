@@ -24,14 +24,16 @@ public:
     }
 };
 
-TEST(lexical_analyser_tests, keywords_test)
+TEST(lexical_analyser_tests, builtins_test)
 {
-    lexical_analyser_tester tester("var in out print");
+    lexical_analyser_tester tester("var in out print map reduce");
 
     tester.expect(jbi::token::var());
     tester.expect(jbi::token::in());
     tester.expect(jbi::token::out());
     tester.expect(jbi::token::print());
+    tester.expect(jbi::token::map());
+    tester.expect(jbi::token::reduce());
 }
 
 TEST(lexical_analyser_tests, identifiers_test)
